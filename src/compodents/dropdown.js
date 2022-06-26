@@ -21,11 +21,11 @@ export default function Dropdown(props) {
       onMouseEnter={toggling}
       onMouseLeave={toggling}
     >
-      <div>{props.title}</div>
+      <>{props.title}</>
       {isOpen && (
         <ul className="dropdownlist">
           {props.options.map((option) => (
-            <li className="dropdown" onClick={onOptionClicked(option)}>
+            <li className="navlist dropdown" onClick={onOptionClicked(option)}>
               {option}
             </li>
           ))}

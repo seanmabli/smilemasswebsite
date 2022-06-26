@@ -1,27 +1,24 @@
 * {
-  font-family: "Open Sans", sans-serif;
-  padding: 0;
-  margin: 0;
   color: #547c94;
 }
 
-.navbar {
+.desktopnavbar {
   margin-left: 5px;
   margin-right: 5px;
   display: flex;
   align-items: center;
 }
 
-.titleandimage {
-  display: flex;
-  overflow: hidden;
-  align-items: center;
+.mobilenavbar {
+  display: none;
 }
 
 .navbaritems {
   display: flex;
   padding: 0;
   margin: 0;
+  position: absolute;
+  right: 10px;
 }
 
 .navbarlogo {
@@ -29,7 +26,7 @@
   height: 100px;
 }
 
-.mobilenavbaritems {
+.mobilehamburger {
   display: none;
 }
 
@@ -38,23 +35,30 @@
   color: #547c94;
 }
 
-@media screen and (max-width: 1100px) {
-  .navbaritems {
-    display: none;
-  }
-
-  .mobilenavbaritems {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    object-fit: cover;
-    width: 40px;
-    height: 40px;
-  }
+.sociallink {
+  object-fit: cover;
+  height: 20px;
+  width: 20px;
 }
 
-@media screen and (max-width: 600px) {
-  .title {
+@media screen and (max-width: 1000px) {
+  .desktopnavbar {
     display: none;
+  }
+
+  .mobilenavbar {
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .mobilehamburger {
+    display: flex;
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 10px;
   }
 }

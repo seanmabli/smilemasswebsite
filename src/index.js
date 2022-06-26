@@ -9,7 +9,7 @@ root.render(
   <>
     <React.Fragment>
       <BrowserRouter>
-      <Navbar />
+        <Navbar />
       </BrowserRouter>
     </React.Fragment>
   </>
