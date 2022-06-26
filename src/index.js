@@ -73,7 +73,7 @@ function Dropdown(props) {
         {(popupState) => (
           <React.Fragment>
             <Button
-              {...bindTrigger(popupState)}
+              onMouseOver={popupState.open}
               style={buttonStyle}
               variant={buttonType}
             >
