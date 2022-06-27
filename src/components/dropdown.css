@@ -30,8 +30,9 @@
   box-shadow: 0 4px 8px 0 rgb(228, 228, 228);
 }
 
-.dropdown {
-  margin-bottom: 0;
-  padding-top: 5px;
-  background-color: white;
+@media screen and (max-width: 1150px) {
+  .notdropdown {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }

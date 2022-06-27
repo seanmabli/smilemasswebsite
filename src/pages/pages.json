@@ -1,0 +1,10 @@
+{
+  "navbar": ["About", "Out Programs", "Get Involved", "News & Events", "Resources", "Support"],
+  "pages": {
+    "about": {
+      "title": "Our Mission",
+      "navbar": "About/Our Mission",
+      "url": "our-mission"
+    }
+  }
+}
