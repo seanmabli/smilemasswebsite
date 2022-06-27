@@ -5,7 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Navbar, MobileNavbarOpened } from "./components/navbar";
 
-import Home from "./pages/home";
+import Accomplishments from "./pages/accomplishments";
+import BeachHouse from "./pages/beachhouse";
+import ClubSmileMass from "./pages/clubsmilemass";
+import CommunityWithinACommunity from "./pages/communitywithinacommunity";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +17,7 @@ root.render(
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          
         </Routes>
       </BrowserRouter>
     </React.Fragment>
