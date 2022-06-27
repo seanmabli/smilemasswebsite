@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./firebase/firebase";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/navbar";
+import { Navbar, MobileNavbarOpened } from "./components/navbar";
 
 import Home from "./pages/home";
 
@@ -20,3 +20,5 @@ root.render(
     </React.Fragment>
   </>
 );
+
+window.addEventListener("resize", MobileNavbarOpened);
