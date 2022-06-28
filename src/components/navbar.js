@@ -24,7 +24,7 @@ function MobileNavbarOpened() {
           onClick={toggle}
         />
         <ul className="navbaritems">
-          <li className="navlist notdropdown" style={{ color: "#547c94" }}>
+          <li className="notdropdown" style={{ color: "#547c94" }}>
             <Dropdown
               title="About"
               options={[
@@ -39,7 +39,7 @@ function MobileNavbarOpened() {
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="navlist notdropdown" style={{ color: "#547c94" }}>
+          <li className="notdropdown" style={{ color: "#547c94" }}>
             <Dropdown
               title="Our Programs"
               options={[
@@ -52,23 +52,23 @@ function MobileNavbarOpened() {
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="navlist notdropdown" style={{ color: "#547c94" }}>
+          <li className="notdropdown" style={{ color: "#547c94" }}>
             <Dropdown
               title="Get Involved"
               options={["Running Team", "Volunteer"]}
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="navlist notdropdown" style={{ color: "#547c94" }}>
+          <li className="notdropdown" style={{ color: "#547c94" }}>
             <Dropdown
               title="News & Events"
               options={["Events", "In The News", "Newsletters", "SMILE Blog"]}
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="navlist notdropdown" style={{ color: "#547c94" }}>
+          <li className="notdropdown" style={{ color: "#547c94" }}>
             <Link
-              className="navbarlink"
+              className="navlist navbarlink"
               to={"resources"}
               style={{ color: "#547c94" }}
             >
@@ -76,7 +76,7 @@ function MobileNavbarOpened() {
             </Link>
           </li>
           <li
-            className="navlist notdropdown"
+            className="notdropdown"
             style={{ backgroundColor: "#547c94", color: "#ffffff" }}
           >
             <Dropdown

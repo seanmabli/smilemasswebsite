@@ -17,10 +17,6 @@
   align-content: center;
 }
 
-.dropdowncontainer {
-  margin: 0 auto;
-}
-
 .dropdownlist {
   padding-top: 10px;
   margin-left: -6px;
@@ -32,7 +28,10 @@
 
 @media screen and (max-width: 1000px) {
   .dropdownlist {
+    padding: 5px;
     position: relative;
+    box-shadow: none;
+    margin-left: 10px;
   }
 
   .notdropdown {
