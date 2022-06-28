@@ -8,7 +8,7 @@ import "./navbar.css";
 function MobileNavbarOpened() {
   const [isOpen, setIsOpen] = useState(false);
 
-  if (!isOpen && window.innerWidth > 1150) {
+  if (!isOpen && window.innerWidth > 1000) {
     setIsOpen(true);
   }
 
@@ -85,36 +85,6 @@ function MobileNavbarOpened() {
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="notdropdown">
-            <a href="https://www.instagram.com/smilemassorg/">
-              <img
-                src="https://img.icons8.com/small/32/547c94/instagram-new.png"
-                className="sociallink"
-                alt="instagram logo"
-              />
-            </a>
-            <a href="https://twitter.com/smilemassorg">
-              <img
-                src="https://img.icons8.com/small/32/547c94/twitter.png"
-                className="sociallink"
-                alt="twitter logo"
-              />
-            </a>
-            <a href="https://www.facebook.com/SmileMass">
-              <img
-                src="https://img.icons8.com/small/32/547c94/facebook-new.png"
-                className="sociallink"
-                alt="facebook logo"
-              />
-            </a>
-            <a href="https://www.youtube.com/channel/UCUkqQwyr2Fg0aytVZ9q6zqA">
-              <img
-                src="https://img.icons8.com/small/32/547c94/youtube-play.png"
-                className="sociallink"
-                alt="youtube logo"
-              />
-            </a>
-          </li>
         </ul>
       </>
     );
@@ -130,7 +100,7 @@ function MobileNavbarOpened() {
   }
 }
 
-function Navbar() {
+export default function Navbar() {
   return (
     <>
       <nav className="navbar">
@@ -142,5 +112,3 @@ function Navbar() {
     </>
   );
 }
-
-export { Navbar, MobileNavbarOpened };

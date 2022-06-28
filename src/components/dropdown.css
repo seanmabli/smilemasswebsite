@@ -30,7 +30,11 @@
   box-shadow: 0 4px 8px 0 rgb(228, 228, 228);
 }
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1000px) {
+  .dropdownlist {
+    position: relative;
+  }
+
   .notdropdown {
     margin-top: 5px;
     margin-bottom: 5px;

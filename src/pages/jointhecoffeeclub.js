@@ -1,5 +1,5 @@
 
-export default function JointheCoffeeClub() {
+export default function JoinTheCoffeeClub() {
   return <p>Join the Coffee Club</p>;
 }
   
