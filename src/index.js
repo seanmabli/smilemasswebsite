@@ -52,14 +52,23 @@ root.render(
             path="/communitywithinacommunity"
             element={<CommunityWithinACommunity />}
           />
+          <Route
+            path="/initiative/community-within-a-community"
+            element={<Navigate to="/communitywithinacommunity" />}
+          />
 
           <Route path="/contact" element={<Contact />} />
 
           <Route path="/donate" element={<Donate />} />
+          <Route path="/support-us" element={<Navigate to="/donate" />} />
 
           <Route
             path="/equipmentloanerprogram"
             element={<EquipmentLoanerProgram />}
+          />
+          <Route
+            path="/initiative/equipment-loaner-program"
+            element={<Navigate to="/equipmentloanerprogram" />}
           />
 
           <Route path="/events" element={<Events />} />
@@ -70,8 +79,13 @@ root.render(
           <Route path="/home" element={<Home />} />
 
           <Route path="/inthenews" element={<InTheNews />} />
+          <Route path="/in-the-news" element={<Navigate to="/inthenews" />} />
 
           <Route path="/jointhecoffeeclub" element={<JoinTheCoffeeClub />} />
+          <Route
+            path="/initiative/coffee-club"
+            element={<Navigate to="/jointhecoffeeclub" />}
+          />
 
           <Route
             path="/localbeachwheelchairlocations"
@@ -90,8 +104,13 @@ root.render(
           <Route path="/resources" element={<Resources />} />
 
           <Route path="/runningteam" element={<RunningTeam />} />
+          <Route
+            path="/smile-mass-running-team"
+            element={<Navigate to="/runningteam" />}
+          />
 
           <Route path="/smileblog" element={<SmileBlog />} />
+          <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
 
           <Route path="/testimonials" element={<Testimonials />} />
 
@@ -99,6 +118,10 @@ root.render(
           <Route path="/our-team" element={<Navigate to="/thestaff" />} />
 
           <Route path="/volunteer" element={<Volunteer />} />
+          <Route
+            path="/learn-how-to-get-involved-with-smile-mass"
+            element={<Navigate to="/volunteer" />}
+          />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
