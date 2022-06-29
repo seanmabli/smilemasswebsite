@@ -77,12 +77,12 @@ function MobileNavbarOpened() {
           </li>
           <li
             className="notdropdown"
-            style={{ backgroundColor: "#547c94", color: "#ffffff" }}
           >
             <Dropdown
               title="Support"
               options={["Join the Coffee Club", "Donate"]}
               dropdownStyle={{ color: "#547c94" }}
+              buttonStyle={{ backgroundColor: "#547c94", color: "#ffffff" }}
             />
           </li>
         </ul>
@@ -102,13 +102,13 @@ function MobileNavbarOpened() {
 
 export default function Navbar() {
   return (
-    <>
+    <div>
       <nav className="navbar">
         <Link className="navbarlink" to="/">
           <img src={logo} alt="logo" className="navbarlogo" />
         </Link>
         <MobileNavbarOpened />
       </nav>
-    </>
+    </div>
   );
 }

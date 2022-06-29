@@ -20,7 +20,7 @@ export default function Dropdown(props) {
       onMouseEnter={toggling}
       onMouseLeave={toggling}
     >
-      <p className="navlist">{props.title}</p>
+      <a className="navlist" style={props.buttonStyle}>{props.title}</a>
       {isOpen && (
         <ul className="dropdownlist">
           {props.options.map((option) => (
