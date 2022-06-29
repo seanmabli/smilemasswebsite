@@ -1,41 +1,28 @@
-.navlist {
+.button {
   list-style: none;
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.4s;
+  z-index: 1;
 }
 
-.navlist:hover {
+.button:hover {
   background-color: rgb(228, 228, 228);
 }
 
-.notdropdown {
-  display: inline;
-  margin-left: 10px;
-  margin-right: 10px;
-  align-content: center;
-}
-
-.dropdownlist {
+.dropdowncontent {
   padding-top: 10px;
-  margin-left: -6px;
   position: absolute;
-  z-index: 100;
   border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgb(228, 228, 228);
+  box-shadow: 0 4px 4px rgb(228, 228, 228);
 }
 
 @media screen and (max-width: 1000px) {
-  .dropdownlist {
+  .dropdowncontent {
     padding: 5px;
     position: relative;
     box-shadow: none;
     margin-left: 10px;
-  }
-
-  .notdropdown {
-    margin-top: 5px;
-    margin-bottom: 5px;
   }
 }

@@ -76,7 +76,7 @@ root.render(
           <Route path="/faq" element={<FAQ />} />
           <Route path="/f-a-q" element={<Navigate to="/faq" />} />
 
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
 
           <Route path="/inthenews" element={<InTheNews />} />
           <Route path="/in-the-news" element={<Navigate to="/inthenews" />} />

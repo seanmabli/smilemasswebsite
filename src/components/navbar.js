@@ -18,13 +18,13 @@ function MobileNavbarOpened() {
     return (
       <>
         <img
-          className="mobilehamburger"
+          className="hamburger"
           src="https://img.icons8.com/small/32/547c94/delete-sign.png"
           alt="mobile navbar button"
           onClick={toggle}
         />
-        <ul className="navbaritems">
-          <li className="notdropdown" style={{ color: "#547c94" }}>
+        <ul className="navbarcontent">
+          <li className="item" style={{ color: "#547c94" }}>
             <Dropdown
               title="About"
               options={[
@@ -39,7 +39,7 @@ function MobileNavbarOpened() {
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="notdropdown" style={{ color: "#547c94" }}>
+          <li className="item" style={{ color: "#547c94" }}>
             <Dropdown
               title="Our Programs"
               options={[
@@ -52,23 +52,23 @@ function MobileNavbarOpened() {
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="notdropdown" style={{ color: "#547c94" }}>
+          <li className="item" style={{ color: "#547c94" }}>
             <Dropdown
               title="Get Involved"
               options={["Running Team", "Volunteer"]}
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="notdropdown" style={{ color: "#547c94" }}>
+          <li className="item" style={{ color: "#547c94" }}>
             <Dropdown
               title="News & Events"
               options={["Events", "In The News", "Newsletters", "SMILE Blog"]}
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="notdropdown" style={{ color: "#547c94" }}>
+          <li className="item" style={{ color: "#547c94" }}>
             <Link
-              className="navlist navbarlink"
+              className="button link"
               to={"resources"}
               style={{ color: "#547c94" }}
             >
@@ -76,7 +76,7 @@ function MobileNavbarOpened() {
             </Link>
           </li>
           <li
-            className="notdropdown"
+            className="item"
           >
             <Dropdown
               title="Support"
@@ -91,7 +91,7 @@ function MobileNavbarOpened() {
   } else {
     return (
       <img
-        className="mobilehamburger"
+        className="hamburger"
         src="https://img.icons8.com/small/32/547c94/menu.png"
         alt="mobile navbar button"
         onClick={toggle}
@@ -102,10 +102,10 @@ function MobileNavbarOpened() {
 
 export default function Navbar() {
   return (
-    <div>
+    <div style={{justifyContent: "center"}}>
       <nav className="navbar">
-        <Link className="navbarlink" to="/">
-          <img src={logo} alt="logo" className="navbarlogo" />
+        <Link className="link" to="/">
+          <img src={logo} alt="logo" className="logo" />
         </Link>
         <MobileNavbarOpened />
       </nav>
