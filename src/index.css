@@ -1,5 +1,5 @@
 * {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -8,7 +8,7 @@ h1 {
   font-size: 30px;
   padding: 0;
   margin: 0;
-  text-align: center;
+  color: rgb(9, 117, 162);
 }
 
 h2 {
@@ -18,6 +18,17 @@ h2 {
   text-align: center;
 }
 
-.navbarcontent {
-  margin: auto 20px;
+p {
+  font-size: 18px;
+  max-width: 1250px;
+}
+
+br {
+  content: "";
+  margin: 10px;
+  display: block;
+}
+
+.page {
+  padding: 10px;
 }

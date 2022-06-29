@@ -5,6 +5,7 @@
   cursor: pointer;
   transition: 0.4s;
   z-index: 1;
+  background-color: rgb(255, 255, 255);
 }
 
 .button:hover {
@@ -14,8 +15,8 @@
 .dropdowncontent {
   padding-top: 10px;
   position: absolute;
-  border-radius: 5px;
-  box-shadow: 0 4px 4px rgb(228, 228, 228);
+  perspective: 1px;
+  box-shadow: 0 4px 4px rgba(114, 114, 114, 0.3);
 }
 
 @media screen and (max-width: 1000px) {

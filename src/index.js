@@ -24,7 +24,7 @@ import Resources from "./pages/resources";
 import RunningTeam from "./pages/runningteam";
 import SmileBlog from "./pages/smileblog";
 import Testimonials from "./pages/testimonials";
-import TheStaff from "./pages/thestaff";
+import OurTeam from "./pages/ourteam";
 import Volunteer from "./pages/volunteer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -114,8 +114,8 @@ root.render(
 
           <Route path="/testimonials" element={<Testimonials />} />
 
-          <Route path="/thestaff" element={<TheStaff />} />
-          <Route path="/our-team" element={<Navigate to="/thestaff" />} />
+          <Route path="/ourteam" element={<OurTeam />} />
+          <Route path="/our-team" element={<Navigate to="/ourteam" />} />
 
           <Route path="/volunteer" element={<Volunteer />} />
           <Route

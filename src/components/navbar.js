@@ -29,7 +29,7 @@ function MobileNavbarOpened() {
               title="About"
               options={[
                 "Our Mission",
-                "The Staff",
+                "Our Team",
                 "Testimonials",
                 "Accomplishments",
                 "Sudbury Accesible Playgrounds",
@@ -102,7 +102,7 @@ function MobileNavbarOpened() {
 
 export default function Navbar() {
   return (
-    <div style={{justifyContent: "center"}}>
+    <div style={{  }}>
       <nav className="navbar">
         <Link className="link" to="/">
           <img src={logo} alt="logo" className="logo" />
