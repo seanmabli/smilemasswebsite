@@ -18,12 +18,18 @@ export default function OurTeam() {
         to continue improving the lives of disabled persons and the people
         around them.
       </p>
+      <div>
+        <div>
+          <img src={lottediomede} />
+        </div>
+        <div>
+          <img src={susanbrown} />
+        </div>
+      </div>
       <table className="center">
         <tr>
           <td>
-            <tr>
-              <img src={lottediomede} />
-            </tr>
+            <tr></tr>
             <tr>Lotte Diomede President & Co-Founder</tr>
             <tr>
               <td>617-967-7755</td>
@@ -38,9 +44,7 @@ export default function OurTeam() {
             </tr>
           </td>
           <td>
-            <tr>
-              <img src={susanbrown} />
-            </tr>
+            <tr></tr>
             <tr>Susan Brown Vice President & Co-Founder</tr>
             <tr>
               <td>978-460-7410</td>

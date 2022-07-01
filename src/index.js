@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/navbar";
 
 import Accomplishments from "./pages/accomplishments";
+import Admin from "./pages/accomplishments";
 import BeachHouse from "./pages/beachhouse";
 import ClubSmileMass from "./pages/clubsmilemass";
 import CommunityWithinACommunity from "./pages/communitywithinacommunity";
@@ -27,102 +28,138 @@ import Testimonials from "./pages/testimonials";
 import OurTeam from "./pages/ourteam";
 import Volunteer from "./pages/volunteer";
 
+import Signup from "./admin/signup";
+import Viewprofile from "./admin/viewprofile";
+import Login from "./admin/login";
+import ForgotPassword from "./admin/forgotpassword";
+import UpdateProfile from "./admin/updateprofile";
+import { AuthProvider } from "./firebase/auth";
+import PrivateRoute from "./firebase/privateroute";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <React.Fragment>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path="/accomplishments" element={<Accomplishments />} />
+        <AuthProvider>
+          <Routes>
+            <Route
+              exact
+              path="/account"
+              element={
+                <PrivateRoute>
+                  <Viewprofile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/update-profile"
+              element={
+                <PrivateRoute>
+                  <UpdateProfile />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          <Route path="/beachhouse" element={<BeachHouse />} />
-          <Route
-            path="initiative/beach-house"
-            element={<Navigate to="/beachhouse" />}
-          />
+            <Route path="/accomplishments" element={<Accomplishments />} />
 
-          <Route path="/clubsmilemass" element={<ClubSmileMass />} />
-          <Route
-            path="/initiative/monthly-program-club-smile-mass"
-            element={<Navigate to="/clubsmilemass" />}
-          />
+            <Route path="/admin" element={<Admin />} />
 
-          <Route
-            path="/communitywithinacommunity"
-            element={<CommunityWithinACommunity />}
-          />
-          <Route
-            path="/initiative/community-within-a-community"
-            element={<Navigate to="/communitywithinacommunity" />}
-          />
+            <Route path="/beachhouse" element={<BeachHouse />} />
+            <Route
+              path="initiative/beach-house"
+              element={<Navigate to="/beachhouse" />}
+            />
 
-          <Route path="/contact" element={<Contact />} />
+            <Route path="/clubsmilemass" element={<ClubSmileMass />} />
+            <Route
+              path="/initiative/monthly-program-club-smile-mass"
+              element={<Navigate to="/clubsmilemass" />}
+            />
 
-          <Route path="/donate" element={<Donate />} />
-          <Route path="/support-us" element={<Navigate to="/donate" />} />
+            <Route
+              path="/communitywithinacommunity"
+              element={<CommunityWithinACommunity />}
+            />
+            <Route
+              path="/initiative/community-within-a-community"
+              element={<Navigate to="/communitywithinacommunity" />}
+            />
 
-          <Route
-            path="/equipmentloanerprogram"
-            element={<EquipmentLoanerProgram />}
-          />
-          <Route
-            path="/initiative/equipment-loaner-program"
-            element={<Navigate to="/equipmentloanerprogram" />}
-          />
+            <Route path="/contact" element={<Contact />} />
 
-          <Route path="/events" element={<Events />} />
+            <Route path="/donate" element={<Donate />} />
+            <Route path="/support-us" element={<Navigate to="/donate" />} />
 
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/f-a-q" element={<Navigate to="/faq" />} />
+            <Route
+              path="/equipmentloanerprogram"
+              element={<EquipmentLoanerProgram />}
+            />
+            <Route
+              path="/initiative/equipment-loaner-program"
+              element={<Navigate to="/equipmentloanerprogram" />}
+            />
 
-          <Route path="/" element={<Home />} />
+            <Route path="/events" element={<Events />} />
 
-          <Route path="/inthenews" element={<InTheNews />} />
-          <Route path="/in-the-news" element={<Navigate to="/inthenews" />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/f-a-q" element={<Navigate to="/faq" />} />
 
-          <Route path="/jointhecoffeeclub" element={<JoinTheCoffeeClub />} />
-          <Route
-            path="/initiative/coffee-club"
-            element={<Navigate to="/jointhecoffeeclub" />}
-          />
+            <Route path="/" element={<Home />} />
 
-          <Route
-            path="/localbeachwheelchairlocations"
-            element={<LocalBeachWheelchairLocations />}
-          />
-          <Route
-            path="/initiative/beach-wheelchairs/"
-            element={<Navigate to="/localbeachwheelchairlocations" />}
-          />
+            <Route path="/inthenews" element={<InTheNews />} />
+            <Route path="/in-the-news" element={<Navigate to="/inthenews" />} />
 
-          <Route path="/newsletters" element={<NewsLetters />} />
+            <Route path="/jointhecoffeeclub" element={<JoinTheCoffeeClub />} />
+            <Route
+              path="/initiative/coffee-club"
+              element={<Navigate to="/jointhecoffeeclub" />}
+            />
 
-          <Route path="/ourmission" element={<OurMission />} />
-          <Route path="/our-mission" element={<Navigate to="/ourmission" />} />
+            <Route
+              path="/localbeachwheelchairlocations"
+              element={<LocalBeachWheelchairLocations />}
+            />
+            <Route
+              path="/initiative/beach-wheelchairs/"
+              element={<Navigate to="/localbeachwheelchairlocations" />}
+            />
 
-          <Route path="/resources" element={<Resources />} />
+            <Route path="/newsletters" element={<NewsLetters />} />
 
-          <Route path="/runningteam" element={<RunningTeam />} />
-          <Route
-            path="/smile-mass-running-team"
-            element={<Navigate to="/runningteam" />}
-          />
+            <Route path="/ourmission" element={<OurMission />} />
+            <Route
+              path="/our-mission"
+              element={<Navigate to="/ourmission" />}
+            />
 
-          <Route path="/smileblog" element={<SmileBlog />} />
-          <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
+            <Route path="/resources" element={<Resources />} />
 
-          <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/runningteam" element={<RunningTeam />} />
+            <Route
+              path="/smile-mass-running-team"
+              element={<Navigate to="/runningteam" />}
+            />
 
-          <Route path="/ourteam" element={<OurTeam />} />
-          <Route path="/our-team" element={<Navigate to="/ourteam" />} />
+            <Route path="/smileblog" element={<SmileBlog />} />
+            <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
 
-          <Route path="/volunteer" element={<Volunteer />} />
-          <Route
-            path="/learn-how-to-get-involved-with-smile-mass"
-            element={<Navigate to="/volunteer" />}
-          />
-        </Routes>
+            <Route path="/testimonials" element={<Testimonials />} />
+
+            <Route path="/ourteam" element={<OurTeam />} />
+            <Route path="/our-team" element={<Navigate to="/ourteam" />} />
+
+            <Route path="/volunteer" element={<Volunteer />} />
+            <Route
+              path="/learn-how-to-get-involved-with-smile-mass"
+              element={<Navigate to="/volunteer" />}
+            />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </React.Fragment>
   </>
