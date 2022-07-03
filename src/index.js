@@ -28,13 +28,7 @@ import Testimonials from "./pages/testimonials";
 import OurTeam from "./pages/ourteam";
 import Volunteer from "./pages/volunteer";
 
-import Signup from "./admin/signup";
-import Viewprofile from "./admin/viewprofile";
-import Login from "./admin/login";
-import ForgotPassword from "./admin/forgotpassword";
-import UpdateProfile from "./admin/updateprofile";
-import { AuthProvider } from "./firebase/auth";
-import PrivateRoute from "./firebase/privateroute";
+import { AuthProvider, PrivateRoute } from "./firebase/auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -44,30 +38,9 @@ root.render(
         <Navbar />
         <AuthProvider>
           <Routes>
-            <Route
-              exact
-              path="/account"
-              element={
-                <PrivateRoute>
-                  <Viewprofile />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/update-profile"
-              element={
-                <PrivateRoute>
-                  <UpdateProfile />
-                </PrivateRoute>
-              }
-            />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-
             <Route path="/accomplishments" element={<Accomplishments />} />
 
-            <Route path="/admin" element={<Admin />} />
+            <Route exact path="/account" element={<PrivateRoute />} />
 
             <Route path="/beachhouse" element={<BeachHouse />} />
             <Route

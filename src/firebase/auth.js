@@ -9,6 +9,9 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebase";
 
+import Account from "../admin/account";
+import Login from "../admin/login";
+
 const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -68,4 +71,9 @@ export function AuthProvider({ children }) {
       {!loading && children}
     </AuthContext.Provider>
   );
+}
+
+export function PrivateRoute() {
+  const { currentUser } = useAuth();
+  return currentUser ? <Account /> : <Login />;
 }
