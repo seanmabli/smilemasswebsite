@@ -1,6 +1,6 @@
 import "../index.css";
-import lottediomede from "../logo/lottediomede.jpg";
-import susanbrown from "../logo/susanbrown.jpg";
+import lottediomede from "../images/lottediomede.jpg";
+import susanbrown from "../images/susanbrown.jpg";
 import { Link } from "react-router-dom";
 
 export default function OurTeam() {

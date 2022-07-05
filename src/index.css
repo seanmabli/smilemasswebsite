@@ -32,3 +32,8 @@ br {
 .page {
   padding: 10px;
 }
+
+.link {
+  text-decoration: none;
+  color: #547c94;
+}

@@ -28,6 +28,8 @@ import Testimonials from "./pages/testimonials";
 import OurTeam from "./pages/ourteam";
 import Volunteer from "./pages/volunteer";
 
+import AdminContact from "./admin/contact";
+
 import { AuthProvider, PrivateRoute } from "./firebase/auth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -41,6 +43,8 @@ root.render(
             <Route path="/accomplishments" element={<Accomplishments />} />
 
             <Route exact path="/account" element={<PrivateRoute />} />
+
+            <Route path="/admin/contact" element={<AdminContact />} />
 
             <Route path="/beachhouse" element={<BeachHouse />} />
             <Route

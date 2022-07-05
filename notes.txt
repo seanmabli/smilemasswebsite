@@ -8,3 +8,6 @@ are all the testimonials reposted from a 5-star review received on the SMILE Mas
 
 changes:
 f.a.q. -> faq
+
+todo:
+add sudburyplayground and beachwheelchair images to accomplishments page

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../logo/logo.png";
+import logo from "../images/logo.png";
 import Dropdown from "./dropdown";
 import "../index.css";
 import "./navbar.css";
