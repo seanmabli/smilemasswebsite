@@ -1,5 +1,4 @@
 import "../index.css";
-import "./ourteam.css";
 import lottediomede from "../logo/lottediomede.jpg";
 import susanbrown from "../logo/susanbrown.jpg";
 import { Link } from "react-router-dom";
@@ -20,10 +19,10 @@ export default function OurTeam() {
       </p>
       <div>
         <div>
-          <img src={lottediomede} />
+          <img src={lottediomede} alt="Lotte Diomede" />
         </div>
         <div>
-          <img src={susanbrown} />
+          <img src={susanbrown} alt="Susan Brown" />
         </div>
       </div>
       <table className="center">

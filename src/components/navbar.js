@@ -33,7 +33,7 @@ function MobileNavbarOpened() {
                 "Testimonials",
                 "Accomplishments",
                 "Sudbury Accesible Playgrounds",
-                "F. A. Q.",
+                "FAQ",
                 "Contact",
               ]}
               dropdownStyle={{ color: "#547c94" }}
