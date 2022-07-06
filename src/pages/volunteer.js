@@ -25,11 +25,7 @@ export default function Volunteer() {
   const [errorText, setErrorText] = useState(["", "", "", "", "", "", ""]);
   const [success, setSuccess] = useState(false);
 
-  const { predictions, mapError } = usePlacesAutocomplete(address);
-
-  if (mapError) {
-    console.error(mapError);
-  }
+  const { predictions } = usePlacesAutocomplete(address);
 
   function SubmitContactForm() {
     setError([false, false, false, false, false, false, false]);

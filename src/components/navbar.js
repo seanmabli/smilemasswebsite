@@ -75,9 +75,7 @@ function MobileNavbarOpened() {
               Resources
             </Link>
           </li>
-          <li
-            className="item"
-          >
+          <li className="item">
             <Dropdown
               title="Support"
               options={["Join the Coffee Club", "Donate"]}
@@ -102,10 +100,16 @@ function MobileNavbarOpened() {
 
 export default function Navbar() {
   return (
-    <div style={{  }}>
+    <div style={{}}>
       <nav className="navbar">
         <Link className="link" to="/">
-          <img src={logo} alt="logo" className="logo" />
+          <img
+            src={logo}
+            rel="preload"
+            as="image"
+            alt="logo"
+            className="logo"
+          />
         </Link>
         <MobileNavbarOpened />
       </nav>
