@@ -53,8 +53,6 @@ export default function Contact() {
       setmessageErrorText("Please enter a request/question/comment");
     }
 
-    // get date time
-
     const upload = async () => {
       await addDoc(collection(db, "contact"), {
         name: name,

@@ -29,8 +29,18 @@ br {
   display: block;
 }
 
+.minorbreak {
+  content: "";
+  margin: 5px;
+  display: block;
+}
+
 .page {
   padding: 10px;
+}
+
+.site {
+  justify-content: center;
 }
 
 .link {

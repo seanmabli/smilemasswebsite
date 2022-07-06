@@ -11,3 +11,4 @@ f.a.q. -> faq
 
 todo:
 add sudburyplayground and beachwheelchair images to accomplishments page
+if get credit card add google maps api
