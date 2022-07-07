@@ -23,6 +23,11 @@ p {
   max-width: 1250px;
 }
 
+li {
+  font-size: 18px;
+  max-width: 1250px;
+}
+
 br {
   content: "";
   margin: 10px;
@@ -46,4 +51,20 @@ br {
 .link {
   text-decoration: none;
   color: #547c94;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.dashed {
+  padding-left: 30px;
+  list-style-type: none;
+}
+.dashed > li {
+  text-indent: -20px;
+}
+.dashed > li:before {
+  content: "- ";
+  text-indent: -20px;
 }

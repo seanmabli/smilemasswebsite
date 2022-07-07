@@ -1,5 +1,7 @@
-
 export default function Resources() {
-  return <p>Resources</p>;
+  return (
+    <div class="page">
+      <h1>Resources</h1>
+    </div>
+  );
 }
-  

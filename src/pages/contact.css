@@ -1,0 +1,42 @@
+.name {
+  width: 250px;
+  margin: 10px;
+  margin-left: 0px;
+}
+
+.email {
+  width: 250px;
+  margin: 10px;
+}
+
+.phone {
+  width: 250px;
+  margin: 10px;
+  margin-right: 0px;
+}
+
+.message {
+  max-width: 790px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 810px) {
+  .name {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .email {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .phone {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}

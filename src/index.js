@@ -20,7 +20,6 @@ import InTheNews from "./pages/inthenews";
 import JoinTheCoffeeClub from "./pages/jointhecoffeeclub";
 import LocalBeachWheelchairLocations from "./pages/localbeachwheelchairlocations";
 import NewsLetters from "./pages/newsletters";
-import OurMission from "./pages/ourmission";
 import Resources from "./pages/resources";
 import RunningTeam from "./pages/runningteam";
 import SmileBlog from "./pages/smileblog";
@@ -115,7 +114,6 @@ root.render(
 
               <Route path="/newsletters" element={<NewsLetters />} />
 
-              <Route path="/ourmission" element={<OurMission />} />
               <Route
                 path="/our-mission"
                 element={<Navigate to="/ourmission" />}
@@ -145,6 +143,8 @@ root.render(
                 path="/learn-how-to-get-involved-with-smile-mass"
                 element={<Navigate to="/volunteer" />}
               />
+
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </AuthProvider>
         </div>

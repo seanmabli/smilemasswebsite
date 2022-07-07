@@ -4,6 +4,7 @@ import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Box, Button, TextField, Autocomplete } from "@mui/material";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
+import "./volunteer.css";
 
 export default function Volunteer() {
   const [name, setName] = useState("");
@@ -12,7 +13,7 @@ export default function Volunteer() {
   const [birthday, setBirthday] = useState("");
   const [address, setAddress] = useState("");
   const [events, setEvents] = useState("");
-  const [available, setAvailable] = useState("");
+  const [availability, setAvailability] = useState("");
   const [error, setError] = useState([
     false,
     false,
@@ -135,7 +136,7 @@ export default function Volunteer() {
         birthday: birthday,
         address: address,
         events: events,
-        available: available,
+        availability: availability,
         time: new Date(),
       });
     };
@@ -214,7 +215,7 @@ export default function Volunteer() {
         <br />
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
-            <div style={{ width: "250px", margin: "10px", marginLeft: "0px" }}>
+            <div className="name">
               <TextField
                 label="Full Name"
                 variant="outlined"
@@ -227,7 +228,7 @@ export default function Volunteer() {
                 required
               />
             </div>
-            <div style={{ width: "250px", margin: "10px" }}>
+            <div className="email">
               <TextField
                 label="Email"
                 variant="outlined"
@@ -240,7 +241,7 @@ export default function Volunteer() {
                 required
               />
             </div>
-            <div style={{ width: "250px", margin: "10px" }}>
+            <div className="phone">
               <TextField
                 label="Phone"
                 variant="outlined"
@@ -255,7 +256,7 @@ export default function Volunteer() {
             </div>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
-            <div style={{ width: "250px", margin: "10px", marginLeft: "0px" }}>
+            <div className="birthday">
               <TextField
                 label="Birthday"
                 variant="outlined"
@@ -267,7 +268,7 @@ export default function Volunteer() {
                 fullWidth
               />
             </div>
-            <div style={{ width: "520px", margin: "10px" }}>
+            <div className="address">
               <Autocomplete
                 disablePortal
                 options={predictions.map(({ description }) => description)}
@@ -287,7 +288,7 @@ export default function Volunteer() {
               />
             </div>
           </div>
-          <div style={{ width: "790px", margin: "10px", marginLeft: "0px" }}>
+          <div className="events">
             <TextField
               label="Which Event Are You Interested In Volunteering for?"
               variant="outlined"
@@ -301,16 +302,16 @@ export default function Volunteer() {
               fullWidth
             />
           </div>
-          <div style={{ width: "790px", margin: "10px", marginLeft: "0px" }}>
+          <div className="availability">
             <TextField
-              label="When are you available to volunteer (please be specific as to the day/time you are able to help)?"
+              label="When are you availability to volunteer (please be specific as to the day/time you are able to help)?"
               variant="outlined"
               size="small"
               minRows={5}
-              value={available}
+              value={availability}
               error={error[6]}
               helperText={errorText[6]}
-              onChange={(e) => setAvailable(e.target.value)}
+              onChange={(e) => setAvailability(e.target.value)}
               multiline
               fullWidth
             />

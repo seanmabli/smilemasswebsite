@@ -2,6 +2,7 @@ import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Box, Button, TextField } from "@mui/material";
+import "./contact.css";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -59,7 +60,7 @@ export default function Contact() {
         email: email,
         phone: phone,
         message: message,
-        time: new Date()
+        time: new Date(),
       });
     };
 
@@ -83,7 +84,7 @@ export default function Contact() {
         <br />
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
-            <div style={{ width: "250px", margin: "10px", marginLeft: "0px" }}>
+            <div className="name">
               <TextField
                 label="Full Name"
                 variant="outlined"
@@ -96,7 +97,7 @@ export default function Contact() {
                 required
               />
             </div>
-            <div style={{ width: "250px", margin: "10px" }}>
+            <div className="email">
               <TextField
                 label="Email"
                 variant="outlined"
@@ -109,7 +110,7 @@ export default function Contact() {
                 required
               />
             </div>
-            <div style={{ width: "250px", margin: "10px" }}>
+            <div className="phone">
               <TextField
                 label="Phone"
                 variant="outlined"
@@ -122,7 +123,7 @@ export default function Contact() {
               />
             </div>
           </div>
-          <div style={{ width: "790px", margin: "10px", marginLeft: "0px" }}>
+          <div className="message">
             <TextField
               label="Your Request/Questions/Comments"
               variant="outlined"
