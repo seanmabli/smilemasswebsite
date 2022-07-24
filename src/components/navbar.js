@@ -1,9 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import Dropdown from "./dropdown";
+import { Button } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import "../index.css";
 import "./navbar.css";
+
+const NavButton = styled(Button)({
+  color: "#547c94",
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  lineHeight: 1.5,
+  backgroundColor: "#FFFFFF",
+  "&:hover": {
+    backgroundColor: "#f0f0f0",
+  },
+});
 
 function MobileNavbarOpened() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +27,12 @@ function MobileNavbarOpened() {
   }
 
   const toggle = () => setIsOpen(!isOpen);
+  
+  let navigate = useNavigate();
+
+  const onOptionClicked = (value) => () => {
+    navigate(value);
+  };
 
   if (isOpen) {
     return (
@@ -24,7 +44,7 @@ function MobileNavbarOpened() {
           onClick={toggle}
         />
         <ul className="navbarcontent">
-          <li className="item" style={{ color: "#547c94" }}>
+          <li className="item">
             <Dropdown
               title="About"
               options={[
@@ -36,10 +56,9 @@ function MobileNavbarOpened() {
                 "FAQ",
                 "Contact",
               ]}
-              dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="item" style={{ color: "#547c94" }}>
+          <li className="item">
             <Dropdown
               title="Our Programs"
               options={[
@@ -49,37 +68,30 @@ function MobileNavbarOpened() {
                 "Community within a Community",
                 "Equipment Loaner Program",
               ]}
-              dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="item" style={{ color: "#547c94" }}>
+          <li className="item">
             <Dropdown
               title="Get Involved"
               options={["Running Team", "Volunteer"]}
               dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="item" style={{ color: "#547c94" }}>
+          <li className="item">
             <Dropdown
               title="News & Events"
               options={["Events", "In The News", "Newsletters", "SMILE Blog"]}
-              dropdownStyle={{ color: "#547c94" }}
             />
           </li>
-          <li className="item" style={{ color: "#547c94" }}>
-            <Link
-              className="button link"
-              to={"resources"}
-              style={{ color: "#547c94" }}
-            >
-              Resources
-            </Link>
+          <li className="item">
+            <NavButton variant="text" onClick={onOptionClicked("resources")}>
+                Resources
+            </NavButton>
           </li>
           <li className="item">
             <Dropdown
               title="Support"
               options={["Join the Coffee Club", "Donate"]}
-              dropdownStyle={{ color: "#547c94" }}
               buttonStyle={{ backgroundColor: "#547c94", color: "#ffffff" }}
             />
           </li>
@@ -100,19 +112,11 @@ function MobileNavbarOpened() {
 
 export default function Navbar() {
   return (
-    <div style={{}}>
-      <nav className="navbar">
-        <Link className="link" to="/">
-          <img
-            src={logo}
-            rel="preload"
-            as="image"
-            alt="logo"
-            className="logo"
-          />
-        </Link>
-        <MobileNavbarOpened />
-      </nav>
-    </div>
+    <nav className="navbar">
+      <Link className="link" to="/">
+        <img src={logo} rel="preload" as="image" alt="logo" className="logo" />
+      </Link>
+      <MobileNavbarOpened />
+    </nav>
   );
 }
