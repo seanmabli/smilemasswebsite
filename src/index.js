@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/navbar";
 
 import Accomplishments from "./pages/accomplishments";
-import Admin from "./pages/accomplishments";
 import BeachHouse from "./pages/beachhouse";
 import ClubSmileMass from "./pages/clubsmilemass";
 import CommunityWithinACommunity from "./pages/communitywithinacommunity";
@@ -36,6 +35,7 @@ root.render(
   <>
     <React.Fragment>
       <BrowserRouter>
+      <div style={{display: "flex", justifyContent: "center"}}>
         <div className="site">
           <Navbar />
           <AuthProvider>
@@ -147,6 +147,7 @@ root.render(
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </AuthProvider>
+        </div>
         </div>
       </BrowserRouter>
     </React.Fragment>
