@@ -24,6 +24,7 @@ import RunningTeam from "./pages/runningteam";
 import SmileBlog from "./pages/smileblog";
 import Testimonials from "./pages/testimonials";
 import OurTeam from "./pages/ourteam";
+import OurMission from "./pages/ourmission";
 import Volunteer from "./pages/volunteer";
 
 import AdminContact from "./admin/contact";
@@ -35,7 +36,7 @@ root.render(
   <>
     <React.Fragment>
       <BrowserRouter>
-      <div style={{display: "flex", justifyContent: "center"}}>
+      <div >
         <div className="site">
           <Navbar />
           <AuthProvider>
@@ -114,6 +115,7 @@ root.render(
 
               <Route path="/newsletters" element={<NewsLetters />} />
 
+              <Route path="/ourmission" element={<OurMission />} />
               <Route
                 path="/our-mission"
                 element={<Navigate to="/ourmission" />}

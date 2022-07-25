@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Skeleton } from "@mui/material";
+import { Skeleton, Stack } from "@mui/material";
 
 export default function FAQ() {
   const [faqs, setFaqs] = useState([]);
+
   useEffect(() => {
     const getFaqs = async () => {
       const data = await getDocs(collection(db, "faq"));
@@ -53,14 +54,18 @@ export default function FAQ() {
       <div className="page">
         <h1>Frequently Asked Questions</h1>
         <br />
+        <Stack spacing={1}>
+          <Skeleton variant="text" width={800} height={35} style={{backgroundColor: "#ccc"}}/>
+          <Skeleton variant="rectangular" height={200} style={{maxWidth: "1250px"}} />
+          <Skeleton variant="text" style={{maxWidth: "1250px"}} height={35}/>
+        </Stack>
         <br />
-        <Skeleton varient="text" width={800}/>
-        <br />
-        <Skeleton varient="text" width={1250} height={400}/>
-        <br />
-        <Skeleton varient="text" width={1250}/>
-        <br />
+        <Stack spacing={1}>
+          <Skeleton variant="text" width={800} height={35} style={{backgroundColor: "#ccc"}}/>
+          <Skeleton variant="rectangular" height={200} style={{maxWidth: "1250px"}} />
+          <Skeleton variant="text" style={{maxWidth: "1250px"}} height={35}/>
+        </Stack>
       </div>
-    )
+    );
   }
 }
