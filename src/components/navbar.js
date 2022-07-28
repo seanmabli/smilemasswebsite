@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import logo from "../images/logo.png";
+import logo from "../images/logo.jpg";
 import Dropdown from "./dropdown";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";

@@ -1,11 +1,13 @@
 there was no page for the "Sudbury Accesible Playgrounds" link so I didn't add the page
-is it still the 10 year aniversary?
 get all sponsors and add them to the page
 where to put social icons?
 what is the diffrence between the news letters and SMILE blog, could we combine these pages?
 get higher resolution images of lotte and susan
 are all the testimonials reposted from a 5-star review received on the SMILE Mass Facebook page?
 on the join the coffee club page you reference the Scholarship Fund, what is this and is there a page?
+
+there is a missing closing parathesis on the guides section of the resource page?
+on resource page the Mass Health & Medicaid information is copied in the financial planing section (i deleted it form this other section is that ok?)
 
 changes:
 f.a.q. -> faq

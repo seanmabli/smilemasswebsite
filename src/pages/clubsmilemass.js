@@ -1,5 +1,7 @@
 
 export default function ClubSMILEMass() {
-  return <p>Club SMILE Mass</p>;
+  return (
+    <p>Club SMILE Mass</p>
+  );
 }
   
