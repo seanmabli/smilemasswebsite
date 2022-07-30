@@ -139,7 +139,11 @@ export default function Contact() {
             />
           </div>
           <div style={{ marginTop: "20px" }}>
-            <Button variant="outlined" onClick={SubmitContactForm}>
+            <Button
+              variant="outlined"
+              onClick={SubmitContactForm}
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+            >
               Submit
             </Button>
           </div>

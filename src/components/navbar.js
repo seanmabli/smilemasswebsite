@@ -2,22 +2,9 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../images/logo.jpg";
 import Dropdown from "./dropdown";
-import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { NavButton } from "../components/mui";
 import "../index.css";
 import "./navbar.css";
-
-const NavButton = styled(Button)({
-  color: "#547c94",
-  boxShadow: "none",
-  textTransform: "none",
-  fontSize: 16,
-  lineHeight: 1.5,
-  backgroundColor: "#FFFFFF",
-  "&:hover": {
-    backgroundColor: "#f0f0f0",
-  },
-});
 
 function MobileNavbarOpened() {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +39,6 @@ function MobileNavbarOpened() {
                 "Our Team",
                 "Testimonials",
                 "Accomplishments",
-                "Sudbury Accesible Playgrounds",
                 "FAQ",
                 "Contact",
               ]}

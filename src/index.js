@@ -18,10 +18,12 @@ import Home from "./pages/home";
 import InTheNews from "./pages/inthenews";
 import JoinTheCoffeeClub from "./pages/jointhecoffeeclub";
 import LocalBeachWheelchairLocations from "./pages/localbeachwheelchairlocations";
+import LotteDiomede from "./pages/lottediomede";
 import NewsLetters from "./pages/newsletters";
 import Resources from "./pages/resources";
 import RunningTeam from "./pages/runningteam";
 import SmileBlog from "./pages/smileblog";
+import SusanBrown from "./pages/susanbrown";
 import Testimonials from "./pages/testimonials";
 import OurTeam from "./pages/ourteam";
 import OurMission from "./pages/ourmission";
@@ -113,6 +115,8 @@ root.render(
                 element={<Navigate to="/localbeachwheelchairlocations" />}
               />
 
+              <Route path="/lottediomede" element={<LotteDiomede />} />
+
               <Route path="/newsletters" element={<NewsLetters />} />
 
               <Route path="/ourmission" element={<OurMission />} />
@@ -134,6 +138,8 @@ root.render(
                 paht="/smile-blog"
                 element={<Navigate to="/smileblog" />}
               />
+
+              <Route path="/susanbrown" element={<SusanBrown />} />
 
               <Route path="/testimonials" element={<Testimonials />} />
 

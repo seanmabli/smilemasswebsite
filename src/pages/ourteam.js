@@ -1,9 +1,16 @@
-import "../index.css";
 import lottediomede from "../images/lottediomede.jpg";
 import susanbrown from "../images/susanbrown.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ReadMyStoryButton } from "../components/mui";
+import "./ourteam.css";
 
 export default function OurTeam() {
+  let navigate = useNavigate();
+
+  const onOptionClicked = (value) => () => {
+    navigate(value);
+  };
+
   return (
     <div className="page">
       <h1>Our Team</h1>
@@ -17,48 +24,59 @@ export default function OurTeam() {
         to continue improving the lives of disabled persons and the people
         around them.
       </p>
-      <div>
-        <div>
-          <img src={lottediomede} alt="Lotte Diomede" />
-        </div>
-        <div>
-          <img src={susanbrown} alt="Susan Brown" />
+      <div style={{ maxWidth: "1250px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          <div className="card">
+            <img
+              src={lottediomede}
+              alt="Lotte Diomede"
+              style={{ width: "100%" }}
+            />
+            <div className="container">
+              <h2>Lotte Diomede</h2>
+              <p>Co-Founder & President</p>
+              <br />
+              <p>
+                I feel like raising Nicholas has made me a better person. I look
+                at the world in a differnt way. Today, I feel I have a moral
+                obligation to not only make the world better for my son but to
+                also make the world accessible for all mankind despite their
+                abilities.
+              </p>
+              <br />
+              <p>617-967-7755</p>
+              <p>lotte@smilemass.org</p>
+              <br />
+              <ReadMyStoryButton onClick={onOptionClicked("/lottediomede")}>
+                Read My Story
+              </ReadMyStoryButton>
+            </div>
+          </div>
+          <div className="card">
+            <img src={susanbrown} alt="Susan Brown" style={{ width: "100%" }} />
+            <div class="container">
+              <h2 className="bold">Susan Brown</h2>
+              <p>Co-Founder & Vice President</p>
+              <br />
+              <p>
+                Being a mom of a child with special needs has motivated me to
+                work towards acceptance and accessibility for all. Everyone
+                deserves the opportunity to go to the beach, go for a bike ride,
+                and do everything that the average family takes for granted. We
+                have an obligation to leave the world a little bit better than
+                how we found it.
+              </p>
+              <br />
+              <p>978-460-7410</p>
+              <p>susan@smilemass.org</p>
+              <br />
+              <ReadMyStoryButton onClick={onOptionClicked("/susanbrown")}>
+                Read My Story
+              </ReadMyStoryButton>
+            </div>
+          </div>
         </div>
       </div>
-      <table className="center">
-        <tr>
-          <td>
-            <tr></tr>
-            <tr>Lotte Diomede President & Co-Founder</tr>
-            <tr>
-              <td>617-967-7755</td>
-              <td>lotte@smilemass.org</td>
-            </tr>
-            <tr>
-              The co-founder of SMILE Mass works tirelessly to help families
-              with disabled members enjoy life a little more.
-            </tr>
-            <tr>
-              <Link to="/lottediomede">Read her story</Link>
-            </tr>
-          </td>
-          <td>
-            <tr></tr>
-            <tr>Susan Brown Vice President & Co-Founder</tr>
-            <tr>
-              <td>978-460-7410</td>
-              <td>susan@smilemass.org</td>
-            </tr>
-            <tr>
-              This co-founder of SMILE Mass works tirelessly to help raise funds
-              for both phases of our dream.
-            </tr>
-            <tr>
-              <Link to="/susanbrown">Read her story</Link>
-            </tr>
-          </td>
-        </tr>
-      </table>
     </div>
   );
 }
