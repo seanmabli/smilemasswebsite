@@ -9,6 +9,22 @@ on the join the coffee club page you reference the Scholarship Fund, what is thi
 there is a missing closing parathesis on the guides section of the resource page?
 on resource page the Mass Health & Medicaid information is copied in the financial planing section (i deleted it form this other section is that ok?)
 
+pages todo:
+club smile Mass
+local beach wheel chair
+beach house
+community within a community
+equiptment loaner program
+events
+in the news
+newsletters
+smile blog
+donate
+admin/contact
+admin/voluteer
+admin/smile blog
+admin/newsletter
+
 changes:
 f.a.q. -> faq
 
