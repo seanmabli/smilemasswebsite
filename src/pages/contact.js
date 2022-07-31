@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
+import {ColoredTextFeild} from "../components/mui"
 import "./contact.css";
 
 export default function Contact() {
@@ -85,7 +86,7 @@ export default function Contact() {
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="name">
-              <TextField
+              <ColoredTextFeild
                 label="Full Name"
                 variant="outlined"
                 size="small"
@@ -98,7 +99,7 @@ export default function Contact() {
               />
             </div>
             <div className="email">
-              <TextField
+              <ColoredTextFeild
                 label="Email"
                 variant="outlined"
                 size="small"
@@ -111,7 +112,7 @@ export default function Contact() {
               />
             </div>
             <div className="phone">
-              <TextField
+              <ColoredTextFeild
                 label="Phone"
                 variant="outlined"
                 size="small"
@@ -124,7 +125,7 @@ export default function Contact() {
             </div>
           </div>
           <div className="message">
-            <TextField
+            <ColoredTextFeild
               label="Your Request/Questions/Comments"
               variant="outlined"
               size="small"

@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
-import { Box, Button, TextField, Autocomplete } from "@mui/material";
+import { Box, Button, Autocomplete } from "@mui/material";
+import { ColoredTextFeild } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./volunteer.css";
 
@@ -105,7 +106,8 @@ export default function Volunteer() {
 
     // validtate birthday
     if (birthday !== "") {
-      var birthdayRegex = /^(0[1-9]|1[012]|[1-9])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
+      var birthdayRegex =
+        /^(0[1-9]|1[012]|[1-9])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
       if (!birthdayRegex.test(birthday)) {
         setError((state) => [
           state[0],
@@ -216,7 +218,7 @@ export default function Volunteer() {
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="name">
-              <TextField
+              <ColoredTextFeild
                 label="Full Name"
                 variant="outlined"
                 size="small"
@@ -229,7 +231,7 @@ export default function Volunteer() {
               />
             </div>
             <div className="email">
-              <TextField
+              <ColoredTextFeild
                 label="Email"
                 variant="outlined"
                 size="small"
@@ -242,7 +244,7 @@ export default function Volunteer() {
               />
             </div>
             <div className="phone">
-              <TextField
+              <ColoredTextFeild
                 label="Phone"
                 variant="outlined"
                 size="small"
@@ -257,7 +259,7 @@ export default function Volunteer() {
           </div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="birthday">
-              <TextField
+              <ColoredTextFeild
                 label="Birthday"
                 variant="outlined"
                 size="small"
@@ -274,7 +276,7 @@ export default function Volunteer() {
                 options={predictions.map(({ description }) => description)}
                 fullWidth
                 renderInput={(params) => (
-                  <TextField
+                  <ColoredTextFeild
                     {...params}
                     label="Address"
                     variant="outlined"
@@ -289,7 +291,7 @@ export default function Volunteer() {
             </div>
           </div>
           <div className="events">
-            <TextField
+            <ColoredTextFeild
               label="Which Event Are You Interested In Volunteering for?"
               variant="outlined"
               size="small"
@@ -303,7 +305,7 @@ export default function Volunteer() {
             />
           </div>
           <div className="availability">
-            <TextField
+            <ColoredTextFeild
               label="When are you availability to volunteer (please be specific as to the day/time you are able to help)?"
               variant="outlined"
               size="small"
@@ -318,7 +320,11 @@ export default function Volunteer() {
           </div>
 
           <div style={{ marginTop: "20px" }}>
-            <Button variant="outlined" onClick={SubmitContactForm}>
+            <Button
+              variant="outlined"
+              onClick={SubmitContactForm}
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+            >
               Submit
             </Button>
           </div>

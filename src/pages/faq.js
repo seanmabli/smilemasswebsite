@@ -29,7 +29,7 @@ export default function FAQ() {
     }
   }
 
-  if (faqs.length !== 0) {
+  if (true) {
     return (
       <div className="page">
         <h1>Frequently Asked Questions</h1>
