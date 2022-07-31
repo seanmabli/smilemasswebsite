@@ -1,8 +1,10 @@
 .newsitem {
   max-width: 300px;
-  padding: 5px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #ccc;
 }
 
 .newslogo {
-  width: 290px;
+  height: 60px;
 }

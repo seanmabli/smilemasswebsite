@@ -35,13 +35,3 @@ export const ColoredTextFeild = styled(TextField)({
     },
   },
 });
-
-export const NewsButton = styled(Button)({
-  color: "#547c94",
-  boxShadow: "none",
-  textTransform: "none",
-  fontSize: 16,
-  lineHeight: 1.5,
-  backgroundColor: "#FFFFFF",
-  borderColor: "#547c94",
-});
