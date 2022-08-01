@@ -1,5 +1,7 @@
-
 export default function SMILEBlog() {
-  return <p>SMILE Blog</p>;
+  return (
+    <div className="page">
+      <h1>SMILE Blog</h1>
+    </div>
+  );
 }
-  

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -25,11 +26,14 @@ export default function Login() {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
+  const navigate = useNavigate();
+
   async function Login() {
     try {
       setLoading(true);
       setError(false);
       await login(email, password);
+      navigate("/admin/dashboard");
     } catch {
       setError(true);
     }

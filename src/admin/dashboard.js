@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function Account() {
+export default function Dashboard() {
   const [error, setError] = useState("");
   const [updating, setUpdating] = useState(true);
   const { currentUser, logout, updatePassword_, updateEmail_ } = useAuth();
@@ -58,13 +58,17 @@ export default function Account() {
 
   if (updating) {
     return (
-      <>
+      <div className="page">
         {error && alert(error)}
         <p>Email: {currentUser.email}</p>
         <button onClick={toggleUpdating}>Update Profile</button>
         <br />
         <button onClick={handleLogout}>Log Out</button>
-      </>
+        <br />
+        <Link to="/admin/smileblog">Admin - SMILE Blog</Link>
+        <br />
+        <Link to="/admin/contact">Admin - Contact</Link>
+      </div>
     );
   } else {
     return (

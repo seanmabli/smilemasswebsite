@@ -8,9 +8,7 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { auth } from "./firebase";
-
-import Account from "../admin/account";
-import Login from "../admin/login";
+import { Navigate } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
@@ -73,7 +71,12 @@ export function AuthProvider({ children }) {
   );
 }
 
-export function PrivateRoute() {
+export function AuthRoute(props) {
   const { currentUser } = useAuth();
-  return currentUser ? <Account /> : <Login />;
+  console.log(currentUser);
+  if (currentUser) {
+    return props.page;
+  } else {
+    return <Navigate to="/admin" />;
+  }
 }

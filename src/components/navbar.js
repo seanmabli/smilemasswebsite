@@ -30,9 +30,12 @@ import OurTeam from "../pages/ourteam";
 import OurMission from "../pages/ourmission";
 import Volunteer from "../pages/volunteer";
 
+import Login from "../admin/login";
+import Dashboard from "../admin/dashboard";
 import AdminContact from "../admin/contact";
+import AdminSmileBlog from "../admin/smileblog";
 
-import { AuthProvider, PrivateRoute } from "../firebase/auth";
+import { AuthProvider, AuthRoute } from "../firebase/auth";
 
 function MobileNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -134,9 +137,20 @@ function PageContent() {
       <Routes>
         <Route path="/accomplishments" element={<Accomplishments />} />
 
-        <Route path="/admin" element={<PrivateRoute />} />
-
-        <Route path="/admin/contact" element={<AdminContact />} />
+        <Route path="/admin" element={<Login />} />
+        <Route
+          path="/admin/dashboard"
+          element={<AuthRoute page={<Dashboard />} />}
+        />
+        <Route
+          path="/admin/contact"
+          element={<AuthRoute page={<AdminContact />} />}
+        />
+        <Route
+          path="/admin/smileblog"
+          element={<AuthRoute page={<AdminSmileBlog />} />}
+        />
+        <Route path="/admin/*" element={<Navigate to="/admin" />} />
 
         <Route path="/beachhouse" element={<BeachHouse />} />
         <Route
