@@ -1,8 +1,7 @@
-import "./inthenews.css";
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import {NewsItemCardActionArea} from "../components/mui";
+import { NewsItemCardActionArea } from "../components/mui";
 
 export default function InTheNews() {
   const [newsItems, setNewsItems] = useState([]);
@@ -30,6 +29,7 @@ export default function InTheNews() {
                 src={newsItem.imageurl}
                 alt="News Logo"
                 className="newslogo"
+                style={{ height: "60px" }}
               />
               <br />
               <p>

@@ -45,3 +45,11 @@ export const NewsItemCardActionArea = styled(CardActionArea)({
   textAlign: "center",
   borderRadius: "5px",
 });
+
+export const SMILEBlogCardActionArea = styled(CardActionArea)({
+  color: "#547c94",
+  padding: "10px",
+  marginBottom: "10px",
+  border: "1px solid #547c94",
+  borderRadius: "5px",
+});
