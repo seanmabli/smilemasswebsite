@@ -1,151 +1,233 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { ColoredTextFeild } from "../components/mui";
+import {
+  Button,
+  InputAdornment,
+  IconButton,
+  Alert,
+  Collapse,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function Login() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login } = useAuth();
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState("login");
   const { resetPassword } = useAuth();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(false);
 
-  let navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-
+  async function Login() {
     try {
-      setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/account");
+      setError(false);
+      await login(email, password);
     } catch {
-      setError("Failed to log in");
+      setError(true);
+    }
+    setLoading(false);
+  }
+
+  async function ResetPassword() {
+    try {
+      setError(false);
+      setMessage(false);
+      setLoading(true);
+      await resetPassword(email);
+      setMessage(true);
+    } catch {
+      setError(true);
     }
 
     setLoading(false);
   }
 
-  async function handleSubmitForgotPassword(e) {
-    e.preventDefault();
-
-    try {
-      setMessage("");
-      setError("");
-      setLoading(true);
-      await resetPassword(emailRef.current.value);
-      setMessage("Check your inbox for further instructions");
-    } catch {
-      setError("Failed to reset password");
-    }
-
-    setLoading(false);
-  }
-
-  const passwordConfirmRef = useRef();
-  const { signup } = useAuth();
-
-  async function handleSubmitSignup(e) {
-    e.preventDefault();
-
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match");
-    }
-
-    try {
-      setError("");
-      setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
-    } catch {
-      setError("Failed to create an account");
-    }
-
-    setLoading(false);
-  }
-
-  const loginpage = () => {
-    setPage("login");
-  };
-  const forgotpasswordpage = () => {
-    setPage("forgotpassword");
-  };
-  const signuppage = () => {
-    setPage("signup");
-  };
+  const loginpage = () => setPage("login");
+  const forgotpasswordpage = () => setPage("forgotpassword");
 
   if (page === "login") {
     return (
       <>
-        {error && alert(error)}
-        <form onSubmit={handleSubmit}>
-          <label>
-            Email:
-            <input type="text" name="email" ref={emailRef} required />
-          </label>{" "}
-          <br />
-          <label>
-            Password:
-            <input type="text" name="password" ref={passwordRef} required />
-          </label>{" "}
-          <br />
-          <input type="submit" value="Log In" disabled={loading} />
-        </form>
-        <button onClick={forgotpasswordpage}>Forgot Password</button>
-        <br />
-        <button onClick={signuppage}>Sign Up</button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: "500px",
+            }}
+          >
+            <Collapse in={error}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setError(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                severity="error"
+                variant="outlined"
+              >
+                Invalid email or password
+              </Alert>
+            </Collapse>
+            <br />
+            <ColoredTextFeild
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              variant="outlined"
+              size="small"
+              required
+              fullWidth
+            />
+            <br />
+            <ColoredTextFeild
+              label="Password"
+              variant="outlined"
+              size="small"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              required
+              fullWidth
+            />
+            <br />
+            <Button
+              variant="outlined"
+              onClick={Login}
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+              disabled={loading}
+              fullWidth
+            >
+              Login
+            </Button>
+            <br className="minorbreak" />
+            <p
+              className="link"
+              style={{ fontSize: "14px", cursor: "pointer" }}
+              onClick={forgotpasswordpage}
+            >
+              Forgot Password
+            </p>
+          </div>
+        </div>
       </>
     );
   } else if (page === "forgotpassword") {
     return (
-      <>
-        {error && alert(error)}
-        {message && alert(message)}
-        <form onSubmit={handleSubmitForgotPassword}>
-          <label>
-            Email:
-            <input type="text" name="email" ref={emailRef} required />
-          </label>{" "}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "500px",
+          }}
+        >
+          <Collapse in={error}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setError(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              severity="error"
+              variant="outlined"
+            >
+              Failed to reset password
+            </Alert>
+          </Collapse>
+          <Collapse in={message}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setError(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              severity="success"
+              variant="outlined"
+            >
+              Check your inbox for further instructions
+            </Alert>
+          </Collapse>
           <br />
-          <input type="submit" value="Reset Password" disabled={loading} />
-        </form>
-        <button onClick={loginpage}>Login</button>
-        <br />
-        <button onClick={signuppage}>Sign Up</button>
-      </>
-    );
-  } else if (page === "signup") {
-    return (
-      <>
-        {error && alert(error)}
-        <form onSubmit={handleSubmitSignup}>
-          <label>
-            Email:
-            <input type="text" name="email" ref={emailRef} required />
-          </label>{" "}
+          <ColoredTextFeild
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            variant="outlined"
+            size="small"
+            required
+            fullWidth
+          />
           <br />
-          <label>
-            Password:
-            <input type="text" name="password" ref={passwordRef} required />
-          </label>{" "}
-          <br />
-          <label>
-            Password Confirmation:
-            <input
-              type="text"
-              name="password"
-              ref={passwordConfirmRef}
-              required
-            />
-          </label>{" "}
-          <br />
-          <input type="submit" value="Sign Up" disabled={loading} />
-        </form>
-        <button onClick={loginpage}>Login</button>
-      </>
+          <Button
+            variant="outlined"
+            onClick={ResetPassword}
+            style={{ color: "#547c94", borderColor: "#547c94" }}
+            disabled={loading}
+            fullWidth
+          >
+            Reset Password
+          </Button>
+          <br className="minorbreak" />
+          <p
+            className="link"
+            style={{ fontSize: "14px", cursor: "pointer" }}
+            onClick={loginpage}
+          >
+            Login
+          </p>
+        </div>
+      </div>
     );
   }
 }

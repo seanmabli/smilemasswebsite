@@ -134,7 +134,7 @@ function PageContent() {
       <Routes>
         <Route path="/accomplishments" element={<Accomplishments />} />
 
-        <Route exact path="/account" element={<PrivateRoute />} />
+        <Route path="/admin" element={<PrivateRoute />} />
 
         <Route path="/admin/contact" element={<AdminContact />} />
 
