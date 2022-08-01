@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, CardActionArea } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const ReadMyStoryButton = styled(Button)({
@@ -34,4 +34,14 @@ export const ColoredTextFeild = styled(TextField)({
       borderColor: '#547c94',
     },
   },
+});
+
+export const NewsItemCardActionArea = styled(CardActionArea)({
+  color: "#547c94",
+  maxWidth: "300px",
+  padding: "10px",
+  margin: "10px",
+  border: "1px solid #547c94",
+  textAlign: "center",
+  borderRadius: "5px",
 });

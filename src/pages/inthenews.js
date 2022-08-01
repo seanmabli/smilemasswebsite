@@ -2,6 +2,7 @@ import "./inthenews.css";
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import {NewsItemCardActionArea} from "../components/mui";
 
 export default function InTheNews() {
   const [newsItems, setNewsItems] = useState([]);
@@ -16,7 +17,7 @@ export default function InTheNews() {
   newsItems.sort(function (first, second) {
     return second.published["seconds"] - first.published["seconds"];
   });
-  
+
   return (
     <div className="page">
       <h1>In The News</h1>
@@ -24,7 +25,7 @@ export default function InTheNews() {
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {newsItems.map((newsItem) => {
           return (
-            <div className="newsitem">
+            <NewsItemCardActionArea className="newsitem" href={newsItem.url}>
               <img
                 src={newsItem.imageurl}
                 alt="News Logo"
@@ -39,8 +40,8 @@ export default function InTheNews() {
                   .slice(1)
                   .join(" ")}
               </p>
-              <a href={newsItem.url}>{newsItem.title}</a>
-            </div>
+              <p>{newsItem.title}</p>
+            </NewsItemCardActionArea>
           );
         })}
       </div>
