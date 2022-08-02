@@ -17,11 +17,9 @@ community within a community
 equiptment loaner program
 events
 newsletters
-smile blog
 donate
 admin/contact
 admin/voluteer
-admin/smile blog
 admin/newsletter
 admin/in the news
 

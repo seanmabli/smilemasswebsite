@@ -61,13 +61,15 @@ export default function Dashboard() {
       <div className="page">
         {error && alert(error)}
         <p>Email: {currentUser.email}</p>
-        <button onClick={toggleUpdating}>Update Profile</button>
+        <p onClick={toggleUpdating} className="link">Update Profile</p>
         <br />
-        <button onClick={handleLogout}>Log Out</button>
+        <p onClick={handleLogout} className="link">Log Out</p>
         <br />
         <Link to="/admin/smileblog">Admin - SMILE Blog</Link>
         <br />
         <Link to="/admin/contact">Admin - Contact</Link>
+        <br />
+        <Link to="/admin/volunteer">Admin - Volunteer</Link>
       </div>
     );
   } else {

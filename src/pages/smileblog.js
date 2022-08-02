@@ -1,9 +1,18 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 import { SMILEBlogCardActionArea } from "../components/mui";
+import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
+import "./smileblog.css";
 
-export default function SMILEBlog() {
+export function SmileBlog() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -18,7 +27,7 @@ export default function SMILEBlog() {
     return second.published - first.published;
   });
 
-  console.log(posts);
+  let navigate = useNavigate();
 
   return (
     <div className="page">
@@ -26,8 +35,13 @@ export default function SMILEBlog() {
       <br />
       {posts.map((post) => {
         return (
-          <>
-            <SMILEBlogCardActionArea>
+          <SMILEBlogCardActionArea onClick={() => navigate(post.url)}>
+            <img
+              src={post.imageurl}
+              alt="Post Thumbnail"
+              className="postthumbnail"
+            />
+            <div>
               <h2 style={{ color: "black" }}>{post.title}</h2>
               <br />
               <p style={{ color: "black" }}>
@@ -38,16 +52,70 @@ export default function SMILEBlog() {
                   .slice(1)
                   .join(" ")}
                 &nbsp;&nbsp;
-                <spam className="bold">Joanna Buoniconti</spam>
+                <span className="bold">Joanna Buoniconti</span>
               </p>
               <br />
               <p style={{ whiteSpace: "pre-line", color: "black" }}>
                 {post.post.split(" ").slice(0, 50).join(" ")}...
               </p>
-            </SMILEBlogCardActionArea>
-          </>
+            </div>
+          </SMILEBlogCardActionArea>
         );
       })}
     </div>
   );
+}
+
+export function SmileBlogPost() {
+  const { id } = useParams();
+
+  const smileblogRef = collection(db, "smileblog");
+  const q = query(smileblogRef, where("url", "==", id));
+
+  const [post, setPost] = useState(null);
+
+  onSnapshot(q, (snapshot) => {
+    const data = [];
+    snapshot.docs.forEach((doc) => {
+      data.push({ ...doc.data(), id: doc.id });
+    });
+    setPost(data);
+  });
+
+  let navigate = useNavigate();
+
+  if (post !== null) {
+    return (
+      <div className="page">
+        {post.map((post) => {
+          return (
+            <>
+              <h1>
+                <span
+                  onClick={() => navigate("/smileblog")}
+                  onMouseOver={{}}
+                  style={{ cursor: "pointer" }}
+                >
+                  SMILE Blog
+                </span>{" "}
+                <span style={{ color: "gray" }}>/</span> {post.title}
+              </h1>
+              <p>
+                {post.published
+                  .toDate()
+                  .toDateString()
+                  .split(" ")
+                  .slice(1)
+                  .join(" ")}
+                &nbsp;&nbsp;
+                <span className="bold">Joanna Buoniconti</span>
+              </p>
+              <br />
+              <p style={{ whiteSpace: "pre-line" }}>{post.post}</p>
+            </>
+          );
+        })}
+      </div>
+    );
+  }
 }

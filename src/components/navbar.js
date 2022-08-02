@@ -23,7 +23,7 @@ import LotteDiomede from "../pages/lottediomede";
 import NewsLetters from "../pages/newsletters";
 import Resources from "../pages/resources";
 import RunningTeam from "../pages/runningteam";
-import SmileBlog from "../pages/smileblog";
+import { SmileBlog, SmileBlogPost } from "../pages/smileblog";
 import SusanBrown from "../pages/susanbrown";
 import Testimonials from "../pages/testimonials";
 import OurTeam from "../pages/ourteam";
@@ -228,6 +228,7 @@ function PageContent() {
         />
 
         <Route path="/smileblog" element={<SmileBlog />} />
+        <Route path="/smileblog/:id" element={<SmileBlogPost />} />
         <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
 
         <Route path="/susanbrown" element={<SusanBrown />} />
@@ -250,7 +251,6 @@ function PageContent() {
 }
 
 export default function Navbar() {
-  console.log(window.innerWidth);
   if (window.innerWidth > 1000) {
     return (
       <>
