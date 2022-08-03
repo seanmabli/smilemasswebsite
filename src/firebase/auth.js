@@ -79,3 +79,12 @@ export function AuthRoute(props) {
     return <Navigate to="/admin" />;
   }
 }
+
+export function AuthSkipLogin(props) {
+  const { currentUser } = useAuth();
+  if (currentUser) {
+    return <Navigate to="/admin/dashboard" />;
+  } else {
+    return props.page;
+  }
+}

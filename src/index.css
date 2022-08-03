@@ -53,6 +53,7 @@ a {
 
 .page {
   padding: 10px;
+  max-width: 1250px;
 }
 
 .site {

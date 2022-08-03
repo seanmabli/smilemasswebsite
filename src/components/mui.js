@@ -38,7 +38,7 @@ export const ColoredTextFeild = styled(TextField)({
 
 export const NewsItemCardActionArea = styled(CardActionArea)({
   color: "#547c94",
-  maxWidth: "300px",
+  maxWidth: "290px",
   padding: "10px",
   margin: "10px",
   border: "1px solid #547c94",
@@ -67,4 +67,13 @@ export const TittapCard = styled(Card)({
   border: "1px solid #547c94",
   borderRadius: "5px",
   maxWidth: "1250px",
+});
+
+export const OurTeamCard = styled(Card)({
+  color: "#547c94",
+  padding: "10px",
+  margin: "10px",
+  border: "1px solid #547c94",
+  borderRadius: "5px",
+  width: '300px',
 });

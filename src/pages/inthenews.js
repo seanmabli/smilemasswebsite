@@ -29,7 +29,7 @@ export default function InTheNews() {
                 src={newsItem.imageurl}
                 alt="News Logo"
                 className="newslogo"
-                style={{ height: "60px" }}
+                style={{ height: "50px" }}
               />
               <br />
               <p>

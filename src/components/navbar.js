@@ -36,8 +36,9 @@ import AdminContact from "../admin/contact";
 import { AdminSmileBlog, AdminSmileBlogEditor } from "../admin/smileblog";
 import AdminNewsletters from "../admin/newsletters";
 import AdminVollunteer from "../admin/volunteer";
+import { AdminInTheNews, AdminInTheNewsEditor } from "../admin/inthenews";
 
-import { AuthProvider, AuthRoute } from "../firebase/auth";
+import { AuthProvider, AuthRoute, AuthSkipLogin } from "../firebase/auth";
 
 function MobileNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -139,7 +140,7 @@ function PageContent() {
       <Routes>
         <Route path="/accomplishments" element={<Accomplishments />} />
 
-        <Route path="/admin" element={<Login />} />
+        <Route path="/admin" element={<AuthSkipLogin page={<Login />} />} />
         <Route
           path="/admin/dashboard"
           element={<AuthRoute page={<Dashboard />} />}
@@ -163,6 +164,16 @@ function PageContent() {
           path="/admin/volunteer"
           element={<AuthRoute page={<AdminVollunteer />} />}
         />
+
+        <Route
+          path="/admin/inthenews"
+          element={<AuthRoute page={<AdminInTheNews />} />}
+        />
+        <Route
+          path="/admin/inthenews/:id"
+          element={<AuthRoute page={<AdminInTheNewsEditor />} />}
+        />
+
         <Route path="/admin/*" element={<Navigate to="/admin" />} />
 
         <Route path="/beachhouse" element={<BeachHouse />} />

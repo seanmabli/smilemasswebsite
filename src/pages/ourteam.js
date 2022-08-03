@@ -1,15 +1,24 @@
-import lottediomede from "../images/lottediomede.jpg";
-import susanbrown from "../images/susanbrown.jpg";
 import { useNavigate } from "react-router-dom";
-import { ReadMyStoryButton } from "../components/mui";
-import "./ourteam.css";
+import { ReadMyStoryButton, OurTeamCard } from "../components/mui";
+import { useState, useEffect } from "react";
+import { db } from "../firebase/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function OurTeam() {
   let navigate = useNavigate();
 
-  const onOptionClicked = (value) => () => {
-    navigate(value);
-  };
+  const [teamMembers, setTeamMembers] = useState([]);
+  useEffect(() => {
+    const getTeamMembers = async () => {
+      const data = await getDocs(collection(db, "ourteam"));
+      setTeamMembers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getTeamMembers();
+  }, []);
+
+  teamMembers.sort(function (first, second) {
+    return first.index - second.index;
+  });
 
   return (
     <div className="page">
@@ -26,55 +35,43 @@ export default function OurTeam() {
       </p>
       <div style={{ maxWidth: "1250px" }}>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          <div className="card">
-            <img
-              src={lottediomede}
-              alt="Lotte Diomede"
-              style={{ width: "100%" }}
-            />
-            <div className="container">
-              <h2>Lotte Diomede</h2>
-              <p>Co-Founder & President</p>
-              <br />
-              <p>
-                I feel like raising Nicholas has made me a better person. I look
-                at the world in a differnt way. Today, I feel I have a moral
-                obligation to not only make the world better for my son but to
-                also make the world accessible for all mankind despite their
-                abilities.
-              </p>
-              <br />
-              <p>617-967-7755</p>
-              <p>lotte@smilemass.org</p>
-              <br />
-              <ReadMyStoryButton onClick={onOptionClicked("/lottediomede")}>
-                Read My Story
-              </ReadMyStoryButton>
-            </div>
-          </div>
-          <div className="card">
-            <img src={susanbrown} alt="Susan Brown" style={{ width: "100%" }} />
-            <div class="container">
-              <h2 className="bold">Susan Brown</h2>
-              <p>Co-Founder & Vice President</p>
-              <br />
-              <p>
-                Being a mom of a child with special needs has motivated me to
-                work towards acceptance and accessibility for all. Everyone
-                deserves the opportunity to go to the beach, go for a bike ride,
-                and do everything that the average family takes for granted. We
-                have an obligation to leave the world a little bit better than
-                how we found it.
-              </p>
-              <br />
-              <p>978-460-7410</p>
-              <p>susan@smilemass.org</p>
-              <br />
-              <ReadMyStoryButton onClick={onOptionClicked("/susanbrown")}>
-                Read My Story
-              </ReadMyStoryButton>
-            </div>
-          </div>
+          {teamMembers.map((teamMember) => {
+            return (
+              <OurTeamCard>
+                <img
+                  src={teamMember.imageurl}
+                  alt="Lotte Diomede"
+                  style={{
+                    width: "100%",
+                    height: "300px",
+                    objectFit: "cover",
+                    objectPosition: "top",
+                  }}
+                />
+                <div className="container">
+                  <h2 style={{color: "black"}}>{teamMember.name}</h2>
+                  <p style={{color: "black"}}>{teamMember.role}</p>
+                  <br />
+                  <p style={{color: "black"}}>{teamMember.phone}</p>
+                  <p style={{color: "black"}}>{teamMember.email}</p>
+                  <br />
+                  <div
+                    style={
+                      teamMember.readmystory
+                        ? { display: "flex" }
+                        : { display: "none" }
+                    }
+                  >
+                    <ReadMyStoryButton
+                      onClick={() => navigate("/" + teamMember.name.replace(/\s/g, "").toLowerCase())}
+                    >
+                      Read My Story
+                    </ReadMyStoryButton>
+                  </div>
+                </div>
+              </OurTeamCard>
+            );
+          })}
         </div>
       </div>
     </div>

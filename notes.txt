@@ -15,6 +15,7 @@ local beach wheel chair
 beach house
 community within a community
 equiptment loaner program
+
 events
 newsletters
 donate
@@ -22,6 +23,7 @@ admin/contact
 admin/voluteer
 admin/newsletter
 admin/in the news
+admin/our team
 
 changes:
 f.a.q. -> faq

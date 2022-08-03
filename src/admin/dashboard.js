@@ -72,6 +72,8 @@ export default function Dashboard() {
         <Link to="/admin/volunteer">Admin - Volunteer</Link>
         <br />
         <Link to="/admin/newsletters">Admin - Newsletters</Link>
+        <br />
+        <Link to="/admin/inthenews">Admin - In the News</Link>
       </div>
     );
   } else {

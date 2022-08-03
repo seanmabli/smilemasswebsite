@@ -1,4 +1,7 @@
+import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
+import { NewsItemCardActionArea } from "../components/mui";
+
 import { ColoredTextFeild } from "../components/mui";
 import {
   Button,
@@ -19,10 +22,8 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
-  query,
-  where,
   doc,
-  onSnapshot,
+  getDoc,
 } from "firebase/firestore";
 import {
   ref,
@@ -32,43 +33,18 @@ import {
 } from "firebase/storage";
 import { db, storage } from "../firebase/firebase";
 
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
-import React, { useCallback } from "react";
-
-import FormatBoldRoundedIcon from "@mui/icons-material/FormatBoldRounded";
-import FormatItalicRoundedIcon from "@mui/icons-material/FormatItalicRounded";
-import StrikethroughSRoundedIcon from "@mui/icons-material/StrikethroughSRounded";
-import FormatClearRoundedIcon from "@mui/icons-material/FormatClearRounded";
-import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
-import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
-import FormatQuoteRoundedIcon from "@mui/icons-material/FormatQuoteRounded";
-import InsertLinkRoundedIcon from "@mui/icons-material/InsertLinkRounded";
-import LinkOffRoundedIcon from "@mui/icons-material/LinkOffRounded";
-import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
-import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
-
-import "./smileblog.css";
-
-import { TittapCard } from "../components/mui";
-import { useNavigate } from "react-router";
-import { SMILEBlogCardActionArea } from "../components/mui";
-import { useParams } from "react-router";
-
-export function AdminSmileBlog() {
-  const [posts, setPosts] = useState([]);
-
+export function AdminInTheNews() {
+  const [newsItems, setNewsItems] = useState([]);
   useEffect(() => {
-    const getPosts = async () => {
-      const data = await getDocs(collection(db, "smileblog"));
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    const getNewsItems = async () => {
+      const data = await getDocs(collection(db, "inthenews"));
+      setNewsItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-    getPosts();
+    getNewsItems();
   }, []);
 
-  posts.sort(function (first, second) {
-    return second.published - first.published;
+  newsItems.sort(function (first, second) {
+    return second.published["seconds"] - first.published["seconds"];
   });
 
   let navigate = useNavigate();
@@ -82,74 +58,81 @@ export function AdminSmileBlog() {
         >
           Admin
         </span>{" "}
-        <span style={{ color: "gray" }}>/</span> Smile Blog
+        <span style={{ color: "gray" }}>/</span> In The News
       </h1>
       <br />
-      <SMILEBlogCardActionArea onClick={() => navigate("new")}>
-        <h2 style={{ color: "black" }}>New Post</h2>
-      </SMILEBlogCardActionArea>
-      {posts.map((post) => {
-        return (
-          <SMILEBlogCardActionArea onClick={() => navigate(post.url)}>
-            <img
-              src={post.imageurl}
-              alt="Post Thumbnail"
-              className="postthumbnail"
-            />
-            <div>
-              <h2 style={{ color: "black" }}>{post.title}</h2>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <NewsItemCardActionArea
+          className="newsitem"
+          onClick={() => navigate("new")}
+        >
+          <h2 style={{ color: "black" }}>New News Item</h2>
+        </NewsItemCardActionArea>
+        {newsItems.map((newsItem) => {
+          return (
+            <NewsItemCardActionArea
+              className="newsitem"
+              onClick={() => navigate(newsItem.id)}
+            >
+              <img
+                src={newsItem.imageurl}
+                alt="News Logo"
+                className="newslogo"
+                style={{ height: "50px" }}
+              />
               <br />
-              <p style={{ color: "black" }}>
-                {post.published
+              <p>
+                {newsItem.published
                   .toDate()
                   .toDateString()
                   .split(" ")
                   .slice(1)
                   .join(" ")}
-                &nbsp;&nbsp;
-                <span className="bold">Joanna Buoniconti</span>
               </p>
-              <br />
-              <p style={{ whiteSpace: "pre-line", color: "black" }}>
-                {post.post
-                  .replace(/<[^>]+>/g, "")
-                  .split(" ")
-                  .slice(0, 50)
-                  .join(" ")}
-                ...
-              </p>
-            </div>
-          </SMILEBlogCardActionArea>
-        );
-      })}
+              <p>{newsItem.title}</p>
+            </NewsItemCardActionArea>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
-export function AdminSmileBlogEditor() {
+export function AdminInTheNewsEditor() {
   const [title, setTitle] = useState("");
   const [published, setPublished] = useState(Date.now());
-  const [success, setSuccess] = useState(false);
-  const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
+  const [image, setImage] = useState({ name: "No file chosen" });
+  const [url, setUrl] = useState("");
+
   const [initialState, setInitialState] = useState(false);
   const [newPost, setNewPost] = useState(true);
-
-  const { id } = useParams();
-
-  const smileblogRef = collection(db, "smileblog");
-  const q = query(smileblogRef, where("url", "==", id));
-
-  const [post, setPost] = useState(null);
-
-  onSnapshot(q, (snapshot) => {
-    const data = [];
-    snapshot.docs.forEach((doc) => {
-      data.push({ ...doc.data(), id: doc.id });
-    });
-    setPost(data);
-  });
+  const [success, setSuccess] = useState(false);
 
   let navigate = useNavigate();
+
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    const getPost = async () => {
+      const data = await getDoc(doc(db, "inthenews", id));
+      setPost(data.data());
+    };
+    getPost();
+  }, []);
+
+  if (post !== null && !initialState) {
+    if (post === undefined && id !== "new") {
+      navigate("/admin/inthenews");
+    }
+    if (id !== "new") {
+      setTitle(post.title);
+      setPublished(post.published.toDate());
+      setUrl(post.url);
+      setNewPost(false);
+    }
+    setInitialState(true);
+  }
 
   const [open, setOpen] = useState(false);
   const [confirm, setConfirm] = useState("");
@@ -163,24 +146,22 @@ export function AdminSmileBlogEditor() {
   };
 
   function save() {
-    const html = editor.getHTML().replace("<p></p>", "<br/>");
     if (newPost) {
-      if (imageUpload.name === "No file chosen") return;
+      if (image.name === "No file chosen") return;
 
       const imageRef = ref(
         storage,
-        `smileblog/${Math.round(Math.random() * 10000000000).toString()}`
+        `inthenews/${Math.round(Math.random() * 10000000000).toString()}`
       );
 
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
+      uploadBytes(imageRef, image).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((imageurl) => {
           const upload = async () => {
-            await addDoc(collection(db, "smileblog"), {
+            await addDoc(collection(db, "inthenews"), {
               title: title,
-              post: html,
               published: new Date(published),
-              url: title.replace(/\s/g, "").toLowerCase(),
-              imageurl: url,
+              url: url,
+              imageurl: imageurl,
             });
             setSuccess("post");
           };
@@ -189,11 +170,10 @@ export function AdminSmileBlogEditor() {
       });
     } else {
       const upload = async () => {
-        await updateDoc(doc(db, "smileblog", post[0].id), {
+        await updateDoc(doc(db, "inthenews", id), {
           title: title,
-          post: html,
           published: new Date(published),
-          url: title.replace(/\s/g, "").toLowerCase(),
+          url: url,
         });
         setSuccess("update");
       };
@@ -202,10 +182,10 @@ export function AdminSmileBlogEditor() {
   }
 
   function deletePost() {
-    deleteObject(ref(storage, post[0].imageurl))
+    deleteObject(ref(storage, post.imageurl))
       .then(() => {
         const upload = async () => {
-          await deleteDoc(doc(db, "smileblog", post[0].id));
+          await deleteDoc(doc(db, "inthenews", id));
           setSuccess("delete");
         };
         upload();
@@ -213,53 +193,6 @@ export function AdminSmileBlogEditor() {
       .catch((error) => {
         console.log(error);
       });
-  }
-
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Link.configure({
-        openOnClick: false,
-      }),
-    ],
-    content: "<p>Post</p>",
-  });
-
-  if (post !== null && !initialState) {
-    if (post.length === 0) {
-      navigate("/admin/smileblog");
-    }
-    if (id !== "new") {
-      setTitle(post[0].title);
-      setPublished(post[0].published.toDate());
-      editor.commands.setContent(post[0].post);
-      setNewPost(false);
-    }
-    setInitialState(true);
-  }
-
-  const setLink = useCallback(() => {
-    const previousUrl = editor.getAttributes("link").href;
-    const url = window.prompt("URL", previousUrl);
-
-    // cancelled
-    if (url === null) {
-      return;
-    }
-
-    // empty
-    if (url === "") {
-      editor.chain().focus().extendMarkRange("link").unsetLink().run();
-
-      return;
-    }
-
-    // update link
-    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
-  }, [editor]);
-
-  if (!editor) {
-    return null;
   }
 
   if (success === "post") {
@@ -274,10 +207,10 @@ export function AdminSmileBlogEditor() {
           </span>{" "}
           <span style={{ color: "gray" }}>/</span>{" "}
           <span
-            onClick={() => navigate("/admin/smileblog")}
+            onClick={() => navigate("/admin/inthenews")}
             style={{ cursor: "pointer" }}
           >
-            Smile Blog
+            In The News
           </span>{" "}
           <span style={{ color: "gray" }}>/</span> Editor
         </h1>
@@ -300,10 +233,10 @@ export function AdminSmileBlogEditor() {
           </span>{" "}
           <span style={{ color: "gray" }}>/</span>{" "}
           <span
-            onClick={() => navigate("/admin/smileblog")}
+            onClick={() => navigate("/admin/inthenews")}
             style={{ cursor: "pointer" }}
           >
-            Smile Blog
+            In The News
           </span>{" "}
           <span style={{ color: "gray" }}>/</span> Editor
         </h1>
@@ -323,10 +256,10 @@ export function AdminSmileBlogEditor() {
           </span>{" "}
           <span style={{ color: "gray" }}>/</span>{" "}
           <span
-            onClick={() => navigate("/admin/smileblog")}
+            onClick={() => navigate("/admin/inthenews")}
             style={{ cursor: "pointer" }}
           >
-            Smile Blog
+            In The News
           </span>{" "}
           <span style={{ color: "gray" }}>/</span> Editor
         </h1>
@@ -334,7 +267,7 @@ export function AdminSmileBlogEditor() {
         <p>Post Deleted</p>
       </div>
     );
-  } else if (imageUpload.name !== undefined) {
+  } else if (image.name !== undefined) {
     return (
       <div className="page">
         <h1>
@@ -346,10 +279,10 @@ export function AdminSmileBlogEditor() {
           </span>{" "}
           <span style={{ color: "gray" }}>/</span>{" "}
           <span
-            onClick={() => navigate("/admin/smileblog")}
+            onClick={() => navigate("/admin/inthenews")}
             style={{ cursor: "pointer" }}
           >
-            Smile Blog
+            In The News
           </span>{" "}
           <span style={{ color: "gray" }}>/</span> Editor
         </h1>
@@ -366,58 +299,18 @@ export function AdminSmileBlogEditor() {
           />
         </div>
         <br />
-        <FormatBoldRoundedIcon
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "isActive" : "isNotActive"}
-        />
-        <FormatItalicRoundedIcon
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "isActive" : "isNotActive"}
-        />
-        <StrikethroughSRoundedIcon
-          onClick={() => editor.chain().focus().toggleStrikethrough().run()}
-          className={
-            editor.isActive("strikethrough") ? "isActive" : "isNotActive"
-          }
-        />
-        <FormatClearRoundedIcon
-          onClick={() => editor.chain().focus().clearNodes().run()}
-          className="isNotActive"
-        />
-        <FormatListBulletedRoundedIcon
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive("bulletList") ? "isActive" : "isNotActive"}
-        />
-        <FormatListNumberedRoundedIcon
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={
-            editor.isActive("orderedList") ? "isActive" : "isNotActive"
-          }
-        />
-        <FormatQuoteRoundedIcon
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "isActive" : "isNotActive"}
-        />
-        <InsertLinkRoundedIcon
-          onClick={setLink}
-          className={editor.isActive("link") ? "isActive" : "isNotActive"}
-        />
-        <LinkOffRoundedIcon
-          onClick={setLink}
-          disabled={!editor.isActive("link")}
-          className="isNotActive"
-        />
-        <UndoRoundedIcon
-          onClick={() => editor.chain().focus().undo().run()}
-          className="isNotActive"
-        />
-        <RedoRoundedIcon
-          onClick={() => editor.chain().focus().redo().run()}
-          className="isNotActive"
-        />
-        <TittapCard variant="outlined">
-          <EditorContent editor={editor} />
-        </TittapCard>
+        <div style={{ maxWidth: "800px" }}>
+          <ColoredTextFeild
+            label="Url"
+            variant="outlined"
+            size="small"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            fullWidth
+            required
+            multiline
+          />
+        </div>
         <br />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
@@ -441,12 +334,20 @@ export function AdminSmileBlogEditor() {
             <input
               type="file"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                setImage(event.target.files[0]);
               }}
               hidden
             />
           </Button>
-          <p>&nbsp;&nbsp;{imageUpload.name}</p>
+          <p>&nbsp;&nbsp;{image.name}</p>
+          {/*
+          <br />
+          <img
+            src={URL.createObjectURL(image)}
+            alt="Uploaded Image"
+            style={{ width: "300px", maxHeight: "600px", objectFit: "cover" }}
+          />
+            */}
         </div>
         <br />
         <div style={{ display: "flex" }}>
@@ -463,7 +364,7 @@ export function AdminSmileBlogEditor() {
             onClick={handleClickOpen}
             style={newPost ? { display: "none" } : { marginLeft: "10px" }}
           >
-            Delete Post
+            Delete News Item
           </Button>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Are you absolutely sure?</DialogTitle>
