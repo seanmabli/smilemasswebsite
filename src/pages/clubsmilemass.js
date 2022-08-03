@@ -1,7 +1,9 @@
-
 export default function ClubSMILEMass() {
   return (
-    <p>Club SMILE Mass</p>
+    <div className="page">
+      <h1>Club SMILE Mass</h1>
+      <br />
+      
+    </div>
   );
 }
-  

@@ -56,7 +56,12 @@ export function SmileBlog() {
               </p>
               <br />
               <p style={{ whiteSpace: "pre-line", color: "black" }}>
-                {post.post.split(" ").slice(0, 50).join(" ")}...
+                {post.post
+                  .replace(/<[^>]+>/g, "")
+                  .split(" ")
+                  .slice(0, 50)
+                  .join(" ")}
+                ...
               </p>
             </div>
           </SMILEBlogCardActionArea>
@@ -111,7 +116,7 @@ export function SmileBlogPost() {
                 <span className="bold">Joanna Buoniconti</span>
               </p>
               <br />
-              <p style={{ whiteSpace: "pre-line" }}>{post.post}</p>
+              <div dangerouslySetInnerHTML={{ __html: post.post }} />
             </>
           );
         })}

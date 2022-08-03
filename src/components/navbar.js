@@ -33,7 +33,9 @@ import Volunteer from "../pages/volunteer";
 import Login from "../admin/login";
 import Dashboard from "../admin/dashboard";
 import AdminContact from "../admin/contact";
-import AdminSmileBlog from "../admin/smileblog";
+import { AdminSmileBlog, AdminSmileBlogEditor } from "../admin/smileblog";
+import AdminNewsletters from "../admin/newsletters";
+import AdminVollunteer from "../admin/volunteer";
 
 import { AuthProvider, AuthRoute } from "../firebase/auth";
 
@@ -149,6 +151,17 @@ function PageContent() {
         <Route
           path="/admin/smileblog"
           element={<AuthRoute page={<AdminSmileBlog />} />}
+        />
+
+        <Route path="/admin/smileblog/:id" element={<AdminSmileBlogEditor />} />
+
+        <Route
+          path="/admin/newsletters"
+          element={<AuthRoute page={<AdminNewsletters />} />}
+        />
+        <Route
+          path="/admin/volunteer"
+          element={<AuthRoute page={<AdminVollunteer />} />}
         />
         <Route path="/admin/*" element={<Navigate to="/admin" />} />
 

@@ -1,4 +1,4 @@
-import { Button, TextField, CardActionArea } from "@mui/material";
+import { Button, TextField, CardActionArea, Card } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const ReadMyStoryButton = styled(Button)({
@@ -57,4 +57,13 @@ export const SMILEBlogCardActionArea = styled(CardActionArea)({
   ['@media (max-width:600px)']: {
     display: "block",
   }
+});
+
+export const TittapCard = styled(Card)({
+  color: "#547c94",
+  padding: "10px",
+  marginBottom: "10px",
+  border: "1px solid #547c94",
+  borderRadius: "5px",
+  maxWidth: "1250px",
 });

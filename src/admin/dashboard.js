@@ -70,6 +70,8 @@ export default function Dashboard() {
         <Link to="/admin/contact">Admin - Contact</Link>
         <br />
         <Link to="/admin/volunteer">Admin - Volunteer</Link>
+        <br />
+        <Link to="/admin/newsletters">Admin - Newsletters</Link>
       </div>
     );
   } else {
