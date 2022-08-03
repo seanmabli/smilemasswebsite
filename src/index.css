@@ -45,6 +45,12 @@ a {
   display: block;
 }
 
+.majorbreak {
+  content: "";
+  margin: 1px;
+  display: block;
+}
+
 .page {
   padding: 10px;
 }

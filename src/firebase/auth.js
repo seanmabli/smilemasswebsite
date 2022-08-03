@@ -73,7 +73,6 @@ export function AuthProvider({ children }) {
 
 export function AuthRoute(props) {
   const { currentUser } = useAuth();
-  console.log(currentUser);
   if (currentUser) {
     return props.page;
   } else {

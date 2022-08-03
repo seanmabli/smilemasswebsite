@@ -98,7 +98,6 @@ export function SmileBlogPost() {
               <h1>
                 <span
                   onClick={() => navigate("/smileblog")}
-                  onMouseOver={{}}
                   style={{ cursor: "pointer" }}
                 >
                   SMILE Blog

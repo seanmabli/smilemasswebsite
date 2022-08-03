@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { ColoredTextFeild } from "../components/mui";
-import { Button } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
@@ -9,13 +17,19 @@ import {
   collection,
   addDoc,
   updateDoc,
+  deleteDoc,
   getDocs,
   query,
   where,
   doc,
   onSnapshot,
 } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { db, storage } from "../firebase/firebase";
 
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -71,6 +85,9 @@ export function AdminSmileBlog() {
         <span style={{ color: "gray" }}>/</span> Smile Blog
       </h1>
       <br />
+      <SMILEBlogCardActionArea onClick={() => navigate("new")}>
+        <h2 style={{ color: "black" }}>New Post</h2>
+      </SMILEBlogCardActionArea>
       {posts.map((post) => {
         return (
           <SMILEBlogCardActionArea onClick={() => navigate(post.url)}>
@@ -134,7 +151,19 @@ export function AdminSmileBlogEditor() {
 
   let navigate = useNavigate();
 
-  function Save() {
+  const [open, setOpen] = useState(false);
+  const [confirm, setConfirm] = useState("");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function save() {
+    const html = editor.getHTML().replace("<p></p>", "<br/>");
     if (newPost) {
       if (imageUpload.name === "No file chosen") return;
 
@@ -148,12 +177,12 @@ export function AdminSmileBlogEditor() {
           const upload = async () => {
             await addDoc(collection(db, "smileblog"), {
               title: title,
-              post: editor.getHTML(),
-              published: published,
+              post: html,
+              published: new Date(published),
               url: title.replace(/\s/g, "").toLowerCase(),
               imageurl: url,
             });
-            setSuccess(true);
+            setSuccess("post");
           };
           upload();
         });
@@ -162,14 +191,28 @@ export function AdminSmileBlogEditor() {
       const upload = async () => {
         await updateDoc(doc(db, "smileblog", post[0].id), {
           title: title,
-          post: editor.getHTML(),
-          published: published,
+          post: html,
+          published: new Date(published),
           url: title.replace(/\s/g, "").toLowerCase(),
         });
-        setSuccess(true);
+        setSuccess("update");
       };
       upload();
     }
+  }
+
+  function deletePost() {
+    deleteObject(ref(storage, post[0].imageurl))
+      .then(() => {
+        const upload = async () => {
+          await deleteDoc(doc(db, "smileblog", post[0].id));
+          setSuccess("delete");
+        };
+        upload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   const editor = useEditor({
@@ -183,9 +226,12 @@ export function AdminSmileBlogEditor() {
   });
 
   if (post !== null && !initialState) {
-    setTitle(post[0].title);
-    setPublished(post[0].published.toDate());
+    if (post.length === 0) {
+      navigate("/admin/smileblog");
+    }
     if (id !== "new") {
+      setTitle(post[0].title);
+      setPublished(post[0].published.toDate());
       editor.commands.setContent(post[0].post);
       setNewPost(false);
     }
@@ -216,8 +262,7 @@ export function AdminSmileBlogEditor() {
     return null;
   }
 
-  if (success) {
-
+  if (success === "post") {
     return (
       <div className="page">
         <h1>
@@ -237,9 +282,56 @@ export function AdminSmileBlogEditor() {
           <span style={{ color: "gray" }}>/</span> Editor
         </h1>
         <br />
-        <p>Post Uploaded Sucessfully, this post will be published on {new Date(published).toDateString()}</p>
+        <p>
+          Post Uploaded, this post will be published on{" "}
+          {new Date(published).toDateString()}
+        </p>
       </div>
     );
+  } else if (success === "update") {
+    return (
+      <div className="page">
+        <h1>
+          <span
+            onClick={() => navigate("/admin/dashboard")}
+            style={{ cursor: "pointer" }}
+          >
+            Admin
+          </span>{" "}
+          <span style={{ color: "gray" }}>/</span>{" "}
+          <span
+            onClick={() => navigate("/admin/smileblog")}
+            style={{ cursor: "pointer" }}
+          >
+            Smile Blog
+          </span>{" "}
+          <span style={{ color: "gray" }}>/</span> Editor
+        </h1>
+        <br />
+        <p>Post Updated</p>
+      </div>
+    );
+  } else if (success === "delete") {
+    <div className="page">
+      <h1>
+        <span
+          onClick={() => navigate("/admin/dashboard")}
+          style={{ cursor: "pointer" }}
+        >
+          Admin
+        </span>{" "}
+        <span style={{ color: "gray" }}>/</span>{" "}
+        <span
+          onClick={() => navigate("/admin/smileblog")}
+          style={{ cursor: "pointer" }}
+        >
+          Smile Blog
+        </span>{" "}
+        <span style={{ color: "gray" }}>/</span> Editor
+      </h1>
+      <br />
+      <p>Post Deleted</p>
+    </div>;
   } else if (imageUpload.name !== undefined) {
     return (
       <div className="page">
@@ -355,13 +447,67 @@ export function AdminSmileBlogEditor() {
           <p>&nbsp;&nbsp;{imageUpload.name}</p>
         </div>
         <br />
-        <Button
-          variant="outlined"
-          onClick={Save}
-          style={{ color: "#547c94", borderColor: "#547c94" }}
-        >
-          Save
-        </Button>
+        <div style={{ display: "flex" }}>
+          <Button
+            variant="outlined"
+            onClick={save}
+            style={{ color: "#547c94", borderColor: "#547c94" }}
+          >
+            Save
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={handleClickOpen}
+            style={newPost ? { display: "none" } : { marginLeft: "10px" }}
+          >
+            Delete Post
+          </Button>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                This action cannot be undone. This will permanently delete{" "}
+                <span className="bold" style={{ color: "#000" }}>
+                  {title}
+                </span>
+                .
+              </DialogContentText>
+              <br />
+              <DialogContentText fontSize={"14px"}>
+                Please type{" "}
+                <span className="bold" style={{ color: "#000" }}>
+                  {title}
+                </span>{" "}
+                to confirm.
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                size="small"
+                type="email"
+                fullWidth
+                variant="outlined"
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} variant="outlined">
+                Cancel
+              </Button>
+              <Button
+                disabled={confirm !== title}
+                onClick={deletePost}
+                variant="outlined"
+                color="error"
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
     );
   }

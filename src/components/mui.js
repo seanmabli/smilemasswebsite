@@ -53,6 +53,7 @@ export const SMILEBlogCardActionArea = styled(CardActionArea)({
   border: "1px solid #547c94",
   borderRadius: "5px",
   maxWidth: "1250px",
+  justifyContent: "left",
   display: "flex",
   ['@media (max-width:600px)']: {
     display: "block",
