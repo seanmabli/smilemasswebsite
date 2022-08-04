@@ -15,93 +15,32 @@ export default function Volunteer() {
   const [address, setAddress] = useState("");
   const [events, setEvents] = useState("");
   const [availability, setAvailability] = useState("");
-  const [error, setError] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [errorText, setErrorText] = useState(["", "", "", "", "", "", ""]);
+  const [error, setError] = useState([false, false, false, false]);
   const [success, setSuccess] = useState(false);
 
   const { predictions } = usePlacesAutocomplete(address);
 
-  function SubmitContactForm() {
-    setError([false, false, false, false, false, false, false]);
-    setErrorText(["", "", "", "", "", "", ""]);
+  function SubmitVolunteerForm() {
+    setError([false, false, false, false]);
 
     // validtate name
     var twoWordNameRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
     var threeWordNameRegex = /^[a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+$/;
     if (!twoWordNameRegex.test(name) && !threeWordNameRegex.test(name)) {
-      setError((state) => [
-        true,
-        state[1],
-        state[2],
-        state[3],
-        state[4],
-        state[5],
-        state[6],
-      ]);
-      setErrorText((state) => [
-        "Please enter your full name (first & last name)",
-        state[1],
-        state[2],
-        state[3],
-        state[4],
-        state[5],
-        state[6],
-      ]);
+      setError((state) => [true, state[1], state[2], state[3]]);
     }
 
     // validtate email
     var emailRegex =
       /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailRegex.test(email)) {
-      setError((state) => [
-        state[0],
-        true,
-        state[2],
-        state[3],
-        state[4],
-        state[5],
-        state[6],
-      ]);
-      setErrorText((state) => [
-        state[0],
-        "Please enter a valid email address",
-        state[2],
-        state[3],
-        state[4],
-        state[5],
-        state[6],
-      ]);
+      setError((state) => [state[0], true, state[2], state[3]]);
     }
 
     // validtate phone
     var phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     if (!phoneRegex.test(phone)) {
-      setError((state) => [
-        state[0],
-        state[1],
-        true,
-        state[3],
-        state[4],
-        state[5],
-        state[6],
-      ]);
-      setErrorText((state) => [
-        state[0],
-        state[1],
-        "Please enter a valid phone number",
-        state[3],
-        state[4],
-        state[5],
-        state[6],
-      ]);
+      setError((state) => [state[0], state[1], true, state[3]]);
     }
 
     // validtate birthday
@@ -109,24 +48,7 @@ export default function Volunteer() {
       var birthdayRegex =
         /^(0[1-9]|1[012]|[1-9])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
       if (!birthdayRegex.test(birthday)) {
-        setError((state) => [
-          state[0],
-          state[1],
-          state[2],
-          true,
-          state[4],
-          state[5],
-          state[6],
-        ]);
-        setErrorText((state) => [
-          state[0],
-          state[1],
-          state[2],
-          "Please enter a valid birthday (mm/dd/yyyy)",
-          state[4],
-          state[5],
-          state[6],
-        ]);
+        setError((state) => [state[0], state[1], state[2], true]);
       }
     }
 
@@ -144,15 +66,7 @@ export default function Volunteer() {
     };
 
     setError((state) => {
-      if (
-        !state[0] &&
-        !state[1] &&
-        !state[2] &&
-        !state[3] &&
-        !state[4] &&
-        !state[5] &&
-        !state[6]
-      ) {
+      if (!state[0] && !state[1] && !state[2] && !state[3]) {
         upload();
         setSuccess(true);
       }
@@ -224,7 +138,11 @@ export default function Volunteer() {
                 size="small"
                 value={name}
                 error={error[0]}
-                helperText={errorText[0]}
+                helperText={
+                  error[0]
+                    ? "Please enter your full name (first & last name)"
+                    : ""
+                }
                 onChange={(e) => setName(e.target.value)}
                 fullWidth
                 required
@@ -237,7 +155,9 @@ export default function Volunteer() {
                 size="small"
                 value={email}
                 error={error[1]}
-                helperText={errorText[1]}
+                helperText={
+                  error[1] ? "Please enter a valid email address" : ""
+                }
                 onChange={(e) => setEmail(e.target.value)}
                 fullWidth
                 required
@@ -250,7 +170,7 @@ export default function Volunteer() {
                 size="small"
                 value={phone}
                 error={error[2]}
-                helperText={errorText[2]}
+                helperText={error[2] ? "Please enter a valid phone number" : ""}
                 onChange={(e) => setPhone(e.target.value)}
                 fullWidth
                 required
@@ -265,12 +185,14 @@ export default function Volunteer() {
                 size="small"
                 value={birthday}
                 error={error[3]}
-                helperText={errorText[3]}
+                helperText={
+                  error[3] ? "Please enter a valid birthday (mm/dd/yyyy)" : ""
+                }
                 onChange={(e) => setBirthday(e.target.value)}
                 fullWidth
               />
             </div>
-            <div className="address">
+            <div className="volunteeraddress">
               <Autocomplete
                 disablePortal
                 options={predictions.map(({ description }) => description)}
@@ -282,8 +204,6 @@ export default function Volunteer() {
                     variant="outlined"
                     size="small"
                     value={address}
-                    error={error[4]}
-                    helperText={errorText[4]}
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 )}
@@ -297,8 +217,6 @@ export default function Volunteer() {
               size="small"
               minRows={5}
               value={events}
-              error={error[5]}
-              helperText={errorText[5]}
               onChange={(e) => setEvents(e.target.value)}
               multiline
               fullWidth
@@ -311,8 +229,6 @@ export default function Volunteer() {
               size="small"
               minRows={5}
               value={availability}
-              error={error[6]}
-              helperText={errorText[6]}
               onChange={(e) => setAvailability(e.target.value)}
               multiline
               fullWidth
@@ -322,7 +238,7 @@ export default function Volunteer() {
           <div style={{ marginTop: "20px" }}>
             <Button
               variant="outlined"
-              onClick={SubmitContactForm}
+              onClick={SubmitVolunteerForm}
               style={{ color: "#547c94", borderColor: "#547c94" }}
             >
               Submit

@@ -18,7 +18,7 @@ import FAQ from "../pages/faq";
 import Home from "../pages/home";
 import InTheNews from "../pages/inthenews";
 import JoinTheCoffeeClub from "../pages/jointhecoffeeclub";
-import LocalBeachWheelchairLocations from "../pages/localbeachwheelchairlocations";
+import BeachWheelchairLocations from "../pages/beachwheelchairlocations";
 import LotteDiomede from "../pages/lottediomede";
 import NewsLetters from "../pages/newsletters";
 import Resources from "../pages/resources";
@@ -84,7 +84,7 @@ function MobileNavbar() {
               title="Our Programs"
               options={[
                 "Club SMILE Mass",
-                "Local Beach Wheelchair Locations",
+                "Beach Wheelchair Locations",
                 "Beach House",
                 "Community within a Community",
                 "Equipment Loaner Program",
@@ -228,8 +228,8 @@ function PageContent() {
         />
 
         <Route
-          path="/localbeachwheelchairlocations"
-          element={<LocalBeachWheelchairLocations />}
+          path="/beachwheelchairlocations"
+          element={<BeachWheelchairLocations />}
         />
         <Route
           path="/initiative/beach-wheelchairs/"

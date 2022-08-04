@@ -31,7 +31,6 @@ import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
@@ -107,6 +106,15 @@ export default function BeachHouse() {
             at a state-of-the-art accessible house? Contact us here for more
             information.
           </p>
+          <br />
+          <Button
+            variant="outlined"
+            href="https://www.vrbo.com/4982108ha/"
+            target="_blank"
+            style={{ color: "#547c94", borderColor: "#547c94" }}
+          >
+           Check Availablity
+          </Button>
         </div>
         <Box sx={{ flexGrow: 1 }} className="image">
           <AutoPlaySwipeableViews
@@ -143,7 +151,7 @@ export default function BeachHouse() {
                 size="small"
                 onClick={handleNext}
                 disabled={activeStep === maxSteps - 1}
-                sx={{color: "#547c94"}}
+                sx={{ color: "#547c94" }}
               >
                 Next
                 <KeyboardArrowRight />
@@ -154,7 +162,7 @@ export default function BeachHouse() {
                 size="small"
                 onClick={handleBack}
                 disabled={activeStep === 0}
-                sx={{color: "#547c94"}}
+                sx={{ color: "#547c94" }}
               >
                 <KeyboardArrowLeft />
                 Back

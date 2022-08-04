@@ -12,9 +12,9 @@ on resource page the Mass Health & Medicaid information is copied in the financi
 pages todo:
 club smile Mass
 local beach wheel chair
-beach house
 community within a community
 equiptment loaner program
+playgrounds
 
 events
 newsletters
@@ -22,8 +22,8 @@ donate
 admin/contact
 admin/voluteer
 admin/newsletter
-admin/in the news
 admin/our team
+admin/events
 
 changes:
 f.a.q. -> faq
@@ -32,3 +32,5 @@ todo:
 add sudburyplayground and beachwheelchair images to accomplishments page
 if get credit card add google maps api
 maybe deal with scrollbar on contact and voluteer pages
+add cool phone number thing to forms
+message after beach nominations
