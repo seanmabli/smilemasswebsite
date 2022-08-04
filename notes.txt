@@ -10,8 +10,8 @@ there is a missing closing parathesis on the guides section of the resource page
 on resource page the Mass Health & Medicaid information is copied in the financial planing section (i deleted it form this other section is that ok?)
 
 pages todo:
+
 club smile Mass
-local beach wheel chair
 community within a community
 equiptment loaner program
 playgrounds
@@ -34,3 +34,4 @@ if get credit card add google maps api
 maybe deal with scrollbar on contact and voluteer pages
 add cool phone number thing to forms
 message after beach nominations
+add ToggleButton to smileblog text editor

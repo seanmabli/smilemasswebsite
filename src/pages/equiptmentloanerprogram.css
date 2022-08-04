@@ -1,0 +1,38 @@
+.largecontainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pickup {
+  width: 250px;
+  margin: 10px 10px 10px 10px;
+}
+
+.dropoff {
+  width: 250px;
+  margin: 10px 0 10px 10px;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+@media screen and (max-width: 810px) {
+  .largecontainer {
+    width: 100%;
+    display: block;
+  }
+
+  .pickup {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .dropoff {
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}

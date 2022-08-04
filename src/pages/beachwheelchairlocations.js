@@ -497,7 +497,7 @@ export default function BeachWheelchairLocations() {
             }
             label="Interested in receiving our newsletter?"
             labelPlacement="start"
-            style={{ margin: "0" }}
+            style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
           />
           <div style={{ marginTop: "10px" }}>
             <Button
