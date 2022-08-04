@@ -1,0 +1,26 @@
+[debug] [2022-08-04T21:35:56.629Z] ----------------------------------------------------------------------
+[debug] [2022-08-04T21:35:56.634Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\smdro\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2022-08-04T21:35:56.635Z] CLI Version:   10.4.1
+[debug] [2022-08-04T21:35:56.635Z] Platform:      win32
+[debug] [2022-08-04T21:35:56.635Z] Node Version:  v14.17.5
+[debug] [2022-08-04T21:35:56.636Z] Time:          Thu Aug 04 2022 17:35:56 GMT-0400 (Eastern Daylight Time)
+[debug] [2022-08-04T21:35:56.636Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-08-04T21:35:56.754Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-08-04T21:35:56.754Z] > authorizing via signed-in user (smdrone1@gmail.com)
+[debug] [2022-08-04T21:35:56.755Z] [iam] checking project smilemass-6902d for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2022-08-04T21:35:56.757Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/smilemass-6902d:testIamPermissions [none]
+[debug] [2022-08-04T21:35:56.758Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/smilemass-6902d:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2022-08-04T21:35:57.088Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/smilemass-6902d:testIamPermissions 200
+[debug] [2022-08-04T21:35:57.089Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/smilemass-6902d:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2022-08-04T21:35:57.093Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/smilemass-6902d/serviceAccounts/smilemass-6902d@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2022-08-04T21:35:57.094Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/smilemass-6902d/serviceAccounts/smilemass-6902d@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2022-08-04T21:35:57.312Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/smilemass-6902d/serviceAccounts/smilemass-6902d@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2022-08-04T21:35:57.313Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/smilemass-6902d/serviceAccounts/smilemass-6902d@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'smilemass-6902d'...
+[info] 
+[info] i  deploying functions 
+[debug] [2022-08-04T21:35:57.327Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/smilemass-6902d [none]
+[debug] [2022-08-04T21:35:57.677Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/smilemass-6902d 200
+[debug] [2022-08-04T21:35:57.677Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/smilemass-6902d {"projectId":"smilemass-6902d","projectNumber":"592962324011","displayName":"smilemass","name":"projects/smilemass-6902d","resources":{"hostingSite":"smilemass-6902d","storageBucket":"smilemass-6902d.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_d75dbd3e-6ab4-4928-ae18-0d942a853b0e"}

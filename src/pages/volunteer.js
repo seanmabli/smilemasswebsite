@@ -212,7 +212,7 @@ export default function Volunteer() {
           </div>
           <div className="events">
             <ColoredTextFeild
-              label="Which Event Are You Interested In Volunteering for?"
+              label="Which events are you interested in volunteering for?"
               variant="outlined"
               size="small"
               minRows={5}
@@ -224,7 +224,7 @@ export default function Volunteer() {
           </div>
           <div className="availability">
             <ColoredTextFeild
-              label="When are you availability to volunteer (please be specific as to the day/time you are able to help)?"
+              label="When are you availabile to volunteer (please be specific as to the day/time you are able to help)?"
               variant="outlined"
               size="small"
               minRows={5}

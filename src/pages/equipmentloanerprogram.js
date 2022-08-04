@@ -61,7 +61,7 @@ export default function EquipmentLoanerProgram() {
   };
 
   const addressPredictions = usePlacesAutocomplete(address).predictions;
-  const deliveryPredictions = usePlacesAutocomplete(address).predictions;
+  const deliveryPredictions = usePlacesAutocomplete(deliveryAddress).predictions;
 
   function SubmitEquiptmentLoanerForm() {
     setError([false, false, false, false, false, false, false]);

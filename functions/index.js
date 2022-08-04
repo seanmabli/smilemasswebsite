@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: "smilemasssite@gmail.com",
-    pass: "xumnstojjmyreoca",
+    pass: functions.config().gmail.password,
   },
 });
 
@@ -25,8 +25,9 @@ exports.contact = functions.firestore
                                   <b>Name: </b>${snap.data().name}<br>
                                   <b>Email: </b>${snap.data().email}<br>
                                   <b>Phone: </b>${snap.data().phone}<br>
-                                  <b>Time: </b>${new Date(snap.data().time)}<br>
-                                  <b>Message: </b>${snap.data().message}
+                                  <b>Your Request/Questions/Comments: </b>${
+                                    snap.data().message
+                                  }
                                 </p>`,
     };
 
@@ -40,7 +41,7 @@ exports.contact = functions.firestore
   });
 
 exports.volunteer = functions.firestore
-  .document("contact/{contactId}")
+  .document("volunteer/{volunteerId}")
   .onCreate((snap, context) => {
     const mailOptions = {
       from: `SMILE Mass Website <smilemasssite@gmail.com>`,
@@ -51,12 +52,14 @@ exports.volunteer = functions.firestore
                                   <b>Name: </b>${snap.data().name}<br>
                                   <b>Email: </b>${snap.data().email}<br>
                                   <b>Phone: </b>${snap.data().phone}<br>
-                                  <b>Time: </b>${snap.data().time}<br>
                                   <b>Address: </b>${snap.data().address}<br>
                                   <b>Birthday: </b>${snap.data().birthday}<br>
-                                  <b>Time: </b>${new Date(snap.data().time)}<br>
-                                  <b>Available: </b>${snap.data().available}<br>
-                                  <b>Events: </b>${snap.data().events}
+                                  <b>Which events are you interested in volunteering for: </b>${
+                                    snap.data().events
+                                  }<br>
+                                  <b>When are you availability to volunteer: </b>${
+                                    snap.data().availability
+                                  }
                                 </p>`,
     };
 
@@ -66,5 +69,74 @@ exports.volunteer = functions.firestore
         return;
       }
       console.log("Sent Volunteer Email");
+    });
+  });
+
+exports.beachnomination = functions.firestore
+  .document("beachnomination/{beachnominationId}")
+  .onCreate((snap, context) => {
+    const mailOptions = {
+      from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+      to: "smdrone1@gmail.com",
+      subject: "Beach Nomination Form Submission",
+      html: `
+                                <p>
+                                  <b>Name: </b>${snap.data().name}<br>
+                                  <b>Email: </b>${snap.data().email}<br>
+                                  <b>Phone: </b>${snap.data().phone}<br>
+                                  <b>Address: </b>${snap.data().address}<br>
+                                  <b>Beach Name: </b>${snap.data().beach}<br>
+                                  <b>Beach Address: </b>${
+                                    snap.data().beachAddress
+                                  }<br>
+                                  <b>Contact Person / Town Official: ${
+                                    snap.data().contact
+                                  }</b>
+                                  <b>Why are you nominating this beach community: ${
+                                    snap.data().why
+                                  }
+                                </p>`,
+    };
+
+    return transporter.sendMail(mailOptions, (error, data) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      console.log("Sent Beach Nomination Email");
+    });
+  });
+
+exports.equiptmentloaner = functions.firestore
+  .document("equiptmentloaner/{equiptmentloanerId}")
+  .onCreate((snap, context) => {
+    const mailOptions = {
+      from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+      to: "smdrone1@gmail.com",
+      subject: "Equiptment Loaner Form Submission",
+      html: `
+                                <p>
+                                  <b>Name: </b>${snap.data().name}<br>
+                                  <b>Email: </b>${snap.data().email}<br>
+                                  <b>Phone: </b>${snap.data().phone}<br>
+                                  <b>Address: </b>${snap.data().address}<br>
+                                  <b>Equiptment: </b>${snap.data().equiptment.join(", ")}<br>
+                                  <b>Requested Pickup Date: </b>${snap.data().pickup}<br>
+                                  <b>Return Date: </b>${snap.data().dropoff}<br>
+                                  <b>Return Date: </b>${snap.data().dropoff}<br>
+                                  <b>Do you need delivery: </b>${snap.data().delivery}<br>
+                                  <b>Delivery Address: </b>${snap.data().deliveryAddress}<br>
+                                  <b>Birthday: </b>${snap.data().birthday}<br>
+                                  <b>Have you used this program before: </b>${snap.data().used}<br>
+                                  <b>Questions / Comments: </b>${snap.data().questions}
+                                </p>`,
+    };
+
+    return transporter.sendMail(mailOptions, (error, data) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      console.log("Sent Beach Nomination Email");
     });
   });
