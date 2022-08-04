@@ -80,14 +80,13 @@ export const OurTeamCard = styled(Card)({
 
 export const EquipmentLoanerProgramCard = styled(Card)({
   color: "rgba(0, 0, 0, 0.6)",
-  margin: "10px 10px 10px 0",
   border: "1px solid rgba(0, 0, 0, 0.23)",
   borderRadius: "5px",
   boxShadow: "none",
-  maxWidth: "248px",
+  width: "248px",
   ['@media (max-width:810px)']: {
     marginRight: "0",
-    marginTop: "20px",
-    maxWidth: "100%",
+    marginTop: "10px",
+    width: "100%",
   }
 });
