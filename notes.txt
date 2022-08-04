@@ -13,12 +13,12 @@ pages todo:
 
 club smile Mass
 community within a community
-equiptment loaner program
 playgrounds
 
 events
 newsletters
 donate
+admin/equiptment loaner program
 admin/contact
 admin/voluteer
 admin/newsletter

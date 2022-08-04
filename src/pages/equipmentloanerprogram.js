@@ -169,7 +169,7 @@ export default function EquipmentLoanerProgram() {
     }
 
     const upload = async () => {
-      await addDoc(collection(db, "equiptmentloanerform"), {
+      await addDoc(collection(db, "equiptmentloaner"), {
         name: name,
         email: email,
         phone: phone,
