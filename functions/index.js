@@ -19,16 +19,14 @@ exports.contact = functions.firestore
     const mailOptions = {
       from: `SMILE Mass Website <smilemasssite@gmail.com>`,
       to: "smdrone1@gmail.com",
-      subject: "Contact Form Submission",
+      subject: `Contact Form Submission ${snap.id}`,
       html: `
-                                <p>
-                                  <b>Name: </b>${snap.data().name}<br>
-                                  <b>Email: </b>${snap.data().email}<br>
-                                  <b>Phone: </b>${snap.data().phone}<br>
-                                  <b>Your Request/Questions/Comments: </b>${
-                                    snap.data().message
-                                  }
-                                </p>`,
+<p style="white-space: pre-wrap">
+<b>Name: </b>${snap.data().name}<br>
+<b>Email: </b>${snap.data().email}<br>
+<b>Phone: </b>${snap.data().phone}<br>
+<b>Your Request/Questions/Comments: </b>${snap.data().message}
+</p>`,
     };
 
     return transporter.sendMail(mailOptions, (error, data) => {
@@ -46,21 +44,21 @@ exports.volunteer = functions.firestore
     const mailOptions = {
       from: `SMILE Mass Website <smilemasssite@gmail.com>`,
       to: "smdrone1@gmail.com",
-      subject: "Volunteer Form Submission",
+      subject: `Volunteer Form Submission ${snap.id}`,
       html: `
-                                <p>
-                                  <b>Name: </b>${snap.data().name}<br>
-                                  <b>Email: </b>${snap.data().email}<br>
-                                  <b>Phone: </b>${snap.data().phone}<br>
-                                  <b>Address: </b>${snap.data().address}<br>
-                                  <b>Birthday: </b>${snap.data().birthday}<br>
-                                  <b>Which events are you interested in volunteering for: </b>${
-                                    snap.data().events
-                                  }<br>
-                                  <b>When are you availability to volunteer: </b>${
-                                    snap.data().availability
-                                  }
-                                </p>`,
+<p style="white-space: pre-wrap">
+<b>Name: </b>${snap.data().name}<br>
+<b>Email: </b>${snap.data().email}<br>
+<b>Phone: </b>${snap.data().phone}<br>
+<b>Address: </b>${snap.data().address}<br>
+<b>Birthday: </b>${snap.data().birthday}<br>
+<b>Which events are you interested in volunteering for: </b>${
+  snap.data().events
+}<br>
+<b>When are you availability to volunteer: </b>${
+  snap.data().availability
+}
+</p>`,
     };
 
     return transporter.sendMail(mailOptions, (error, data) => {
@@ -78,24 +76,18 @@ exports.beachnomination = functions.firestore
     const mailOptions = {
       from: `SMILE Mass Website <smilemasssite@gmail.com>`,
       to: "smdrone1@gmail.com",
-      subject: "Beach Nomination Form Submission",
+      subject: `Beach Nomination Form Submission ${snap.id}`,
       html: `
-                                <p>
-                                  <b>Name: </b>${snap.data().name}<br>
-                                  <b>Email: </b>${snap.data().email}<br>
-                                  <b>Phone: </b>${snap.data().phone}<br>
-                                  <b>Address: </b>${snap.data().address}<br>
-                                  <b>Beach Name: </b>${snap.data().beach}<br>
-                                  <b>Beach Address: </b>${
-                                    snap.data().beachAddress
-                                  }<br>
-                                  <b>Contact Person / Town Official: ${
-                                    snap.data().contact
-                                  }</b>
-                                  <b>Why are you nominating this beach community: ${
-                                    snap.data().why
-                                  }
-                                </p>`,
+<p style="white-space: pre-wrap">
+<b>Name: </b>${snap.data().name}<br>
+<b>Email: </b>${snap.data().email}<br>
+<b>Phone: </b>${snap.data().phone}<br>
+<b>Address: </b>${snap.data().address}<br>
+<b>Beach Name: </b>${snap.data().beach}<br>
+<b>Beach Address: </b>${snap.data().beachAddress}<br>
+<b>Contact Person / Town Official: </b>${snap.data().contact}<br>
+<b>Why are you nominating this beach community: </b>${snap.data().why}<br>
+</p>`,
     };
 
     return transporter.sendMail(mailOptions, (error, data) => {
@@ -113,23 +105,23 @@ exports.equiptmentloaner = functions.firestore
     const mailOptions = {
       from: `SMILE Mass Website <smilemasssite@gmail.com>`,
       to: "smdrone1@gmail.com",
-      subject: "Equiptment Loaner Form Submission",
+      subject: `Equiptment Loaner Form Submission  ${snap.id}`,
       html: `
-                                <p>
-                                  <b>Name: </b>${snap.data().name}<br>
-                                  <b>Email: </b>${snap.data().email}<br>
-                                  <b>Phone: </b>${snap.data().phone}<br>
-                                  <b>Address: </b>${snap.data().address}<br>
-                                  <b>Equiptment: </b>${snap.data().equiptment.join(", ")}<br>
-                                  <b>Requested Pickup Date: </b>${snap.data().pickup}<br>
-                                  <b>Return Date: </b>${snap.data().dropoff}<br>
-                                  <b>Return Date: </b>${snap.data().dropoff}<br>
-                                  <b>Do you need delivery: </b>${snap.data().delivery}<br>
-                                  <b>Delivery Address: </b>${snap.data().deliveryAddress}<br>
-                                  <b>Birthday: </b>${snap.data().birthday}<br>
-                                  <b>Have you used this program before: </b>${snap.data().used}<br>
-                                  <b>Questions / Comments: </b>${snap.data().questions}
-                                </p>`,
+<p style="white-space: pre-wrap">
+<b>Name: </b>${snap.data().name}<br>
+<b>Email: </b>${snap.data().email}<br>
+<b>Phone: </b>${snap.data().phone}<br>
+<b>Address: </b>${snap.data().address}<br>
+<b>Equiptment: </b>${snap.data().equiptment.join(", ")}<br>
+<b>Requested Pickup Date: </b>${snap.data().pickup}<br>
+<b>Return Date: </b>${snap.data().dropoff}<br>
+<b>Return Date: </b>${snap.data().dropoff}<br>
+<b>Do you need delivery: </b>${snap.data().delivery}<br>
+<b>Delivery Address: </b>${snap.data().deliveryAddress}<br>
+<b>Birthday: </b>${snap.data().birthday}<br>
+<b>Have you used this program before: </b>${snap.data().used}<br>
+<b>Questions / Comments: </b>${snap.data().questions}
+</p>`,
     };
 
     return transporter.sendMail(mailOptions, (error, data) => {

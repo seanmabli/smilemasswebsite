@@ -61,7 +61,8 @@ export default function EquipmentLoanerProgram() {
   };
 
   const addressPredictions = usePlacesAutocomplete(address).predictions;
-  const deliveryPredictions = usePlacesAutocomplete(deliveryAddress).predictions;
+  const deliveryPredictions =
+    usePlacesAutocomplete(deliveryAddress).predictions;
 
   function SubmitEquiptmentLoanerForm() {
     setError([false, false, false, false, false, false, false]);
@@ -267,6 +268,8 @@ export default function EquipmentLoanerProgram() {
             <Autocomplete
               disablePortal
               options={addressPredictions.map(({ description }) => description)}
+              clearOnBlur={false}
+              onChange={(event, value) => setAddress(value)}
               fullWidth
               renderInput={(params) => (
                 <ColoredTextFeild
@@ -384,6 +387,8 @@ export default function EquipmentLoanerProgram() {
                 options={deliveryPredictions.map(
                   ({ description }) => description
                 )}
+                clearOnBlur={false}
+                onChange={(event, value) => setAddress(value)}
                 fullWidth
                 renderInput={(params) => (
                   <ColoredTextFeild

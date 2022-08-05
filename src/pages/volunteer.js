@@ -197,6 +197,8 @@ export default function Volunteer() {
                 disablePortal
                 options={predictions.map(({ description }) => description)}
                 fullWidth
+                clearOnBlur={false}
+                onChange={(event, value) => setAddress(value)}
                 renderInput={(params) => (
                   <ColoredTextFeild
                     {...params}

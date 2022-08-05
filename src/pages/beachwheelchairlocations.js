@@ -414,6 +414,8 @@ export default function BeachWheelchairLocations() {
             <Autocomplete
               disablePortal
               options={addressPredictions.map(({ description }) => description)}
+              clearOnBlur={false}
+              onChange={(event, value) => setAddress(value)}
               fullWidth
               renderInput={(params) => (
                 <ColoredTextFeild
@@ -445,6 +447,8 @@ export default function BeachWheelchairLocations() {
                 options={beachAddressPredictions.map(
                   ({ description }) => description
                 )}
+                clearOnBlur={false}
+                onChange={(event, value) => setAddress(value)}
                 fullWidth
                 renderInput={(params) => (
                   <ColoredTextFeild
