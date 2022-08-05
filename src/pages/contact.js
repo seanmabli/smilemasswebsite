@@ -2,7 +2,7 @@ import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Box, Button } from "@mui/material";
-import {ColoredTextFeild} from "../components/mui"
+import { ColoredTextFeild } from "../components/mui";
 import "./contact.css";
 
 export default function Contact() {
@@ -62,6 +62,7 @@ export default function Contact() {
         phone: phone,
         message: message,
         time: new Date(),
+        status: "new",
       });
     };
 

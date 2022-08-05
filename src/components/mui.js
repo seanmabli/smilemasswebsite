@@ -1,4 +1,11 @@
-import { Button, TextField, CardActionArea, Card } from "@mui/material";
+import {
+  Button,
+  TextField,
+  CardActionArea,
+  Card,
+  Tabs,
+  Tab,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const ReadMyStoryButton = styled(Button)({
@@ -26,12 +33,12 @@ export const NavButton = styled(Button)({
 });
 
 export const ColoredTextFeild = styled(TextField)({
-  '& label.Mui-focused': {
-    color: '#547c94',
+  "& label.Mui-focused": {
+    color: "#547c94",
   },
-  '& .MuiOutlinedInput-root': {
-    '&.Mui-focused fieldset': {
-      borderColor: '#547c94',
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused fieldset": {
+      borderColor: "#547c94",
     },
   },
 });
@@ -55,9 +62,9 @@ export const SMILEBlogCardActionArea = styled(CardActionArea)({
   maxWidth: "1250px",
   justifyContent: "left",
   display: "flex",
-  ['@media (max-width:600px)']: {
+  ["@media (max-width:600px)"]: {
     display: "block",
-  }
+  },
 });
 
 export const TittapCard = styled(Card)({
@@ -75,7 +82,7 @@ export const OurTeamCard = styled(Card)({
   margin: "10px",
   border: "1px solid #547c94",
   borderRadius: "5px",
-  width: '300px',
+  width: "300px",
 });
 
 export const EquipmentLoanerProgramCard = styled(Card)({
@@ -84,9 +91,37 @@ export const EquipmentLoanerProgramCard = styled(Card)({
   borderRadius: "5px",
   boxShadow: "none",
   width: "248px",
-  ['@media (max-width:810px)']: {
+  ["@media (max-width:810px)"]: {
     marginRight: "0",
     marginTop: "10px",
     width: "100%",
-  }
+  },
+});
+
+export const AdminContactTabs = styled((props) => (
+  <Tabs
+    {...props}
+    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+  />
+))({
+  "& .MuiTabs-indicator": {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  "& .MuiTabs-indicatorSpan": {
+    width: "100%",
+    backgroundColor: "#547c94",
+  },
+});
+
+export const AdminContactTab = styled(Tab)({
+  textTransform: "none",
+  color: "#547c94",
+  "&.Mui-selected": {
+    color: "#547c94",
+  },
+  "&.Mui-focusVisible": {
+    backgroundColor: "#547c94",
+  },
 });
