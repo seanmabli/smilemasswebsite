@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { Divider } from "@mui/material";
+import ArchiveIcon from "@mui/icons-material/Archive";
 
 export default function AdminContact() {
   const [contacts, setContacts] = useState([]);
@@ -20,33 +22,34 @@ export default function AdminContact() {
     <div className="page">
       <h1>Admin - Contact</h1>
       <br />
+      <Divider />
+      <br />
       {contacts.map((contact) => {
-        console.log(contact);
-        if (contact.phone !== "") {
-          return (
-            <>
+        return (
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <ArchiveIcon style={{}} />
+            <p>
+              <span className="bold">Name: </span>
+              {contact.name}
+            </p>
+            <p>
+              <span className="bold">Email: </span>
+              {contact.email}
+            </p>
+            <p>
+              <span className="bold">Phone: </span>
+              {contact.phone}
+            </p>
+            <p>
+              <span className="bold">Message: </span>
               <br />
-              <p style={{ fontWeight: "bold" }}>
-                {contact.name} - {contact.email} - {contact.phone} -{" "}
-                {contact.time.toDate().toString()}
-              </p>
-              <p style={{ whiteSpace: "pre-wrap" }}>{contact.message}</p>
-              <br />
-            </>
-          );
-        } else {
-          return (
-            <>
-              <br />
-              <p style={{ fontWeight: "bold" }}>
-                {contact.name} - {contact.email} -{" "}
-                {contact.time.toDate().toString()}
-              </p>
-              <p style={{ whiteSpace: "pre-wrap" }}>{contact.message}</p>
-              <br />
-            </>
-          );
-        }
+              <span style={{ whiteSpace: "pre-wrap" }}>{contact.message}</span>
+            </p>
+            <br />
+            <Divider />
+            <br />
+          </div>
+        );
       })}
     </div>
   );
