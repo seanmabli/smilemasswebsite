@@ -115,8 +115,7 @@ exports.equiptmentloaner = functions.firestore
 <b>Equiptment: </b>${snap.data().equiptment.join(", ")}<br>
 <b>Requested Pickup Date: </b>${snap.data().pickup}<br>
 <b>Return Date: </b>${snap.data().dropoff}<br>
-<b>Return Date: </b>${snap.data().dropoff}<br>
-<b>Do you need delivery: </b>${snap.data().delivery}<br>
+<b>Do you need delivery: </b>${snap.data().delivery ? "Yes" : "No"}<br>
 <b>Delivery Address: </b>${snap.data().deliveryAddress}<br>
 <b>Birthday: </b>${snap.data().birthday}<br>
 <b>Have you used this program before: </b>${snap.data().used}<br>

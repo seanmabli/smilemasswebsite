@@ -98,7 +98,7 @@ export const EquipmentLoanerProgramCard = styled(Card)({
   },
 });
 
-export const AdminContactTabs = styled((props) => (
+export const AdminTabs = styled((props) => (
   <Tabs
     {...props}
     TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
@@ -115,7 +115,7 @@ export const AdminContactTabs = styled((props) => (
   },
 });
 
-export const AdminContactTab = styled(Tab)({
+export const AdminTab = styled(Tab)({
   textTransform: "none",
   color: "#547c94",
   "&.Mui-selected": {

@@ -61,19 +61,31 @@ export default function Dashboard() {
       <div className="page">
         {error && alert(error)}
         <p>Email: {currentUser.email}</p>
-        <p onClick={toggleUpdating} className="link">Update Profile</p>
+        <p onClick={toggleUpdating} className="link">
+          Update Profile
+        </p>
         <br />
-        <p onClick={handleLogout} className="link">Log Out</p>
+        <p onClick={handleLogout} className="link">
+          Log Out
+        </p>
         <br />
         <Link to="/admin/smileblog">Admin - SMILE Blog</Link>
+        <br />
+        <Link to="/admin/newsletters">Admin - Newsletters</Link>
+        <br />
+        <Link to="/admin/inthenews">Admin - In the News</Link>
         <br />
         <Link to="/admin/contact">Admin - Contact</Link>
         <br />
         <Link to="/admin/volunteer">Admin - Volunteer</Link>
         <br />
-        <Link to="/admin/newsletters">Admin - Newsletters</Link>
+        <Link to="/admin/equiptmentloanerprogram">
+          Admin - Equipment Loaner Program
+        </Link>
         <br />
-        <Link to="/admin/inthenews">Admin - In the News</Link>
+        <Link to="/admin/beachwheelchairlocations">
+          Admin - Beach Wheelchair Locations
+        </Link>
       </div>
     );
   } else {

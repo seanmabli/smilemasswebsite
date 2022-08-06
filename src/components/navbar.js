@@ -37,6 +37,8 @@ import { AdminSmileBlog, AdminSmileBlogEditor } from "../admin/smileblog";
 import AdminNewsletters from "../admin/newsletters";
 import AdminVollunteer from "../admin/volunteer";
 import { AdminInTheNews, AdminInTheNewsEditor } from "../admin/inthenews";
+import AdminEquiptmentLoanerProgram from "../admin/equipmentloanerprogram";
+import AdminBeachWheelchairLocations from "../admin/beachwheelchairlocations";
 
 import { AuthProvider, AuthRoute, AuthSkipLogin } from "../firebase/auth";
 
@@ -172,6 +174,16 @@ function PageContent() {
         <Route
           path="/admin/inthenews/:id"
           element={<AuthRoute page={<AdminInTheNewsEditor />} />}
+        />
+
+        <Route
+          path="/admin/equiptmentloanerprogram"
+          element={<AuthRoute page={<AdminEquiptmentLoanerProgram />} />}
+        />
+
+        <Route
+          path="/admin/beachwheelchairlocations"
+          element={<AdminBeachWheelchairLocations />}
         />
 
         <Route path="/admin/*" element={<Navigate to="/admin" />} />

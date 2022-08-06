@@ -26,36 +26,38 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PropTypes from "prop-types";
 import { AdminTabs, AdminTab } from "../components/mui";
 
-export default function AdminContact() {
-  const [contacts, setContacts] = useState([]);
+export default function AdminEquiptmentLoanerProgram() {
+  const [responses, setResponses] = useState([]);
   const [initial, setInitial] = useState(true);
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
-    const getContacts = async () => {
-      const data = await getDocs(collection(db, "contact"));
-      setContacts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    const getresponses = async () => {
+      const data = await getDocs(collection(db, "equiptmentloaner"));
+      setResponses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       if (initial) {
-        const upload = async (contact) => {
-          if (contact.status === "new") {
-            await updateDoc(doc(db, "contact", contact.id), {
+        const upload = async (response) => {
+          if (response.status === "new") {
+            await updateDoc(doc(db, "equiptmentloaner", response.id), {
               status: "all",
             });
           }
         };
-        setContacts((state) => {
-          for (const contact of state) {
-            upload(contact);
+        setResponses((state) => {
+          for (const response of state) {
+            upload(response);
           }
           return state;
         });
         setInitial(false);
       }
     };
-    getContacts();
+    getresponses();
   }, []);
 
-  contacts.sort(function (first, second) {
+  console.log(responses);
+
+  responses.sort(function (first, second) {
     return second.time - first.time;
   });
 
@@ -96,32 +98,32 @@ export default function AdminContact() {
     setValue(newValue);
   };
 
-  function archive(contact) {
-    const update = async (contact) => {
+  function archive(response) {
+    const update = async (response) => {
       console.log("archive");
-      await updateDoc(doc(db, "contact", contact.id), {
+      await updateDoc(doc(db, "equiptmentloaner", response.id), {
         status: "archived",
       });
-      contact.status = "archived";
+      response.status = "archived";
       forceUpdate();
     };
-    update(contact);
+    update(response);
   }
 
-  function unarchive(contact) {
-    const update = async (contact) => {
+  function unarchive(response) {
+    const update = async (response) => {
       console.log("unarchive");
-      await updateDoc(doc(db, "contact", contact.id), {
+      await updateDoc(doc(db, "equiptmentloaner", response.id), {
         status: "all",
       });
-      contact.status = "all";
+      response.status = "all";
       forceUpdate();
     };
-    update(contact);
+    update(response);
   }
 
   const [open, setOpen] = useState(false);
-  const [deletingContact, setDeletingContact] = useState({});
+  const [deletingresponse, setDeletingresponse] = useState({});
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -131,10 +133,10 @@ export default function AdminContact() {
     setOpen(false);
   };
 
-  function deleteContact() {
+  function deleteResponse() {
     const upload = async () => {
-      await deleteDoc(doc(db, "contact", deletingContact.id));
-      contacts.splice(contacts.indexOf(deletingContact), 1);
+      await deleteDoc(doc(db, "response", deletingresponse.id));
+      responses.splice(responses.indexOf(deletingresponse), 1);
       handleClose();
       forceUpdate();
     };
@@ -150,7 +152,7 @@ export default function AdminContact() {
         >
           Admin
         </span>{" "}
-        <span style={{ color: "gray" }}>/</span> Contact
+        <span style={{ color: "gray" }}>/</span> Equipment Loaner Program
       </h1>
       <br />
       <Box sx={{ width: "100%" }}>
@@ -163,8 +165,8 @@ export default function AdminContact() {
         </Box>
         <br />
         <TabPanel value={value} index={0}>
-          {contacts.map((contact) => {
-            if (contact.status === "new") {
+          {responses.map((response) => {
+            if (response.status === "new") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -178,7 +180,7 @@ export default function AdminContact() {
                     <Tooltip title="Archive">
                       <IconButton
                         onClick={() => {
-                          archive(contact);
+                          archive(response);
                         }}
                       >
                         <ArchiveIcon />
@@ -187,7 +189,7 @@ export default function AdminContact() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingContact(contact);
+                          setDeletingresponse(response);
                           handleClickOpen();
                         }}
                       >
@@ -197,28 +199,63 @@ export default function AdminContact() {
                   </div>
                   <p>
                     <span className="bold">Name: </span>
-                    {contact.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {contact.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {contact.phone}
+                    {response.phone}
                   </p>
                   <p>
-                    <span className="bold">Message: </span>
+                    <span className="bold">Address: </span>
+                    {response.address}
+                  </p>
+                  <p>
+                    <span className="bold">Equiptment: </span>
+                    {response.equiptment.join(", ")}
+                  </p>
+                  <p>
+                    <span className="bold">Requested Pickup Date: </span>
+                    {response.pickup}
+                  </p>
+                  <p>
+                    <span className="bold">Return Date: </span>
+                    {response.dropoff}
+                  </p>
+                  <p>
+                    <span className="bold">Do you need delivery: </span>
+                    {response.delivery ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <span className="bold">Delivery Address: </span>
+                    {response.deliveryAddress}
+                  </p>
+                  <p>
+                    <span className="bold">Birthday: </span>
+                    {response.birthday}
+                  </p>
+                  <p>
+                    <span className="bold">
+                      Have you used this program before:{" "}
+                    </span>
+                    {response.used ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <span className="bold">Questions / Comments: </span>
                     <br />
                     <span
                       style={
-                        contact.message.includes("\n")
+                        response.questions.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {contact.message}
+                      {response.questions}
                     </span>
+                    <br />
                   </p>
                   <br />
                   <Divider />
@@ -231,7 +268,7 @@ export default function AdminContact() {
           })}
           <p
             style={
-              contacts.filter((content) => content.status === "new").length ===
+              responses.filter((content) => content.status === "new").length ===
               0
                 ? { display: "flex" }
                 : { display: "none" }
@@ -241,8 +278,8 @@ export default function AdminContact() {
           </p>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {contacts.map((contact) => {
-            if (contact.status === "all") {
+          {responses.map((response) => {
+            if (response.status === "all") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -256,7 +293,7 @@ export default function AdminContact() {
                     <Tooltip title="Archive">
                       <IconButton
                         onClick={() => {
-                          archive(contact);
+                          archive(response);
                         }}
                       >
                         <ArchiveIcon />
@@ -265,7 +302,7 @@ export default function AdminContact() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingContact(contact);
+                          setDeletingresponse(response);
                           handleClickOpen();
                         }}
                       >
@@ -275,28 +312,63 @@ export default function AdminContact() {
                   </div>
                   <p>
                     <span className="bold">Name: </span>
-                    {contact.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {contact.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {contact.phone}
+                    {response.phone}
                   </p>
                   <p>
-                    <span className="bold">Message: </span>
+                    <span className="bold">Address: </span>
+                    {response.address}
+                  </p>
+                  <p>
+                    <span className="bold">Equiptment: </span>
+                    {response.equiptment.join(", ")}
+                  </p>
+                  <p>
+                    <span className="bold">Requested Pickup Date: </span>
+                    {response.pickup}
+                  </p>
+                  <p>
+                    <span className="bold">Return Date: </span>
+                    {response.dropoff}
+                  </p>
+                  <p>
+                    <span className="bold">Do you need delivery: </span>
+                    {response.delivery ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <span className="bold">Delivery Address: </span>
+                    {response.deliveryAddress}
+                  </p>
+                  <p>
+                    <span className="bold">Birthday: </span>
+                    {response.birthday}
+                  </p>
+                  <p>
+                    <span className="bold">
+                      Have you used this program before:{" "}
+                    </span>
+                    {response.used ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <span className="bold">Questions / Comments: </span>
                     <br />
                     <span
                       style={
-                        contact.message.includes("\n")
+                        response.questions.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {contact.message}
+                      {response.questions}
                     </span>
+                    <br />
                   </p>
                   <br />
                   <Divider />
@@ -309,8 +381,8 @@ export default function AdminContact() {
           })}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          {contacts.map((contact) => {
-            if (contact.status === "archived") {
+          {responses.map((response) => {
+            if (response.status === "archived") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -324,7 +396,7 @@ export default function AdminContact() {
                     <Tooltip title="Unarchive">
                       <IconButton
                         onClick={() => {
-                          unarchive(contact);
+                          unarchive(response);
                         }}
                       >
                         <UnarchiveIcon />
@@ -333,7 +405,7 @@ export default function AdminContact() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingContact(contact);
+                          setDeletingresponse(response);
                           handleClickOpen();
                         }}
                       >
@@ -343,28 +415,63 @@ export default function AdminContact() {
                   </div>
                   <p>
                     <span className="bold">Name: </span>
-                    {contact.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {contact.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {contact.phone}
+                    {response.phone}
                   </p>
                   <p>
-                    <span className="bold">Message: </span>
+                    <span className="bold">Address: </span>
+                    {response.address}
+                  </p>
+                  <p>
+                    <span className="bold">Equiptment: </span>
+                    {response.equiptment.join(", ")}
+                  </p>
+                  <p>
+                    <span className="bold">Requested Pickup Date: </span>
+                    {response.pickup}
+                  </p>
+                  <p>
+                    <span className="bold">Return Date: </span>
+                    {response.dropoff}
+                  </p>
+                  <p>
+                    <span className="bold">Do you need delivery: </span>
+                    {response.delivery ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <span className="bold">Delivery Address: </span>
+                    {response.deliveryAddress}
+                  </p>
+                  <p>
+                    <span className="bold">Birthday: </span>
+                    {response.birthday}
+                  </p>
+                  <p>
+                    <span className="bold">
+                      Have you used this program before:{" "}
+                    </span>
+                    {response.used ? "Yes" : "No"}
+                  </p>
+                  <p>
+                    <span className="bold">Questions / Comments: </span>
                     <br />
                     <span
                       style={
-                        contact.message.includes("\n")
+                        response.questions.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {contact.message}
+                      {response.questions}
                     </span>
+                    <br />
                   </p>
                   <br />
                   <Divider />
@@ -393,7 +500,7 @@ export default function AdminContact() {
           >
             Cancel
           </Button>
-          <Button onClick={deleteContact} variant="outlined" color="error">
+          <Button onClick={deleteResponse} variant="outlined" color="error">
             Delete
           </Button>
         </DialogActions>

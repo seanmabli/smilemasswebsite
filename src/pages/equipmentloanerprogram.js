@@ -183,6 +183,7 @@ export default function EquipmentLoanerProgram() {
         used: used,
         questions: questions,
         equiptment: equiptment,
+        status: "new",
         time: new Date(),
       });
     };

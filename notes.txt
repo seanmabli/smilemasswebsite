@@ -18,9 +18,8 @@ playgrounds
 events
 newsletters
 donate
+admin/beach nominations
 admin/equiptment loaner program
-admin/contact
-admin/voluteer
 admin/newsletter
 admin/our team
 admin/events

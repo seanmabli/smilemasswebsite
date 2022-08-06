@@ -62,6 +62,7 @@ export default function Volunteer() {
         events: events,
         availability: availability,
         time: new Date(),
+        status: "new",
       });
     };
 
@@ -226,7 +227,7 @@ export default function Volunteer() {
           </div>
           <div className="availability">
             <ColoredTextFeild
-              label="When are you availabile to volunteer (please be specific as to the day/time you are able to help)?"
+              label="When are you available to volunteer (please be specific as to the day/time you are able to help)?"
               variant="outlined"
               size="small"
               minRows={5}
