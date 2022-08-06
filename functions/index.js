@@ -3,6 +3,8 @@ const admin = require("firebase-admin");
 const nodemailer = require("nodemailer");
 admin.initializeApp();
 
+const db = admin.firestore();
+
 let transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -16,6 +18,9 @@ let transporter = nodemailer.createTransport({
 exports.contact = functions.firestore
   .document("contact/{contactId}")
   .onCreate((snap, context) => {
+
+    const emailList = db.collection('email').filter('type', '==', 'contact');
+
     const mailOptions = {
       from: `SMILE Mass Website <smilemasssite@gmail.com>`,
       to: "smdrone1@gmail.com",
@@ -26,6 +31,7 @@ exports.contact = functions.firestore
 <b>Email: </b>${snap.data().email}<br>
 <b>Phone: </b>${snap.data().phone}<br>
 <b>Your Request/Questions/Comments: </b>${snap.data().message}
+${emailList}
 </p>`,
     };
 
@@ -53,11 +59,9 @@ exports.volunteer = functions.firestore
 <b>Address: </b>${snap.data().address}<br>
 <b>Birthday: </b>${snap.data().birthday}<br>
 <b>Which events are you interested in volunteering for: </b>${
-  snap.data().events
-}<br>
-<b>When are you availability to volunteer: </b>${
-  snap.data().availability
-}
+        snap.data().events
+      }<br>
+<b>When are you availability to volunteer: </b>${snap.data().availability}
 </p>`,
     };
 
