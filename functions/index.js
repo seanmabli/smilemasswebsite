@@ -17,10 +17,15 @@ let transporter = nodemailer.createTransport({
 
 exports.contact = functions.firestore
   .document("contact/{contactId}")
-  .onCreate((snap, context) => {
+  .onUpdate((snap, context) => {
+    const query = db.collection("email").where("type", "==", "contact");
+    const out = query.get().then((querySnapshot) => {
+      return querySnapshot.docs.map((doc) => doc.data());
+    });
 
-    const emailList = db.collection('email').filter('type', '==', 'contact');
+    console.log(query, query.get(), out);
 
+    /*
     const mailOptions = {
       from: `SMILE Mass Website <smilemasssite@gmail.com>`,
       to: "smdrone1@gmail.com",
@@ -31,7 +36,6 @@ exports.contact = functions.firestore
 <b>Email: </b>${snap.data().email}<br>
 <b>Phone: </b>${snap.data().phone}<br>
 <b>Your Request/Questions/Comments: </b>${snap.data().message}
-${emailList}
 </p>`,
     };
 
@@ -42,6 +46,7 @@ ${emailList}
       }
       console.log("Sent Contact Email");
     });
+    */
   });
 
 exports.volunteer = functions.firestore
