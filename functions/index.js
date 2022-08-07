@@ -17,46 +17,59 @@ let transporter = nodemailer.createTransport({
 
 exports.contact = functions.firestore
   .document("contact/{contactId}")
-  .onUpdate((snap, context) => {
-    const query = db.collection("email").where("type", "==", "contact");
-    const out = query.get().then((querySnapshot) => {
-      return querySnapshot.docs.map((doc) => doc.data());
-    });
-
-    console.log(query, query.get(), out);
-
-    /*
-    const mailOptions = {
-      from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-      to: "smdrone1@gmail.com",
-      subject: `Contact Form Submission ${snap.id}`,
-      html: `
+  .onCreate((snap, context) => {
+    const emaillist = [];
+    db.doc("email/contact")
+      .get()
+      .then((documentSnapshot) => {
+        documentSnapshot.ref.get().then((doc) => {
+          emaillist.push.apply(emaillist, doc.data().email);
+          console.log(emaillist);
+        });
+      })
+      .then(() => {
+        const mailOptions = {
+          from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+          bcc: emaillist,
+          subject: `Contact Form Submission ${snap.id}`,
+          html: `
 <p style="white-space: pre-wrap">
 <b>Name: </b>${snap.data().name}<br>
 <b>Email: </b>${snap.data().email}<br>
 <b>Phone: </b>${snap.data().phone}<br>
 <b>Your Request/Questions/Comments: </b>${snap.data().message}
 </p>`,
-    };
+        };
 
-    return transporter.sendMail(mailOptions, (error, data) => {
-      if (error) {
-        console.log(error);
-        return;
-      }
-      console.log("Sent Contact Email");
-    });
-    */
+        transporter.sendMail(mailOptions, (error, data) => {
+          if (error) {
+            console.log(error);
+          }
+          console.log("Sent Contact Email");
+        });
+      });
+
+    return "Sent Contact Email";
   });
 
 exports.volunteer = functions.firestore
   .document("volunteer/{volunteerId}")
   .onCreate((snap, context) => {
-    const mailOptions = {
-      from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-      to: "smdrone1@gmail.com",
-      subject: `Volunteer Form Submission ${snap.id}`,
-      html: `
+    const emailist = [];
+    db.doc("email/volunteer")
+      .get()
+      .then((documentSnapshot) => {
+        documentSnapshot.ref.get().then((doc) => {
+          emaillist.push.apply(emaillist, doc.data().email);
+          console.log(emaillist);
+        });
+      })
+      .then(() => {
+        const mailOptions = {
+          from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+          bcc: emailist,
+          subject: `Volunteer Form Submission ${snap.id}`,
+          html: `
 <p style="white-space: pre-wrap">
 <b>Name: </b>${snap.data().name}<br>
 <b>Email: </b>${snap.data().email}<br>
@@ -64,29 +77,41 @@ exports.volunteer = functions.firestore
 <b>Address: </b>${snap.data().address}<br>
 <b>Birthday: </b>${snap.data().birthday}<br>
 <b>Which events are you interested in volunteering for: </b>${
-        snap.data().events
-      }<br>
+            snap.data().events
+          }<br>
 <b>When are you availability to volunteer: </b>${snap.data().availability}
 </p>`,
-    };
+        };
 
-    return transporter.sendMail(mailOptions, (error, data) => {
-      if (error) {
-        console.log(error);
-        return;
-      }
-      console.log("Sent Volunteer Email");
-    });
+        transporter.sendMail(mailOptions, (error, data) => {
+          if (error) {
+            console.log(error);
+          }
+          console.log("Sent Volunteer Email");
+        });
+      });
+
+    return "Success";
   });
 
 exports.beachnomination = functions.firestore
   .document("beachnomination/{beachnominationId}")
   .onCreate((snap, context) => {
-    const mailOptions = {
-      from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-      to: "smdrone1@gmail.com",
-      subject: `Beach Nomination Form Submission ${snap.id}`,
-      html: `
+    const emailist = [];
+    db.doc("email/beachnomination")
+      .get()
+      .then((documentSnapshot) => {
+        documentSnapshot.ref.get().then((doc) => {
+          emaillist.push.apply(emaillist, doc.data().email);
+          console.log(emaillist);
+        });
+      })
+      .then(() => {
+        const mailOptions = {
+          from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+          bcc: emailist,
+          subject: `Beach Nomination Form Submission ${snap.id}`,
+          html: `
 <p style="white-space: pre-wrap">
 <b>Name: </b>${snap.data().name}<br>
 <b>Email: </b>${snap.data().email}<br>
@@ -97,25 +122,37 @@ exports.beachnomination = functions.firestore
 <b>Contact Person / Town Official: </b>${snap.data().contact}<br>
 <b>Why are you nominating this beach community: </b>${snap.data().why}<br>
 </p>`,
-    };
+        };
 
-    return transporter.sendMail(mailOptions, (error, data) => {
-      if (error) {
-        console.log(error);
-        return;
-      }
-      console.log("Sent Beach Nomination Email");
-    });
+        transporter.sendMail(mailOptions, (error, data) => {
+          if (error) {
+            console.log(error);
+          }
+          console.log("Sent Beach Nomination Email");
+        });
+      });
+
+    return "Success";
   });
 
 exports.equiptmentloaner = functions.firestore
   .document("equiptmentloaner/{equiptmentloanerId}")
   .onCreate((snap, context) => {
-    const mailOptions = {
-      from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-      to: "smdrone1@gmail.com",
-      subject: `Equiptment Loaner Form Submission  ${snap.id}`,
-      html: `
+    const emailist = [];
+    db.doc("email/equiptmentloaner")
+      .get()
+      .then((documentSnapshot) => {
+        documentSnapshot.ref.get().then((doc) => {
+          emaillist.push.apply(emaillist, doc.data().email);
+          console.log(emaillist);
+        });
+      })
+      .then(() => {
+        const mailOptions = {
+          from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+          bcc: emailist,
+          subject: `Equiptment Loaner Form Submission ${snap.id}`,
+          html: `
 <p style="white-space: pre-wrap">
 <b>Name: </b>${snap.data().name}<br>
 <b>Email: </b>${snap.data().email}<br>
@@ -130,13 +167,15 @@ exports.equiptmentloaner = functions.firestore
 <b>Have you used this program before: </b>${snap.data().used}<br>
 <b>Questions / Comments: </b>${snap.data().questions}
 </p>`,
-    };
+        };
 
-    return transporter.sendMail(mailOptions, (error, data) => {
-      if (error) {
-        console.log(error);
-        return;
-      }
-      console.log("Sent Beach Nomination Email");
-    });
+        transporter.sendMail(mailOptions, (error, data) => {
+          if (error) {
+            console.log(error);
+          }
+          console.log("Sent Equiptment Loaner Email");
+        });
+      });
+
+    return "Success";
   });

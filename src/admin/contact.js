@@ -3,6 +3,7 @@ import { db } from "../firebase/firebase";
 import {
   collection,
   getDocs,
+  getDoc,
   updateDoc,
   deleteDoc,
   doc,
@@ -141,6 +142,17 @@ export default function AdminContact() {
     upload();
   }
 
+  const [emailList, setEmailList] = useState([]);
+  useEffect(() => {
+    const getEmailList = async () => {
+      const data = await getDoc(doc(db, "email", "contact"));
+      setEmailList(data.data().email);
+    };
+    getEmailList();
+  }, []);
+
+  console.log(emailList);
+
   return (
     <div className="page">
       <h1>
@@ -159,6 +171,7 @@ export default function AdminContact() {
             <AdminTab label="New" {...a11yProps(0)} />
             <AdminTab label="All" {...a11yProps(1)} />
             <AdminTab label="Archive" {...a11yProps(2)} />
+            <AdminTab label="Email List" {...a11yProps(3)} />
           </AdminTabs>
         </Box>
         <br />
@@ -374,6 +387,34 @@ export default function AdminContact() {
             } else {
               return null;
             }
+          })}
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          {emailList.map((email) => {
+            return (
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    color: "#547c94",
+                    position: "absolute",
+                    top: "0px",
+                    right: "0px",
+                  }}
+                >
+                  <Tooltip title="Delete">
+                    <IconButton onClick={() => {}}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                <p style={{ paddingTop: "8px", paddingBottom: "8px" }}>
+                  {email}
+                </p>
+                <br />
+                <Divider />
+                <br />
+              </div>
+            );
           })}
         </TabPanel>
       </Box>
