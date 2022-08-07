@@ -135,7 +135,7 @@ export default function AdminBeachWheelchairLocations() {
 
   function deleteResponse() {
     const upload = async () => {
-      await deleteDoc(doc(db, "response", deletingresponse.id));
+      await deleteDoc(doc(db, "beachnomination", deletingresponse.id));
       responses.splice(responses.indexOf(deletingresponse), 1);
       handleClose();
       forceUpdate();
