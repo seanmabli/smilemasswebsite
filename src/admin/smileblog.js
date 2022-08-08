@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ColoredTextFeild } from "../components/mui";
+import { ColoredTextField } from "../components/mui";
 import {
   Button,
   TextField,
@@ -355,7 +355,7 @@ export function AdminSmileBlogEditor() {
         </h1>
         <br />
         <div style={{ maxWidth: "800px" }}>
-          <ColoredTextFeild
+          <ColoredTextField
             label="Title"
             variant="outlined"
             size="small"
@@ -422,7 +422,7 @@ export function AdminSmileBlogEditor() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             renderInput={(props) => (
-              <ColoredTextFeild {...props} size="small" />
+              <ColoredTextField {...props} size="small" />
             )}
             label="Publish Date Time"
             value={published}

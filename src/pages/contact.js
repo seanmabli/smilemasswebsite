@@ -2,7 +2,7 @@ import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Box, Button } from "@mui/material";
-import { ColoredTextFeild } from "../components/mui";
+import { ColoredTextField } from "../components/mui";
 import "./contact.css";
 
 export default function Contact() {
@@ -11,25 +11,16 @@ export default function Contact() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState([false, false, false, false]);
-  const [nameErrorText, setnameErrorText] = useState("");
-  const [emailErrorText, setemailErrorText] = useState("");
-  const [phoneErrorText, setphoneErrorText] = useState("");
-  const [messageErrorText, setmessageErrorText] = useState("");
   const [success, setSuccess] = useState(false);
 
   function SubmitContactForm() {
     setError([false, false, false, false]);
-    setnameErrorText("");
-    setemailErrorText("");
-    setphoneErrorText("");
-    setmessageErrorText("");
 
     // validtate name
     var twoWordNameRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
     var threeWordNameRegex = /^[a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+$/;
     if (!twoWordNameRegex.test(name) && !threeWordNameRegex.test(name)) {
       setError((state) => [true, state[1], state[2], state[3]]);
-      setnameErrorText("Please enter your full name (first & last name)");
     }
 
     // validtate email
@@ -37,7 +28,6 @@ export default function Contact() {
       /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailRegex.test(email)) {
       setError((state) => [state[0], true, state[2], state[3]]);
-      setemailErrorText("Please enter a valid email address");
     }
 
     // validtate phone
@@ -45,14 +35,12 @@ export default function Contact() {
       var phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
       if (!phoneRegex.test(phone)) {
         setError((state) => [state[0], state[1], true, state[3]]);
-        setphoneErrorText("Please enter a valid phone number");
       }
     }
 
     // validate message
     if (message === "") {
       setError((state) => [state[0], state[1], state[2], true]);
-      setmessageErrorText("Please enter a request/question/comment");
     }
 
     const upload = async () => {
@@ -87,53 +75,53 @@ export default function Contact() {
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="name">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Full Name"
                 variant="outlined"
                 size="small"
                 value={name}
                 error={error[0]}
-                helperText={nameErrorText}
+                helperText={error[0] ? "Please enter your full name (first & last name)" : ""}
                 onChange={(e) => setName(e.target.value)}
                 fullWidth
                 required
               />
             </div>
             <div className="email">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Email"
                 variant="outlined"
                 size="small"
                 value={email}
                 error={error[1]}
-                helperText={emailErrorText}
+                helperText={error[1] ? "Please enter a valid email address" : ""}
                 onChange={(e) => setEmail(e.target.value)}
                 fullWidth
                 required
               />
             </div>
             <div className="phone">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Phone"
                 variant="outlined"
                 size="small"
                 value={phone}
                 error={error[2]}
-                helperText={phoneErrorText}
+                helperText={error[2] ? "Please enter a valid phone number" : ""}
                 onChange={(e) => setPhone(e.target.value)}
                 fullWidth
               />
             </div>
           </div>
           <div className="message">
-            <ColoredTextFeild
+            <ColoredTextField
               label="Your Request/Questions/Comments"
               variant="outlined"
               size="small"
               minRows={5}
               value={message}
               error={error[3]}
-              helperText={messageErrorText}
+              helperText={error[3] ? "Please enter a request/question/comment" : ""}
               onChange={(e) => setMessage(e.target.value)}
               multiline
               fullWidth

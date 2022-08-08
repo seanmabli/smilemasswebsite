@@ -32,7 +32,7 @@ export const NavButton = styled(Button)({
   },
 });
 
-export const ColoredTextFeild = styled(TextField)({
+export const ColoredTextField = styled(TextField)({
   "& label.Mui-focused": {
     color: "#547c94",
   },

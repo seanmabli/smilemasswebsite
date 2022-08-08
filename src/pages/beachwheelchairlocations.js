@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material";
-import { ColoredTextFeild } from "../components/mui";
+import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./beachwheelchairlocations.css";
 
@@ -365,7 +365,7 @@ export default function BeachWheelchairLocations() {
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="name">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Full Name"
                 variant="outlined"
                 size="small"
@@ -382,7 +382,7 @@ export default function BeachWheelchairLocations() {
               />
             </div>
             <div className="email">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Email"
                 variant="outlined"
                 size="small"
@@ -397,7 +397,7 @@ export default function BeachWheelchairLocations() {
               />
             </div>
             <div className="phone">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Phone"
                 variant="outlined"
                 size="small"
@@ -418,7 +418,7 @@ export default function BeachWheelchairLocations() {
               onChange={(event, value) => setAddress(value)}
               fullWidth
               renderInput={(params) => (
-                <ColoredTextFeild
+                <ColoredTextField
                   {...params}
                   label="Address"
                   variant="outlined"
@@ -431,7 +431,7 @@ export default function BeachWheelchairLocations() {
           </div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="beachname">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Beach Name"
                 variant="outlined"
                 size="small"
@@ -451,7 +451,7 @@ export default function BeachWheelchairLocations() {
                 onChange={(event, value) => setAddress(value)}
                 fullWidth
                 renderInput={(params) => (
-                  <ColoredTextFeild
+                  <ColoredTextField
                     {...params}
                     label="Beach Address"
                     variant="outlined"
@@ -465,7 +465,7 @@ export default function BeachWheelchairLocations() {
           </div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="contact">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Contact Person / Town Official"
                 variant="outlined"
                 size="small"
@@ -479,7 +479,7 @@ export default function BeachWheelchairLocations() {
           </div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="why">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Why are you nominating this beach community?"
                 variant="outlined"
                 size="small"

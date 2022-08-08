@@ -3,7 +3,7 @@ import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Box, Button, Autocomplete } from "@mui/material";
-import { ColoredTextFeild } from "../components/mui";
+import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./volunteer.css";
 
@@ -133,7 +133,7 @@ export default function Volunteer() {
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="name">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Full Name"
                 variant="outlined"
                 size="small"
@@ -150,7 +150,7 @@ export default function Volunteer() {
               />
             </div>
             <div className="email">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Email"
                 variant="outlined"
                 size="small"
@@ -165,7 +165,7 @@ export default function Volunteer() {
               />
             </div>
             <div className="phone">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Phone"
                 variant="outlined"
                 size="small"
@@ -180,7 +180,7 @@ export default function Volunteer() {
           </div>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="birthday">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Birthday"
                 variant="outlined"
                 size="small"
@@ -201,7 +201,7 @@ export default function Volunteer() {
                 clearOnBlur={false}
                 onChange={(event, value) => setAddress(value)}
                 renderInput={(params) => (
-                  <ColoredTextFeild
+                  <ColoredTextField
                     {...params}
                     label="Address"
                     variant="outlined"
@@ -214,7 +214,7 @@ export default function Volunteer() {
             </div>
           </div>
           <div className="events">
-            <ColoredTextFeild
+            <ColoredTextField
               label="Which events are you interested in volunteering for?"
               variant="outlined"
               size="small"
@@ -226,7 +226,7 @@ export default function Volunteer() {
             />
           </div>
           <div className="availability">
-            <ColoredTextFeild
+            <ColoredTextField
               label="When are you available to volunteer (please be specific as to the day/time you are able to help)?"
               variant="outlined"
               size="small"

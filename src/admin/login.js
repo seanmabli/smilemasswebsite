@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../firebase/auth";
-import { ColoredTextFeild } from "../components/mui";
+import { ColoredTextField } from "../components/mui";
 import {
   Button,
   InputAdornment,
@@ -93,7 +93,7 @@ export default function Login() {
               </Alert>
             </Collapse>
             <br />
-            <ColoredTextFeild
+            <ColoredTextField
               label="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +103,7 @@ export default function Login() {
               fullWidth
             />
             <br />
-            <ColoredTextFeild
+            <ColoredTextField
               label="Password"
               variant="outlined"
               size="small"
@@ -203,7 +203,7 @@ export default function Login() {
             </Alert>
           </Collapse>
           <br />
-          <ColoredTextFeild
+          <ColoredTextField
             label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

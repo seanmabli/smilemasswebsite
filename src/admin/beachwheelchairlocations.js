@@ -32,7 +32,7 @@ export default function AdminBeachWheelchairLocations() {
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
-    const getresponses = async () => {
+    const getResponses = async () => {
       const data = await getDocs(collection(db, "beachnomination"));
       setResponses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       if (initial) {
@@ -52,7 +52,7 @@ export default function AdminBeachWheelchairLocations() {
         setInitial(false);
       }
     };
-    getresponses();
+    getResponses();
   }, []);
 
   console.log(responses);

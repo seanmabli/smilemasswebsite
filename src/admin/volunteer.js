@@ -3,6 +3,7 @@ import { db } from "../firebase/firebase";
 import {
   collection,
   getDocs,
+  getDoc,
   updateDoc,
   deleteDoc,
   doc,
@@ -23,122 +24,133 @@ import {
 import ArchiveIcon from "@mui/icons-material/Archive";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PropTypes from "prop-types";
-import { AdminTabs, AdminTab } from "../components/mui";
+import { AdminTabs, AdminTab, ColoredTextField } from "../components/mui";
 
 export default function AdminVolunteer() {
-  const [volunteers, setVolunteers] = useState([]);
+  const [responses, setresponses] = useState([]);
   const [initial, setInitial] = useState(true);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
-    const getVolunteers = async () => {
+    const getresponses = async () => {
       const data = await getDocs(collection(db, "volunteer"));
-      setVolunteers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setresponses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       if (initial) {
-        const upload = async (volunteer) => {
-          if (volunteer.status === "new") {
-            await updateDoc(doc(db, "volunteer", volunteer.id), {
+        const upload = async (response) => {
+          if (response.status === "new") {
+            await updateDoc(doc(db, "volunteer", response.id), {
               status: "all",
             });
           }
         };
-        setVolunteers((state) => {
-          for (const volunteer of state) {
-            upload(volunteer);
+        setresponses((state) => {
+          for (const response of state) {
+            upload(response);
           }
           return state;
         });
         setInitial(false);
       }
     };
-    getVolunteers();
+    getresponses();
   }, []);
 
-  volunteers.sort(function (first, second) {
+  responses.sort(function (first, second) {
     return second.time - first.time;
   });
 
   const navigate = useNavigate();
 
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && <Box>{children}</Box>}
-      </div>
-    );
-  }
-
-  TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-  };
-
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
-
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  function archive(volunteer) {
-    const update = async (volunteer) => {
+  function archive(response) {
+    const update = async (response) => {
       console.log("archive");
-      await updateDoc(doc(db, "volunteer", volunteer.id), {
+      await updateDoc(doc(db, "volunteer", response.id), {
         status: "archived",
       });
-      volunteer.status = "archived";
+      response.status = "archived";
       forceUpdate();
     };
-    update(volunteer);
+    update(response);
   }
 
-  function unarchive(volunteer) {
-    const update = async (volunteer) => {
+  function unarchive(response) {
+    const update = async (response) => {
       console.log("unarchive");
-      await updateDoc(doc(db, "volunteer", volunteer.id), {
+      await updateDoc(doc(db, "volunteer", response.id), {
         status: "all",
       });
-      volunteer.status = "all";
+      response.status = "all";
       forceUpdate();
     };
-    update(volunteer);
+    update(response);
   }
 
-  const [open, setOpen] = useState(false);
-  const [deletingVolunteer, setDeletingVolunteer] = useState({});
+  const [openDeletingResponse, setOpenDeletingResponse] = useState(false);
+  const [DeletingResponse, setDeletingResponse] = useState({});
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [openDeletingEmail, setOpenDeletingEmail] = useState(false);
+  const [deletingEmail, setDeletingEmail] = useState("");
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  function deleteVolunteer() {
+  function deleteresponse() {
     const upload = async () => {
-      await deleteDoc(doc(db, "volunteer", deletingVolunteer.id));
-      volunteers.splice(volunteers.indexOf(deletingVolunteer), 1);
-      handleClose();
+      await deleteDoc(doc(db, "volunteer", DeletingResponse.id));
+      responses.splice(responses.indexOf(DeletingResponse), 1);
+
+      setOpenDeletingResponse(false);
       forceUpdate();
     };
     upload();
+  }
+
+  const [emailList, setEmailList] = useState([]);
+  useEffect(() => {
+    const getEmailList = async () => {
+      const data = await getDoc(doc(db, "email", "volunteer"));
+      setEmailList(data.data().email);
+    };
+    getEmailList();
+  }, []);
+
+  function deleteEmail() {
+    const update = async () => {
+      await updateDoc(doc(db, "email", "response"), {
+        email: emailList.filter((e) => e !== deletingEmail),
+      });
+      setEmailList((state) => state.filter((e) => e !== deletingEmail));
+      setOpenDeletingEmail(false);
+      forceUpdate();
+    };
+    update();
+  }
+
+  function addEmail() {
+    setError(false);
+
+    var emailRegex =
+      /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailRegex.test(email)) {
+      setError(true);
+    }
+
+    const update = async () => {
+      await updateDoc(doc(db, "email", "volunteer"), {
+        email: [...emailList, email],
+      });
+      setEmailList((state) => [...state, email]);
+      setEmail("");
+      forceUpdate();
+    };
+
+    setError((state) => {
+      if (!state) {
+        update();
+      }
+      return state;
+    });
   }
 
   return (
@@ -155,16 +167,17 @@ export default function AdminVolunteer() {
       <br />
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <AdminTabs value={value} onChange={handleChange}>
-            <AdminTab label="New" {...a11yProps(0)} />
-            <AdminTab label="All" {...a11yProps(1)} />
-            <AdminTab label="Archive" {...a11yProps(2)} />
+          <AdminTabs value={value}>
+            <AdminTab label="New" onClick={() => setValue(0)} />
+            <AdminTab label="All" onClick={() => setValue(1)} />
+            <AdminTab label="Archive" onClick={() => setValue(2)} />
+            <AdminTab label="Email List" onClick={() => setValue(3)} />
           </AdminTabs>
         </Box>
         <br />
-        <TabPanel value={value} index={0}>
-          {volunteers.map((volunteer) => {
-            if (volunteer.status === "new") {
+        <div hidden={value !== 0}>
+          {responses.map((response) => {
+            if (response.status === "new") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -178,7 +191,7 @@ export default function AdminVolunteer() {
                     <Tooltip title="Archive">
                       <IconButton
                         onClick={() => {
-                          archive(volunteer);
+                          archive(response);
                         }}
                       >
                         <ArchiveIcon />
@@ -187,8 +200,9 @@ export default function AdminVolunteer() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingVolunteer(volunteer);
-                          handleClickOpen();
+                          setDeletingResponse(response);
+
+                          setOpenDeletingResponse(true);
                         }}
                       >
                         <DeleteIcon />
@@ -258,18 +272,18 @@ export default function AdminVolunteer() {
           })}
           <p
             style={
-              volunteers.filter((content) => content.status === "new")
-                .length === 0
+              responses.filter((content) => content.status === "new").length ===
+              0
                 ? { display: "flex" }
                 : { display: "none" }
             }
           >
             No new submissions
           </p>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {volunteers.map((volunteer) => {
-            if (volunteer.status === "all") {
+        </div>
+        <div hidden={value !== 1}>
+          {responses.map((response) => {
+            if (response.status === "all") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -283,7 +297,7 @@ export default function AdminVolunteer() {
                     <Tooltip title="Archive">
                       <IconButton
                         onClick={() => {
-                          archive(volunteer);
+                          archive(response);
                         }}
                       >
                         <ArchiveIcon />
@@ -292,8 +306,9 @@ export default function AdminVolunteer() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingVolunteer(volunteer);
-                          handleClickOpen();
+                          setDeletingResponse(response);
+
+                          setOpenDeletingResponse(true);
                         }}
                       >
                         <DeleteIcon />
@@ -361,10 +376,10 @@ export default function AdminVolunteer() {
               return null;
             }
           })}
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          {volunteers.map((volunteer) => {
-            if (volunteer.status === "archived") {
+        </div>
+        <div hidden={value !== 2}>
+          {responses.map((response) => {
+            if (response.status === "archived") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -378,7 +393,7 @@ export default function AdminVolunteer() {
                     <Tooltip title="Unarchive">
                       <IconButton
                         onClick={() => {
-                          unarchive(volunteer);
+                          unarchive(response);
                         }}
                       >
                         <UnarchiveIcon />
@@ -387,8 +402,8 @@ export default function AdminVolunteer() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingVolunteer(volunteer);
-                          handleClickOpen();
+                          setDeletingResponse(response);
+                          setOpenDeletingResponse(true);
                         }}
                       >
                         <DeleteIcon />
@@ -456,9 +471,74 @@ export default function AdminVolunteer() {
               return null;
             }
           })}
-        </TabPanel>
+        </div>
+        <div hidden={value !== 3}>
+          {emailList.map((email) => {
+            return (
+              <div style={{ position: "relative" }}>
+                <div
+                  style={{
+                    color: "#547c94",
+                    position: "absolute",
+                    top: "0px",
+                    right: "0px",
+                  }}
+                >
+                  <Tooltip title="Delete">
+                    <IconButton
+                      onClick={() => {
+                        setDeletingEmail(email);
+                        setOpenDeletingEmail(true);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                <p style={{ paddingTop: "8px", paddingBottom: "8px" }}>
+                  {email}
+                </p>
+                <br />
+                <Divider />
+                <br />
+              </div>
+            );
+          })}
+          <Box component="form" noValidate autoComplete="off">
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
+              <div className="addemail">
+                <ColoredTextField
+                  label="New Email"
+                  variant="outlined"
+                  size="small"
+                  value={email}
+                  error={error}
+                  helperText={error ? "Please enter a valid email address" : ""}
+                  onChange={(e) => setEmail(e.target.value)}
+                  fullWidth
+                  required
+                />
+              </div>
+              <Button
+                onClick={addEmail}
+                style={{
+                  color: "#547c94",
+                  borderColor: "#547c94",
+                  marginLeft: "10px",
+                  height: "40px",
+                }}
+                variant="outlined"
+              >
+                Add
+              </Button>
+            </div>
+          </Box>
+        </div>
       </Box>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={openDeletingResponse}
+        onClose={() => setOpenDeletingResponse(false)}
+      >
         <DialogTitle>Are you absolutely sure?</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -468,13 +548,37 @@ export default function AdminVolunteer() {
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={handleClose}
+            onClick={() => setOpenDeletingResponse(false)}
             variant="outlined"
             style={{ color: "#547c94", borderColor: "#547c94" }}
           >
             Cancel
           </Button>
-          <Button onClick={deleteVolunteer} variant="outlined" color="error">
+          <Button onClick={deleteresponse} variant="outlined" color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openDeletingEmail}
+        onClose={() => setOpenDeletingEmail(false)}
+      >
+        <DialogTitle>Are you absolutely sure?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This action cannot be undone. This will permanently delete this
+            email.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setOpenDeletingEmail(false)}
+            variant="outlined"
+            style={{ color: "#547c94", borderColor: "#547c94" }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={deleteEmail} variant="outlined" color="error">
             Delete
           </Button>
         </DialogActions>

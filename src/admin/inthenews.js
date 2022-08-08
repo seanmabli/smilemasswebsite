@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { NewsItemCardActionArea } from "../components/mui";
 
-import { ColoredTextFeild } from "../components/mui";
+import { ColoredTextField } from "../components/mui";
 import {
   Button,
   TextField,
@@ -288,7 +288,7 @@ export function AdminInTheNewsEditor() {
         </h1>
         <br />
         <div style={{ maxWidth: "800px" }}>
-          <ColoredTextFeild
+          <ColoredTextField
             label="Title"
             variant="outlined"
             size="small"
@@ -300,7 +300,7 @@ export function AdminInTheNewsEditor() {
         </div>
         <br />
         <div style={{ maxWidth: "800px" }}>
-          <ColoredTextFeild
+          <ColoredTextField
             label="Url"
             variant="outlined"
             size="small"
@@ -315,7 +315,7 @@ export function AdminInTheNewsEditor() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             renderInput={(props) => (
-              <ColoredTextFeild {...props} size="small" />
+              <ColoredTextField {...props} size="small" />
             )}
             label="Publish Date Time"
             value={published}

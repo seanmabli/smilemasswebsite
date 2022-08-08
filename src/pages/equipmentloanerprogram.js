@@ -15,7 +15,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import {
-  ColoredTextFeild,
+  ColoredTextField,
   EquipmentLoanerProgramCard,
 } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
@@ -220,7 +220,7 @@ export default function EquipmentLoanerProgram() {
         <Box component="form" noValidate autoComplete="off">
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             <div className="name">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Full Name"
                 variant="outlined"
                 size="small"
@@ -237,7 +237,7 @@ export default function EquipmentLoanerProgram() {
               />
             </div>
             <div className="email">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Email"
                 variant="outlined"
                 size="small"
@@ -252,7 +252,7 @@ export default function EquipmentLoanerProgram() {
               />
             </div>
             <div className="phone">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Phone"
                 variant="outlined"
                 size="small"
@@ -273,7 +273,7 @@ export default function EquipmentLoanerProgram() {
               onChange={(event, value) => setAddress(value)}
               fullWidth
               renderInput={(params) => (
-                <ColoredTextFeild
+                <ColoredTextField
                   {...params}
                   label="Address"
                   variant="outlined"
@@ -339,7 +339,7 @@ export default function EquipmentLoanerProgram() {
               </List>
             </EquipmentLoanerProgramCard>
             <div className="pickup">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Requested Pickup Date"
                 variant="outlined"
                 size="small"
@@ -354,7 +354,7 @@ export default function EquipmentLoanerProgram() {
               />
             </div>
             <div className="dropoff">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Return Date"
                 variant="outlined"
                 size="small"
@@ -392,7 +392,7 @@ export default function EquipmentLoanerProgram() {
                 onChange={(event, value) => setAddress(value)}
                 fullWidth
                 renderInput={(params) => (
-                  <ColoredTextFeild
+                  <ColoredTextField
                     {...params}
                     label="Delivery Address (if different from home address)"
                     variant="outlined"
@@ -403,7 +403,7 @@ export default function EquipmentLoanerProgram() {
                 )}
               />
             </div>
-            <ColoredTextFeild
+            <ColoredTextField
               label="Birthday"
               variant="outlined"
               size="small"
@@ -416,7 +416,7 @@ export default function EquipmentLoanerProgram() {
               fullWidth
             />
             <div className="questions">
-              <ColoredTextFeild
+              <ColoredTextField
                 label="Questions / Comments"
                 variant="outlined"
                 size="small"

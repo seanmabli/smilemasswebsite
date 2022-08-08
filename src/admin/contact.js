@@ -24,119 +24,85 @@ import {
 import ArchiveIcon from "@mui/icons-material/Archive";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import DeleteIcon from "@mui/icons-material/Delete";
-import PropTypes from "prop-types";
-import { AdminTabs, AdminTab } from "../components/mui";
+import { AdminTabs, AdminTab, ColoredTextField } from "../components/mui";
+
+import "./contact.css";
 
 export default function AdminContact() {
-  const [contacts, setContacts] = useState([]);
+  const [responses, setresponses] = useState([]);
   const [initial, setInitial] = useState(true);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
-    const getContacts = async () => {
+    const getresponses = async () => {
       const data = await getDocs(collection(db, "contact"));
-      setContacts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setresponses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       if (initial) {
-        const upload = async (contact) => {
-          if (contact.status === "new") {
-            await updateDoc(doc(db, "contact", contact.id), {
+        const upload = async (response) => {
+          if (response.status === "new") {
+            await updateDoc(doc(db, "contact", response.id), {
               status: "all",
             });
           }
         };
-        setContacts((state) => {
-          for (const contact of state) {
-            upload(contact);
+        setresponses((state) => {
+          for (const response of state) {
+            upload(response);
           }
           return state;
         });
         setInitial(false);
       }
     };
-    getContacts();
+    getresponses();
   }, []);
 
-  contacts.sort(function (first, second) {
+  responses.sort(function (first, second) {
     return second.time - first.time;
   });
 
   const navigate = useNavigate();
 
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && <Box>{children}</Box>}
-      </div>
-    );
-  }
-
-  TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-  };
-
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
-
   const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  function archive(contact) {
-    const update = async (contact) => {
+  function archive(response) {
+    const update = async (response) => {
       console.log("archive");
-      await updateDoc(doc(db, "contact", contact.id), {
+      await updateDoc(doc(db, "contact", response.id), {
         status: "archived",
       });
-      contact.status = "archived";
+      response.status = "archived";
       forceUpdate();
     };
-    update(contact);
+    update(response);
   }
 
-  function unarchive(contact) {
-    const update = async (contact) => {
+  function unarchive(response) {
+    const update = async (response) => {
       console.log("unarchive");
-      await updateDoc(doc(db, "contact", contact.id), {
+      await updateDoc(doc(db, "contact", response.id), {
         status: "all",
       });
-      contact.status = "all";
+      response.status = "all";
       forceUpdate();
     };
-    update(contact);
+    update(response);
   }
 
-  const [open, setOpen] = useState(false);
-  const [deletingContact, setDeletingContact] = useState({});
+  const [openDeletingResponse, setOpenDeletingResponse] = useState(false);
+  const [DeletingResponse, setDeletingResponse] = useState({});
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [openDeletingEmail, setOpenDeletingEmail] = useState(false);
+  const [deletingEmail, setDeletingEmail] = useState("");
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  function deleteContact() {
+  function deleteresponse() {
     const upload = async () => {
-      await deleteDoc(doc(db, "contact", deletingContact.id));
-      contacts.splice(contacts.indexOf(deletingContact), 1);
-      handleClose();
+      await deleteDoc(doc(db, "contact", DeletingResponse.id));
+      responses.splice(responses.indexOf(DeletingResponse), 1);
+
+      setOpenDeletingResponse(false);
       forceUpdate();
     };
     upload();
@@ -151,7 +117,43 @@ export default function AdminContact() {
     getEmailList();
   }, []);
 
-  console.log(emailList);
+  function deleteEmail() {
+    const update = async () => {
+      await updateDoc(doc(db, "email", "response"), {
+        email: emailList.filter((e) => e !== deletingEmail),
+      });
+      setEmailList((state) => state.filter((e) => e !== deletingEmail));
+      setOpenDeletingEmail(false);
+      forceUpdate();
+    };
+    update();
+  }
+
+  function addEmail() {
+    setError(false);
+
+    var emailRegex =
+      /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailRegex.test(email)) {
+      setError(true);
+    }
+
+    const update = async () => {
+      await updateDoc(doc(db, "email", "contact"), {
+        email: [...emailList, email],
+      });
+      setEmailList((state) => [...state, email]);
+      setEmail("");
+      forceUpdate();
+    };
+
+    setError((state) => {
+      if (!state) {
+        update();
+      }
+      return state;
+    });
+  }
 
   return (
     <div className="page">
@@ -167,17 +169,17 @@ export default function AdminContact() {
       <br />
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <AdminTabs value={value} onChange={handleChange}>
-            <AdminTab label="New" {...a11yProps(0)} />
-            <AdminTab label="All" {...a11yProps(1)} />
-            <AdminTab label="Archive" {...a11yProps(2)} />
-            <AdminTab label="Email List" {...a11yProps(3)} />
+          <AdminTabs value={value}>
+            <AdminTab label="New" onClick={() => setValue(0)} />
+            <AdminTab label="All" onClick={() => setValue(1)} />
+            <AdminTab label="Archive" onClick={() => setValue(2)} />
+            <AdminTab label="Email List" onClick={() => setValue(3)} />
           </AdminTabs>
         </Box>
         <br />
-        <TabPanel value={value} index={0}>
-          {contacts.map((contact) => {
-            if (contact.status === "new") {
+        <div hidden={value !== 0}>
+          {responses.map((response) => {
+            if (response.status === "new") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -191,7 +193,7 @@ export default function AdminContact() {
                     <Tooltip title="Archive">
                       <IconButton
                         onClick={() => {
-                          archive(contact);
+                          archive(response);
                         }}
                       >
                         <ArchiveIcon />
@@ -200,8 +202,9 @@ export default function AdminContact() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingContact(contact);
-                          handleClickOpen();
+                          setDeletingResponse(response);
+
+                          setOpenDeletingResponse(true);
                         }}
                       >
                         <DeleteIcon />
@@ -210,27 +213,27 @@ export default function AdminContact() {
                   </div>
                   <p>
                     <span className="bold">Name: </span>
-                    {contact.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {contact.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {contact.phone}
+                    {response.phone}
                   </p>
                   <p>
                     <span className="bold">Message: </span>
                     <br />
                     <span
                       style={
-                        contact.message.includes("\n")
+                        response.message.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {contact.message}
+                      {response.message}
                     </span>
                   </p>
                   <br />
@@ -244,7 +247,7 @@ export default function AdminContact() {
           })}
           <p
             style={
-              contacts.filter((content) => content.status === "new").length ===
+              responses.filter((content) => content.status === "new").length ===
               0
                 ? { display: "flex" }
                 : { display: "none" }
@@ -252,10 +255,10 @@ export default function AdminContact() {
           >
             No new submissions
           </p>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {contacts.map((contact) => {
-            if (contact.status === "all") {
+        </div>
+        <div hidden={value !== 1}>
+          {responses.map((response) => {
+            if (response.status === "all") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -269,7 +272,7 @@ export default function AdminContact() {
                     <Tooltip title="Archive">
                       <IconButton
                         onClick={() => {
-                          archive(contact);
+                          archive(response);
                         }}
                       >
                         <ArchiveIcon />
@@ -278,8 +281,9 @@ export default function AdminContact() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingContact(contact);
-                          handleClickOpen();
+                          setDeletingResponse(response);
+
+                          setOpenDeletingResponse(true);
                         }}
                       >
                         <DeleteIcon />
@@ -288,27 +292,27 @@ export default function AdminContact() {
                   </div>
                   <p>
                     <span className="bold">Name: </span>
-                    {contact.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {contact.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {contact.phone}
+                    {response.phone}
                   </p>
                   <p>
                     <span className="bold">Message: </span>
                     <br />
                     <span
                       style={
-                        contact.message.includes("\n")
+                        response.message.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {contact.message}
+                      {response.message}
                     </span>
                   </p>
                   <br />
@@ -320,10 +324,10 @@ export default function AdminContact() {
               return null;
             }
           })}
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          {contacts.map((contact) => {
-            if (contact.status === "archived") {
+        </div>
+        <div hidden={value !== 2}>
+          {responses.map((response) => {
+            if (response.status === "archived") {
               return (
                 <div style={{ position: "relative" }}>
                   <div
@@ -337,7 +341,7 @@ export default function AdminContact() {
                     <Tooltip title="Unarchive">
                       <IconButton
                         onClick={() => {
-                          unarchive(contact);
+                          unarchive(response);
                         }}
                       >
                         <UnarchiveIcon />
@@ -346,8 +350,8 @@ export default function AdminContact() {
                     <Tooltip title="Delete">
                       <IconButton
                         onClick={() => {
-                          setDeletingContact(contact);
-                          handleClickOpen();
+                          setDeletingResponse(response);
+                          setOpenDeletingResponse(true);
                         }}
                       >
                         <DeleteIcon />
@@ -356,27 +360,27 @@ export default function AdminContact() {
                   </div>
                   <p>
                     <span className="bold">Name: </span>
-                    {contact.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {contact.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {contact.phone}
+                    {response.phone}
                   </p>
                   <p>
                     <span className="bold">Message: </span>
                     <br />
                     <span
                       style={
-                        contact.message.includes("\n")
+                        response.message.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {contact.message}
+                      {response.message}
                     </span>
                   </p>
                   <br />
@@ -388,8 +392,8 @@ export default function AdminContact() {
               return null;
             }
           })}
-        </TabPanel>
-        <TabPanel value={value} index={3}>
+        </div>
+        <div hidden={value !== 3}>
           {emailList.map((email) => {
             return (
               <div style={{ position: "relative" }}>
@@ -402,7 +406,12 @@ export default function AdminContact() {
                   }}
                 >
                   <Tooltip title="Delete">
-                    <IconButton onClick={() => {}}>
+                    <IconButton
+                      onClick={() => {
+                        setDeletingEmail(email);
+                        setOpenDeletingEmail(true);
+                      }}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </Tooltip>
@@ -416,9 +425,41 @@ export default function AdminContact() {
               </div>
             );
           })}
-        </TabPanel>
+          <Box component="form" noValidate autoComplete="off">
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
+              <div className="addemail">
+                <ColoredTextField
+                  label="New Email"
+                  variant="outlined"
+                  size="small"
+                  value={email}
+                  error={error}
+                  helperText={error ? "Please enter a valid email address" : ""}
+                  onChange={(e) => setEmail(e.target.value)}
+                  fullWidth
+                  required
+                />
+              </div>
+              <Button
+                onClick={addEmail}
+                style={{
+                  color: "#547c94",
+                  borderColor: "#547c94",
+                  marginLeft: "10px",
+                  height: "40px",
+                }}
+                variant="outlined"
+              >
+                Add
+              </Button>
+            </div>
+          </Box>
+        </div>
       </Box>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={openDeletingResponse}
+        onClose={() => setOpenDeletingResponse(false)}
+      >
         <DialogTitle>Are you absolutely sure?</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -428,13 +469,37 @@ export default function AdminContact() {
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={handleClose}
+            onClick={() => setOpenDeletingResponse(false)}
             variant="outlined"
             style={{ color: "#547c94", borderColor: "#547c94" }}
           >
             Cancel
           </Button>
-          <Button onClick={deleteContact} variant="outlined" color="error">
+          <Button onClick={deleteresponse} variant="outlined" color="error">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openDeletingEmail}
+        onClose={() => setOpenDeletingEmail(false)}
+      >
+        <DialogTitle>Are you absolutely sure?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This action cannot be undone. This will permanently delete this
+            email.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setOpenDeletingEmail(false)}
+            variant="outlined"
+            style={{ color: "#547c94", borderColor: "#547c94" }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={deleteEmail} variant="outlined" color="error">
             Delete
           </Button>
         </DialogActions>
