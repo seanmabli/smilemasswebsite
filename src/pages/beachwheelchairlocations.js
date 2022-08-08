@@ -64,6 +64,7 @@ export default function BeachWheelchairLocations() {
         why: why,
         newsletter: newsletter,
         time: new Date(),
+        status: "new",
       });
     };
 

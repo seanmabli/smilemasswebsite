@@ -117,7 +117,7 @@ export default function AdminVolunteer() {
 
   function deleteEmail() {
     const update = async () => {
-      await updateDoc(doc(db, "email", "response"), {
+      await updateDoc(doc(db, "email", "volunteer"), {
         email: emailList.filter((e) => e !== deletingEmail),
       });
       setEmailList((state) => state.filter((e) => e !== deletingEmail));
@@ -209,25 +209,26 @@ export default function AdminVolunteer() {
                       </IconButton>
                     </Tooltip>
                   </div>
+
                   <p>
                     <span className="bold">Name: </span>
-                    {volunteer.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {volunteer.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {volunteer.phone}
+                    {response.phone}
                   </p>
                   <p>
                     <span className="bold">Address: </span>
-                    {volunteer.address}
+                    {response.address}
                   </p>
                   <p>
                     <span className="bold">Birthday: </span>
-                    {volunteer.birthday}
+                    {response.birthday}
                   </p>
                   <p>
                     <span className="bold">
@@ -236,12 +237,12 @@ export default function AdminVolunteer() {
                     <br />
                     <span
                       style={
-                        volunteer.events.includes("\n")
+                        response.events.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {volunteer.events}
+                      {response.events}
                     </span>
                     <br />
                   </p>
@@ -252,12 +253,12 @@ export default function AdminVolunteer() {
                     <br />
                     <span
                       style={
-                        volunteer.availability.includes("\n")
+                        response.availability.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {volunteer.availability}
+                      {response.availability}
                     </span>
                     <br />
                   </p>
@@ -315,25 +316,26 @@ export default function AdminVolunteer() {
                       </IconButton>
                     </Tooltip>
                   </div>
+
                   <p>
                     <span className="bold">Name: </span>
-                    {volunteer.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {volunteer.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {volunteer.phone}
+                    {response.phone}
                   </p>
                   <p>
                     <span className="bold">Address: </span>
-                    {volunteer.address}
+                    {response.address}
                   </p>
                   <p>
                     <span className="bold">Birthday: </span>
-                    {volunteer.birthday}
+                    {response.birthday}
                   </p>
                   <p>
                     <span className="bold">
@@ -342,12 +344,12 @@ export default function AdminVolunteer() {
                     <br />
                     <span
                       style={
-                        volunteer.events.includes("\n")
+                        response.events.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {volunteer.events}
+                      {response.events}
                     </span>
                     <br />
                   </p>
@@ -358,12 +360,12 @@ export default function AdminVolunteer() {
                     <br />
                     <span
                       style={
-                        volunteer.availability.includes("\n")
+                        response.availability.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {volunteer.availability}
+                      {response.availability}
                     </span>
                     <br />
                   </p>
@@ -410,25 +412,26 @@ export default function AdminVolunteer() {
                       </IconButton>
                     </Tooltip>
                   </div>
+
                   <p>
                     <span className="bold">Name: </span>
-                    {volunteer.name}
+                    {response.name}
                   </p>
                   <p>
                     <span className="bold">Email: </span>
-                    {volunteer.email}
+                    {response.email}
                   </p>
                   <p>
                     <span className="bold">Phone: </span>
-                    {volunteer.phone}
+                    {response.phone}
                   </p>
                   <p>
                     <span className="bold">Address: </span>
-                    {volunteer.address}
+                    {response.address}
                   </p>
                   <p>
                     <span className="bold">Birthday: </span>
-                    {volunteer.birthday}
+                    {response.birthday}
                   </p>
                   <p>
                     <span className="bold">
@@ -437,12 +440,12 @@ export default function AdminVolunteer() {
                     <br />
                     <span
                       style={
-                        volunteer.events.includes("\n")
+                        response.events.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {volunteer.events}
+                      {response.events}
                     </span>
                     <br />
                   </p>
@@ -453,12 +456,12 @@ export default function AdminVolunteer() {
                     <br />
                     <span
                       style={
-                        volunteer.availability.includes("\n")
+                        response.availability.includes("\n")
                           ? { whiteSpace: "pre-wrap" }
                           : {}
                       }
                     >
-                      {volunteer.availability}
+                      {response.availability}
                     </span>
                     <br />
                   </p>

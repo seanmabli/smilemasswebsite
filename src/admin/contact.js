@@ -119,7 +119,7 @@ export default function AdminContact() {
 
   function deleteEmail() {
     const update = async () => {
-      await updateDoc(doc(db, "email", "response"), {
+      await updateDoc(doc(db, "email", "contact"), {
         email: emailList.filter((e) => e !== deletingEmail),
       });
       setEmailList((state) => state.filter((e) => e !== deletingEmail));
