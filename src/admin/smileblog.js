@@ -8,6 +8,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Tooltip,
+  IconButton,
 } from "@mui/material";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -366,59 +368,110 @@ export function AdminSmileBlogEditor() {
           />
         </div>
         <br />
-        <FormatBoldRoundedIcon
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "isActive" : "isNotActive"}
-        />
-        <FormatItalicRoundedIcon
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "isActive" : "isNotActive"}
-        />
-        <StrikethroughSRoundedIcon
-          onClick={() => editor.chain().focus().toggleStrikethrough().run()}
-          className={
-            editor.isActive("strikethrough") ? "isActive" : "isNotActive"
-          }
-        />
-        <FormatClearRoundedIcon
-          onClick={() => editor.chain().focus().clearNodes().run()}
-          className="isNotActive"
-        />
-        <FormatListBulletedRoundedIcon
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive("bulletList") ? "isActive" : "isNotActive"}
-        />
-        <FormatListNumberedRoundedIcon
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={
-            editor.isActive("orderedList") ? "isActive" : "isNotActive"
-          }
-        />
-        <FormatQuoteRoundedIcon
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "isActive" : "isNotActive"}
-        />
-        <InsertLinkRoundedIcon
-          onClick={setLink}
-          className={editor.isActive("link") ? "isActive" : "isNotActive"}
-        />
-        <LinkOffRoundedIcon
-          onClick={setLink}
-          disabled={!editor.isActive("link")}
-          className="isNotActive"
-        />
-        <UndoRoundedIcon
-          onClick={() => editor.chain().focus().undo().run()}
-          className="isNotActive"
-        />
-        <RedoRoundedIcon
-          onClick={() => editor.chain().focus().redo().run()}
-          className="isNotActive"
-        />
+        <Tooltip title="Bold">
+          <IconButton
+            onClick={() => editor.chain().focus().toggleBold().run()}
+            sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+          >
+            <FormatBoldRoundedIcon
+              className={editor.isActive("bold") ? "isActive" : "isNotActive"}
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Italic">
+          <IconButton
+            onClick={() => editor.chain().focus().toggleItalic().run()}
+            sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+          >
+            <FormatItalicRoundedIcon
+              className={editor.isActive("italic") ? "isActive" : "isNotActive"}
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Strikethrough">
+          <IconButton
+            onClick={() => editor.chain().focus().toggleStrikethrough().run()}
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            <StrikethroughSRoundedIcon
+              className={
+                editor.isActive("strikethrough") ? "isActive" : "isNotActive"
+              }
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Clear Formatting">
+          <IconButton
+            onClick={() => editor.chain().focus().clearNodes().run()}
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            <FormatClearRoundedIcon className="isNotActive" />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Bulleted List">
+          <IconButton
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            <FormatListBulletedRoundedIcon
+              className={
+                editor.isActive("bulletList") ? "isActive" : "isNotActive"
+              }
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Numbered List">
+          <IconButton
+            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            <FormatListNumberedRoundedIcon
+              className={
+                editor.isActive("orderedList") ? "isActive" : "isNotActive"
+              }
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Block Quote">
+          <IconButton
+            onClick={() => editor.chain().focus().toggleBlockquote().run()}
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            <FormatQuoteRoundedIcon
+              className={
+                editor.isActive("blockquote") ? "isActive" : "isNotActive"
+              }
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Insert Link">
+          <IconButton
+            onClick={setLink}
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            <InsertLinkRoundedIcon
+              className={editor.isActive("link") ? "isActive" : "isNotActive"}
+            />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Link Off">
+          <IconButton onClick={setLink} disabled={!editor.isActive("link")}>
+            <LinkOffRoundedIcon className="isNotActive" />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Undo">
+          <IconButton onClick={() => editor.chain().focus().undo().run()}>
+            <UndoRoundedIcon className="isNotActive" />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Redo">
+          <IconButton onClick={() => editor.chain().focus().redo().run()}>
+            <RedoRoundedIcon className="isNotActive" />
+          </IconButton>
+        </Tooltip>
         <TittapCard variant="outlined">
           <EditorContent editor={editor} />
         </TittapCard>
-        <br />
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             renderInput={(props) => (

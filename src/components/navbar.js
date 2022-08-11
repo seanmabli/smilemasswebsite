@@ -34,7 +34,7 @@ import Login from "../admin/login";
 import Dashboard from "../admin/dashboard";
 import AdminContact from "../admin/contact";
 import { AdminSmileBlog, AdminSmileBlogEditor } from "../admin/smileblog";
-import AdminNewsletters from "../admin/newsletters";
+import { AdminNewsletters, AdminNewslettersEditor } from "../admin/newsletters";
 import AdminVollunteer from "../admin/volunteer";
 import { AdminInTheNews, AdminInTheNewsEditor } from "../admin/inthenews";
 import AdminEquiptmentLoanerProgram from "../admin/equipmentloanerprogram";

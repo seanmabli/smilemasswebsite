@@ -18,19 +18,19 @@ let transporter = nodemailer.createTransport({
 exports.contact = functions.firestore
   .document("contact/{contactId}")
   .onCreate((snap, context) => {
-    const emaillist = [];
+    const emailList = [];
     db.doc("email/contact")
       .get()
       .then((documentSnapshot) => {
         documentSnapshot.ref.get().then((doc) => {
-          emaillist.push.apply(emaillist, doc.data().email);
-          console.log(emaillist);
+          emailList.push.apply(emailList, doc.data().email);
+          console.log(emailList);
         });
       })
       .then(() => {
         const mailOptions = {
           from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-          bcc: emaillist,
+          bcc: emailList,
           subject: `Contact Form Submission ${snap.id}`,
           html: `
 <p style="white-space: pre-wrap">
@@ -55,19 +55,19 @@ exports.contact = functions.firestore
 exports.volunteer = functions.firestore
   .document("volunteer/{volunteerId}")
   .onCreate((snap, context) => {
-    const emailist = [];
+    const emailList = [];
     db.doc("email/volunteer")
       .get()
       .then((documentSnapshot) => {
         documentSnapshot.ref.get().then((doc) => {
-          emaillist.push.apply(emaillist, doc.data().email);
-          console.log(emaillist);
+          emailList.push.apply(emailList, doc.data().email);
+          console.log(emailList);
         });
       })
       .then(() => {
         const mailOptions = {
           from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-          bcc: emailist,
+          bcc: emailList,
           subject: `Volunteer Form Submission ${snap.id}`,
           html: `
 <p style="white-space: pre-wrap">
@@ -97,19 +97,19 @@ exports.volunteer = functions.firestore
 exports.beachnomination = functions.firestore
   .document("beachnomination/{beachnominationId}")
   .onCreate((snap, context) => {
-    const emailist = [];
+    const emailList = [];
     db.doc("email/beachnomination")
       .get()
       .then((documentSnapshot) => {
         documentSnapshot.ref.get().then((doc) => {
-          emaillist.push.apply(emaillist, doc.data().email);
-          console.log(emaillist);
+          emailList.push.apply(emailList, doc.data().email);
+          console.log(emailList);
         });
       })
       .then(() => {
         const mailOptions = {
           from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-          bcc: emailist,
+          bcc: emailList,
           subject: `Beach Nomination Form Submission ${snap.id}`,
           html: `
 <p style="white-space: pre-wrap">
@@ -138,19 +138,19 @@ exports.beachnomination = functions.firestore
 exports.equiptmentloaner = functions.firestore
   .document("equiptmentloaner/{equiptmentloanerId}")
   .onCreate((snap, context) => {
-    const emailist = [];
+    const emailList = [];
     db.doc("email/equiptmentloaner")
       .get()
       .then((documentSnapshot) => {
         documentSnapshot.ref.get().then((doc) => {
-          emaillist.push.apply(emaillist, doc.data().email);
-          console.log(emaillist);
+          emailList.push.apply(emailList, doc.data().email);
+          console.log(emailList);
         });
       })
       .then(() => {
         const mailOptions = {
           from: `SMILE Mass Website <smilemasssite@gmail.com>`,
-          bcc: emailist,
+          bcc: emailList,
           subject: `Equiptment Loaner Form Submission ${snap.id}`,
           html: `
 <p style="white-space: pre-wrap">
