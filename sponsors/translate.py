@@ -24,29 +24,7 @@ for file in original:
 '''
 new = [f for f in listdir(newName) if isfile(join(newName, f))]
 
-rows=2
-cols = 2
-img_count = 0
-
-fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(15,15))
-
-for i in range(rows):
-    for j in range(cols):        
-        if img_count < len(new):
-            axes[i, j].imshow(new[img_count])
-            img_count+=1
-
-def make_array():
-    from PIL import Image
-    array = []
-    for file in new:
-      im = Image.open(newName + "/" + file)
-      array.append(im)
-    return np.array(array)
-
-array = make_array()
-result = gallery(array)
-plt.imshow(result)
-plt.show()
-
-print(len(original), len(new))
+for title in new:
+  img = Image.open(newName + "/" + title)
+  img = img.resize((200, int(img.size[1] / (img.size[0] / 200))))
+  img.save("upload/" + title)
