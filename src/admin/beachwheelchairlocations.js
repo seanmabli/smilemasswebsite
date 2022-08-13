@@ -21,22 +21,22 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import UnarchiveIcon from "@mui/icons-material/Unarchive";
-import DeleteIcon from "@mui/icons-material/Delete";
+import ArchiveRoundedIcon from "@mui/icons-material/ArchiveRounded";
+import UnarchiveRoundedIcon from "@mui/icons-material/UnarchiveRounded";
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { AdminTabs, AdminTab, ColoredTextField } from "../components/mui";
 
 export default function AdminBeachWheelchairLocations() {
-  const [responses, setresponses] = useState([]);
+  const [responses, setResponses] = useState([]);
   const [initial, setInitial] = useState(true);
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
-    const getresponses = async () => {
+    const getResponses = async () => {
       const data = await getDocs(collection(db, "beachnomination"));
-      setresponses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setResponses(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       if (initial) {
         const upload = async (response) => {
           if (response.status === "new") {
@@ -45,7 +45,7 @@ export default function AdminBeachWheelchairLocations() {
             });
           }
         };
-        setresponses((state) => {
+        setResponses((state) => {
           for (const response of state) {
             upload(response);
           }
@@ -54,7 +54,7 @@ export default function AdminBeachWheelchairLocations() {
         setInitial(false);
       }
     };
-    getresponses();
+    getResponses();
   }, []);
 
   responses.sort(function (first, second) {
@@ -90,15 +90,15 @@ export default function AdminBeachWheelchairLocations() {
   }
 
   const [openDeletingResponse, setOpenDeletingResponse] = useState(false);
-  const [DeletingResponse, setDeletingResponse] = useState({});
+  const [deletingResponse, setDeletingResponse] = useState({});
 
   const [openDeletingEmail, setOpenDeletingEmail] = useState(false);
   const [deletingEmail, setDeletingEmail] = useState("");
 
   function deleteresponse() {
     const upload = async () => {
-      await deleteDoc(doc(db, "beachnomination", DeletingResponse.id));
-      responses.splice(responses.indexOf(DeletingResponse), 1);
+      await deleteDoc(doc(db, "beachnomination", deletingResponse.id));
+      responses.splice(responses.indexOf(deletingResponse), 1);
 
       setOpenDeletingResponse(false);
       forceUpdate();
@@ -194,7 +194,7 @@ export default function AdminBeachWheelchairLocations() {
                           archive(response);
                         }}
                       >
-                        <ArchiveIcon />
+                        <ArchiveRoundedIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="Delete">
@@ -205,7 +205,7 @@ export default function AdminBeachWheelchairLocations() {
                           setOpenDeletingResponse(true);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteRoundedIcon />
                       </IconButton>
                     </Tooltip>
                   </div>
@@ -303,7 +303,7 @@ export default function AdminBeachWheelchairLocations() {
                           archive(response);
                         }}
                       >
-                        <ArchiveIcon />
+                        <ArchiveRoundedIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="Delete">
@@ -314,7 +314,7 @@ export default function AdminBeachWheelchairLocations() {
                           setOpenDeletingResponse(true);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteRoundedIcon />
                       </IconButton>
                     </Tooltip>
                   </div>
@@ -403,7 +403,7 @@ export default function AdminBeachWheelchairLocations() {
                           unarchive(response);
                         }}
                       >
-                        <UnarchiveIcon />
+                        <UnarchiveRoundedIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="Delete">
@@ -413,7 +413,7 @@ export default function AdminBeachWheelchairLocations() {
                           setOpenDeletingResponse(true);
                         }}
                       >
-                        <DeleteIcon />
+                        <DeleteRoundedIcon />
                       </IconButton>
                     </Tooltip>
                   </div>
@@ -502,7 +502,7 @@ export default function AdminBeachWheelchairLocations() {
                         setOpenDeletingEmail(true);
                       }}
                     >
-                      <DeleteIcon />
+                      <DeleteRoundedIcon />
                     </IconButton>
                   </Tooltip>
                 </div>

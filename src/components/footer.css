@@ -1,0 +1,20 @@
+.sponsorscontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.sponsor {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.sponsorimage {
+  margin: 10px;
+  width: 100px;
+  height: fit-content;
+}

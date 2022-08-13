@@ -86,6 +86,8 @@ export default function Dashboard() {
         <Link to="/admin/beachwheelchairlocations">
           Admin - Beach Wheelchair Locations
         </Link>
+        <br />
+        <Link to="/admin/sponsors">Admin - Sponsors</Link>
       </div>
     );
   } else {

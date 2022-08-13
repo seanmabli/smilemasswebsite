@@ -67,6 +67,8 @@ export function SmileBlog() {
               </div>
             </SMILEBlogCardActionArea>
           );
+        } else {
+          return;
         }
       })}
     </div>
