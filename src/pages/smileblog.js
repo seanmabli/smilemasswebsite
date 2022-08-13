@@ -34,38 +34,40 @@ export function SmileBlog() {
       <h1>SMILE Blog</h1>
       <br />
       {posts.map((post) => {
-        return (
-          <SMILEBlogCardActionArea onClick={() => navigate(post.url)}>
-            <img
-              src={post.imageurl}
-              alt="Post Thumbnail"
-              className="postthumbnail"
-            />
-            <div>
-              <h2 style={{ color: "black" }}>{post.title}</h2>
-              <br />
-              <p style={{ color: "black" }}>
-                {post.published
-                  .toDate()
-                  .toDateString()
-                  .split(" ")
-                  .slice(1)
-                  .join(" ")}
-                &nbsp;&nbsp;
-                <span className="bold">Joanna Buoniconti</span>
-              </p>
-              <br />
-              <p style={{ whiteSpace: "pre-line", color: "black" }}>
-                {post.post
-                  .replace(/<[^>]+>/g, "")
-                  .split(" ")
-                  .slice(0, 50)
-                  .join(" ")}
-                ...
-              </p>
-            </div>
-          </SMILEBlogCardActionArea>
-        );
+        if (post.published.toDate() < new Date()) {
+          return (
+            <SMILEBlogCardActionArea onClick={() => navigate(post.url)}>
+              <img
+                src={post.imageurl}
+                alt="Post Thumbnail"
+                className="postthumbnail"
+              />
+              <div>
+                <h2 style={{ color: "black" }}>{post.title}</h2>
+                <br />
+                <p style={{ color: "black" }}>
+                  {post.published
+                    .toDate()
+                    .toDateString()
+                    .split(" ")
+                    .slice(1)
+                    .join(" ")}
+                  &nbsp;&nbsp;
+                  <span className="bold">Joanna Buoniconti</span>
+                </p>
+                <br />
+                <p style={{ whiteSpace: "pre-line", color: "black" }}>
+                  {post.post
+                    .replace(/<[^>]+>/g, "")
+                    .split(" ")
+                    .slice(0, 50)
+                    .join(" ")}
+                  ...
+                </p>
+              </div>
+            </SMILEBlogCardActionArea>
+          );
+        }
       })}
     </div>
   );

@@ -68,10 +68,8 @@ export const SMILEBlogCardActionArea = styled(CardActionArea)({
 });
 
 export const TittapCard = styled(Card)({
-  color: "#547c94",
   padding: "10px",
   marginBottom: "20px",
-  border: "1px solid #547c94",
   borderRadius: "5px",
   maxWidth: "1250px",
 });

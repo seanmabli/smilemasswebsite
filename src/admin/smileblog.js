@@ -10,6 +10,7 @@ import {
   DialogTitle,
   Tooltip,
   IconButton,
+  ClickAwayListener,
 } from "@mui/material";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -135,6 +136,8 @@ export function AdminSmileBlogEditor() {
   const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
   const [initialState, setInitialState] = useState(false);
   const [newPost, setNewPost] = useState(true);
+  const [inEditor, setInEditor] = useState(false);
+  const [hoverEditor, setHoverEditor] = useState(false);
 
   const { id } = useParams();
 
@@ -228,7 +231,7 @@ export function AdminSmileBlogEditor() {
   });
 
   if (post !== null && !initialState) {
-    if (post.length === 0) {
+    if (post.length === 0 && id !== "new") {
       navigate("/admin/smileblog");
     }
     if (id !== "new") {
@@ -390,13 +393,11 @@ export function AdminSmileBlogEditor() {
         </Tooltip>
         <Tooltip title="Strikethrough">
           <IconButton
-            onClick={() => editor.chain().focus().toggleStrikethrough().run()}
+            onClick={() => editor.chain().focus().toggleStrike().run()}
             sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
           >
             <StrikethroughSRoundedIcon
-              className={
-                editor.isActive("strikethrough") ? "isActive" : "isNotActive"
-              }
+              className={editor.isActive("strike") ? "isActive" : "isNotActive"}
             />
           </IconButton>
         </Tooltip>
@@ -469,9 +470,22 @@ export function AdminSmileBlogEditor() {
             <RedoRoundedIcon className="isNotActive" />
           </IconButton>
         </Tooltip>
-        <TittapCard variant="outlined">
-          <EditorContent editor={editor} />
-        </TittapCard>
+        <ClickAwayListener onClickAway={() => setInEditor(false)}>
+          <TittapCard
+            variant="outlined"
+            onMouseEnter={() => setHoverEditor(true)}
+            onMouseLeave={() => setHoverEditor(false)}
+            onMouseDownCapture={() => setInEditor(true)}
+            sx={[
+              hoverEditor
+                ? { borderWidth: "1px", borderColor: "#547c94" }
+                : { borderWidth: "1px", borderColor: "rgba(0, 0, 0, 0.23)" },
+              inEditor ? { borderWidth: "2px", borderColor: "#547c94" } : {},
+            ]}
+          >
+            <EditorContent editor={editor} />
+          </TittapCard>
+        </ClickAwayListener>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             renderInput={(props) => (
