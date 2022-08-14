@@ -33,6 +33,7 @@ import { ColoredTextField } from "../components/mui";
 export function AdminTestimonials() {
   const [testimonials, setTestimonials] = useState([]);
   const [content, setContent] = useState("");
+  const [images, setImages] = useState([{ name: "No file chosen" }]);
   const [error, setError] = useState(false);
 
   const [editing, setEditing] = useState(false);
@@ -49,6 +50,10 @@ export function AdminTestimonials() {
     };
     getTestimonials();
   }, []);
+
+  testimonials.sort(function (first, second) {
+    return first.index - second.index;
+  });
 
   function addTestimonial() {
     if (content === "") {
@@ -108,6 +113,16 @@ export function AdminTestimonials() {
         setEditingError(false);
       };
       upload();
+    }
+  }
+
+  const [imageNames, setImageNames] = useState(["No file chosen"]);
+
+  function getImageNames(images) {
+    setImageNames([]);
+    console.log(images);
+    for (let i = 0; i < images.length; i++) {
+      setImageNames((prev) => [...prev, images[i].name]);
     }
   }
 
@@ -215,6 +230,25 @@ export function AdminTestimonials() {
         multiline
         minRows={4}
       />
+      <div style={{ display: "flex", marginTop: "20px" }}>
+        <Button
+          variant="outlined"
+          component="label"
+          style={{ color: "#547c94", borderColor: "#547c94", height: "40px" }}
+        >
+          Upload Images
+          <input
+            type="file"
+            onChange={(event) => {
+              setImages(event.target.files);
+              getImageNames(event.target.files);
+            }}
+            hidden
+            multiple
+          />
+        </Button>
+        <p>&nbsp;&nbsp;{imageNames.join(", ")}</p>
+      </div>
       <Button
         onClick={addTestimonial}
         style={{
