@@ -4,6 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { Box, Button } from "@mui/material";
 import { ColoredTextField } from "../components/mui";
 import "./contact.css";
+import { Footer } from "../components/footer";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -138,6 +139,7 @@ export default function Contact() {
             </Button>
           </div>
         </Box>
+        <Footer />
       </div>
     );
   } else {
@@ -151,6 +153,7 @@ export default function Contact() {
         <br />
         <p>Thank you for your interest in Smile Mass.</p>
         <p>We will be in touch with you shortly.</p>
+        <Footer />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import { Button,} from "@mui/material";
 import { Link } from "react-router-dom";
+import { Footer } from "../components/footer";
 
 export default function JoinTheCoffeeClub() {
   return (
@@ -43,6 +44,7 @@ export default function JoinTheCoffeeClub() {
         </li>
         <li>Scholarship Fund</li>
       </ul>
+      <Footer />
     </div>
   );
 }

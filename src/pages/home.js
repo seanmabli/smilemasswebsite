@@ -1,3 +1,5 @@
+import { Footer } from "../components/footer";
+
 export default function Home() {
   return (
     <div className="page">
@@ -12,6 +14,7 @@ export default function Home() {
         accessibility in vacation and recreation experiences. Please help us see
         our vision through. Read letters from some of our supporters right here.
       </p>
+      <Footer />
     </div>
   );
 }

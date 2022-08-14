@@ -3,6 +3,7 @@ import { ReadMyStoryButton, OurTeamCard } from "../components/mui";
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { Footer } from "../components/footer";
 
 export default function OurTeam() {
   let navigate = useNavigate();
@@ -74,6 +75,7 @@ export default function OurTeam() {
           })}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

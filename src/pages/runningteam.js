@@ -1,3 +1,5 @@
+import { Footer } from "../components/footer";
+
 export default function RunningTeam() {
   return (
     <div className="page">
@@ -72,6 +74,7 @@ export default function RunningTeam() {
           race bib number (if they wish to receive a recorded time).
         </li>
       </ul>
+      <Footer />
     </div>
   );
 }

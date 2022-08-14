@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Footer } from "../components/footer";
 
 export default function OurMission() {
   return (
@@ -34,7 +34,7 @@ export default function OurMission() {
         disabled family member enjoy happy, healthy memories through vacation
         and recreation experiences. Over the past 11 years we have:
       </p>
-      <br />
+      <Footer />
     </div>
   );
 }

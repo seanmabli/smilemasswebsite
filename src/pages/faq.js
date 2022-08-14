@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Skeleton, Stack } from "@mui/material";
+import { Footer } from "../components/footer";
 
 export default function FAQ() {
   const [faqs, setFaqs] = useState([]);
@@ -47,6 +48,7 @@ export default function FAQ() {
             </>
           );
         })}
+        <Footer />
       </div>
     );
   } else {
@@ -55,16 +57,35 @@ export default function FAQ() {
         <h1>Frequently Asked Questions</h1>
         <br />
         <Stack spacing={1}>
-          <Skeleton variant="text" width={800} height={35} style={{backgroundColor: "#ccc"}}/>
-          <Skeleton variant="rectangular" height={200} style={{maxWidth: "1250px"}} />
-          <Skeleton variant="text" style={{maxWidth: "1250px"}} height={35}/>
+          <Skeleton
+            variant="text"
+            width={800}
+            height={35}
+            style={{ backgroundColor: "#ccc" }}
+          />
+          <Skeleton
+            variant="rectangular"
+            height={200}
+            style={{ maxWidth: "1250px" }}
+          />
+          <Skeleton variant="text" style={{ maxWidth: "1250px" }} height={35} />
         </Stack>
         <br />
         <Stack spacing={1}>
-          <Skeleton variant="text" width={800} height={35} style={{backgroundColor: "#ccc"}}/>
-          <Skeleton variant="rectangular" height={200} style={{maxWidth: "1250px"}} />
-          <Skeleton variant="text" style={{maxWidth: "1250px"}} height={35}/>
+          <Skeleton
+            variant="text"
+            width={800}
+            height={35}
+            style={{ backgroundColor: "#ccc" }}
+          />
+          <Skeleton
+            variant="rectangular"
+            height={200}
+            style={{ maxWidth: "1250px" }}
+          />
+          <Skeleton variant="text" style={{ maxWidth: "1250px" }} height={35} />
         </Stack>
+        <Footer />
       </div>
     );
   }

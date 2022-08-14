@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import sudburyplayground from "../images/sudburyplayground.jpg";
-import beachwheelchair from "../images/beachwheelchair.jpg";
 import {
   Timeline,
   TimelineItem,
@@ -10,6 +8,7 @@ import {
   TimelineDot,
   TimelineOppositeContent,
 } from "@mui/lab";
+import { Footer } from "../components/footer";
 
 export default function Accomplishments() {
   return (
@@ -210,6 +209,7 @@ export default function Accomplishments() {
           </TimelineContent>
         </TimelineItem>
       </Timeline>
+      <Footer />
     </div>
   );
 }

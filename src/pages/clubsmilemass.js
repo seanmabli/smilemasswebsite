@@ -1,3 +1,5 @@
+import { Footer } from "../components/footer";
+
 export default function ClubSMILEMass() {
   return (
     <div className="page">
@@ -23,6 +25,7 @@ export default function ClubSMILEMass() {
         with them to grow stronger and more confident. We’ve seen incredible
         progress from our members!
       </p>
+      <Footer />
     </div>
   );
 }

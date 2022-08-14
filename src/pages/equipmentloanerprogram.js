@@ -20,6 +20,7 @@ import {
 } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./equiptmentloanerprogram.css";
+import { Footer } from "../components/footer";
 
 export default function EquipmentLoanerProgram() {
   const [name, setName] = useState("");
@@ -457,6 +458,7 @@ export default function EquipmentLoanerProgram() {
         <p>You equiptment loaner request has been submited.</p>
         <p>We will be in touch with you shortly.</p>
       </div>
+      <Footer />
     </div>
   );
 }

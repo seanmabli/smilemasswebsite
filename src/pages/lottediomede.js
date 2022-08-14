@@ -1,3 +1,5 @@
+import { Footer } from "../components/footer";
+
 export default function LotteDiomede() {
   return (
     <div className="page">
@@ -55,6 +57,7 @@ export default function LotteDiomede() {
         at a time. I owe my mission to Nicholas and if it weren’t for him, who
         knows if this is the path I would have chosen.
       </p>
+      <Footer />
     </div>
   );
 }

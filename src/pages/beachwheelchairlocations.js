@@ -11,6 +11,7 @@ import {
 import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./beachwheelchairlocations.css";
+import { Footer } from "../components/footer";
 
 export default function BeachWheelchairLocations() {
   const [name, setName] = useState("");
@@ -522,6 +523,7 @@ export default function BeachWheelchairLocations() {
         </p>
         <p>We will be in touch with you shortly.</p>
       </div>
+      <Footer />
     </div>
   );
 }

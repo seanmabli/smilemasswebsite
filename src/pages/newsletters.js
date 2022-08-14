@@ -4,6 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { Box, Button, Autocomplete } from "@mui/material";
 import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
+import { Footer } from "../components/footer";
 
 export default function Newsletters() {
   const [name, setName] = useState("");
@@ -154,6 +155,7 @@ export default function Newsletters() {
       <br />
       <h2>Recent Newsletters</h2>
       <br />
+      <Footer />
     </div>
   );
 }

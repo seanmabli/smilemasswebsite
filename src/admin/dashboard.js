@@ -88,6 +88,8 @@ export default function Dashboard() {
         </Link>
         <br />
         <Link to="/admin/sponsors">Admin - Sponsors</Link>
+        <br />
+        <Link to="/admin/testimonials">Admin - Testimonials</Link>
       </div>
     );
   } else {

@@ -11,6 +11,7 @@ import { SMILEBlogCardActionArea } from "../components/mui";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import "./smileblog.css";
+import { Footer } from "../components/footer";
 
 export function SmileBlog() {
   const [posts, setPosts] = useState([]);
@@ -71,6 +72,7 @@ export function SmileBlog() {
           return;
         }
       })}
+      <Footer />
     </div>
   );
 }
@@ -123,6 +125,7 @@ export function SmileBlogPost() {
             </>
           );
         })}
+        <Footer />
       </div>
     );
   }

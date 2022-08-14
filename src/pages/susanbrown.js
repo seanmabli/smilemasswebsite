@@ -1,3 +1,5 @@
+import { Footer } from "../components/footer";
+
 export default function SusanBrown() {
   return (
     <div className="page">
@@ -40,6 +42,7 @@ export default function SusanBrown() {
         program.&nbsp; Together we are creating an inclusive community for all
         abilities.&nbsp; &nbsp;
       </p>
+      <Footer />
     </div>
   );
 }

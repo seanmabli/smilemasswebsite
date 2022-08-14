@@ -6,6 +6,7 @@ import { Box, Button, Autocomplete } from "@mui/material";
 import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./volunteer.css";
+import { Footer } from "../components/footer";
 
 export default function Volunteer() {
   const [name, setName] = useState("");
@@ -248,6 +249,7 @@ export default function Volunteer() {
             </Button>
           </div>
         </Box>
+        <Footer />
       </div>
     );
   } else {
@@ -307,6 +309,7 @@ export default function Volunteer() {
         <br />
         <p>Thank you for your interest in volunteering with SMILE Mass.</p>
         <p>We will be in touch with you shortly.</p>
+        <Footer />
       </div>
     );
   }
