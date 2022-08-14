@@ -62,10 +62,28 @@ export function AdminTestimonials() {
     } else {
       setError(false);
 
+      const i = 0;
+      const imageUrls = [];
+
+      while (i < images.length) {
+        const imageRef = ref(
+          storage,
+          `testimonials/${Math.round(Math.random() * 10000000000).toString()}`
+        );
+        
+        uploadBytes(imageRef, images).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            imageUrls.push(url);
+            i++;
+          });
+        });
+      }
+
       const upload = async () => {
         await addDoc(collection(db, "testimonials"), {
           content: content,
           index: testimonials.length,
+          images: imageUrls,
         });
         testimonials.push({ content, index: testimonials.length });
         setContent("");
@@ -157,18 +175,33 @@ export function AdminTestimonials() {
                 required
                 multiline
               />
-              <Button
-                onClick={updateTestimonial}
-                style={{
-                  color: "#547c94",
-                  borderColor: "#547c94",
-                  marginTop: "20px",
-                  height: "40px",
-                }}
-                variant="outlined"
-              >
-                Update
-              </Button>
+              <div style={{ display: "flex" }}>
+                <Button
+                  onClick={updateTestimonial}
+                  style={{
+                    color: "#547c94",
+                    borderColor: "#547c94",
+                    marginTop: "20px",
+                    height: "40px",
+                  }}
+                  variant="outlined"
+                >
+                  Update
+                </Button>
+                <Button
+                  onClick={() => setEditing(false)}
+                  style={{
+                    color: "#547c94",
+                    borderColor: "#547c94",
+                    marginTop: "20px",
+                    marginLeft: "20px",
+                    height: "40px",
+                  }}
+                  variant="outlined"
+                >
+                  Cancel
+                </Button>
+              </div>
             </div>
           );
         } else {
