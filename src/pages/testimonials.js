@@ -29,6 +29,15 @@ export default function Testimonials() {
             <Divider />
             <br />
             <p style={{ whiteSpace: "pre-wrap" }}>{testimonial.content}</p>
+            {testimonial.imageurls.map((image) => {
+              return (
+                <img
+                  src={image}
+                  alt="testimonial"
+                  style={{ width: "100px", height: "auto" }}
+                />
+              );
+            })}
           </>
         );
       })}

@@ -35,6 +35,7 @@ export function AdminTestimonials() {
   const [content, setContent] = useState("");
   const [images, setImages] = useState([{ name: "No file chosen" }]);
   const [error, setError] = useState(false);
+  const [noImage, setNoImage] = useState(false);
 
   const [editing, setEditing] = useState(false);
   const [editingId, setEditingId] = useState("");
@@ -55,40 +56,38 @@ export function AdminTestimonials() {
     return first.index - second.index;
   });
 
+  const [downloadURLs, setDownloadURLs] = useState([]);
+
   function addTestimonial() {
     if (content === "") {
       setError(true);
       return;
     } else {
       setError(false);
-
-      const i = 0;
-      const imageUrls = [];
-
-      while (i < images.length) {
-        const imageRef = ref(
-          storage,
-          `testimonials/${Math.round(Math.random() * 10000000000).toString()}`
-        );
-        
-        uploadBytes(imageRef, images).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then((url) => {
-            imageUrls.push(url);
-            i++;
+      if (images[0].type === undefined) {
+        setNoImage(true);
+        return;
+      } else {
+        const uploadImages = async () => {
+          Array.from(images).forEach(async (image) => {
+            if (image.name !== "No file chosen") {
+              const imageRef = ref(
+                storage,
+                `testimonials/${Math.round(
+                  Math.random() * 10000000000
+                ).toString()}`
+              );
+              uploadBytes(imageRef, image).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                  setDownloadURLs((prev) => [...prev, url]);
+                });
+              });
+            }
           });
-        });
-      }
+        };
 
-      const upload = async () => {
-        await addDoc(collection(db, "testimonials"), {
-          content: content,
-          index: testimonials.length,
-          images: imageUrls,
-        });
-        testimonials.push({ content, index: testimonials.length });
-        setContent("");
-      };
-      upload();
+        uploadImages();
+      }
     }
   }
 
@@ -135,13 +134,35 @@ export function AdminTestimonials() {
   }
 
   const [imageNames, setImageNames] = useState(["No file chosen"]);
-
   function getImageNames(images) {
     setImageNames([]);
-    console.log(images);
     for (let i = 0; i < images.length; i++) {
       setImageNames((prev) => [...prev, images[i].name]);
     }
+  }
+
+  if (downloadURLs.length === images.length || noImage) {
+    console.log("uploading");
+    const uploadDoc = async () => {
+      const id = await addDoc(collection(db, "testimonials"), {
+        content: content,
+        index: testimonials.length,
+        imageurls: downloadURLs,
+        imagenames: imageNames,
+      }).id;
+      testimonials.push({
+        content,
+        id,
+        index: testimonials.length,
+        images: downloadURLs,
+      });
+      setContent("");
+      setImages([{ name: "No file chosen" }]);
+      setImageNames(["No file chosen"]);
+      setDownloadURLs([]);
+      setNoImage(false);
+    };
+    uploadDoc();
   }
 
   return (
@@ -242,6 +263,15 @@ export function AdminTestimonials() {
                   </Tooltip>
                 </div>
                 <p style={{ whiteSpace: "pre-wrap" }}>{testimonial.content}</p>
+                {testimonial.imageurls.map((image) => {
+                  return (
+                    <img
+                      src={image}
+                      alt="testimonial"
+                      style={{ width: "100px", height: "auto" }}
+                    />
+                  );
+                })}
               </div>
             </div>
           );
