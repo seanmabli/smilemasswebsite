@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 import {
   collection,
   getDocs,
@@ -35,7 +35,7 @@ export function AdminTestimonials() {
   const [content, setContent] = useState("");
   const [images, setImages] = useState([{ name: "No file chosen" }]);
   const [error, setError] = useState(false);
-  const [noImage, setNoImage] = useState(false);
+  const [run, setRun] = useState(false);
 
   const [editing, setEditing] = useState(false);
   const [editingId, setEditingId] = useState("");
@@ -64,8 +64,10 @@ export function AdminTestimonials() {
       return;
     } else {
       setError(false);
+      setRun(true);
+
       if (images[0].type === undefined) {
-        setNoImage(true);
+        setImages([]);
         return;
       } else {
         const uploadImages = async () => {
@@ -85,7 +87,6 @@ export function AdminTestimonials() {
             }
           });
         };
-
         uploadImages();
       }
     }
@@ -141,7 +142,7 @@ export function AdminTestimonials() {
     }
   }
 
-  if (downloadURLs.length === images.length || noImage) {
+  if (downloadURLs.length === images.length && run) {
     console.log("uploading");
     const uploadDoc = async () => {
       const id = await addDoc(collection(db, "testimonials"), {
@@ -154,15 +155,15 @@ export function AdminTestimonials() {
         content,
         id,
         index: testimonials.length,
-        images: downloadURLs,
+        imageurls: downloadURLs,
       });
       setContent("");
       setImages([{ name: "No file chosen" }]);
       setImageNames(["No file chosen"]);
       setDownloadURLs([]);
-      setNoImage(false);
     };
     uploadDoc();
+    setRun(false);
   }
 
   return (
@@ -303,8 +304,10 @@ export function AdminTestimonials() {
           <input
             type="file"
             onChange={(event) => {
-              setImages(event.target.files);
-              getImageNames(event.target.files);
+              if (event.target.files !== []) {
+                setImages(event.target.files);
+                getImageNames(event.target.files);
+              }
             }}
             hidden
             multiple
