@@ -45,7 +45,7 @@ export default function Newsletters() {
     }
 
     const upload = async () => {
-      await addDoc(collection(db, "newsletter"), {
+      await addDoc(collection(db, "newslettersignup"), {
         name: name,
         email: email,
         phone: phone,

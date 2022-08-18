@@ -168,6 +168,11 @@ function PageContent() {
           element={<AuthRoute page={<AdminNewsletters />} />}
         />
         <Route
+          path="/admin/newsletters/:id"
+          element={<AuthRoute page={<AdminNewslettersEditor />} />}
+        />
+
+        <Route
           path="/admin/volunteer"
           element={<AuthRoute page={<AdminVollunteer />} />}
         />

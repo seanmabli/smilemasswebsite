@@ -8,6 +8,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Tooltip,
+  IconButton,
+  ClickAwayListener,
 } from "@mui/material";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -35,15 +38,27 @@ import { db, storage } from "../firebase/firebase";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
+import TextAlign from "@tiptap/extension-text-align";
+import TextStyle from "@tiptap/extension-text-style";
+import { Color } from "@tiptap/extension-color";
+
+import { TwitterPicker } from "react-color";
+
 import React, { useCallback } from "react";
 
 import FormatBoldRoundedIcon from "@mui/icons-material/FormatBoldRounded";
 import FormatItalicRoundedIcon from "@mui/icons-material/FormatItalicRounded";
 import StrikethroughSRoundedIcon from "@mui/icons-material/StrikethroughSRounded";
+import FormatColorTextRoundedIcon from "@mui/icons-material/FormatColorTextRounded";
+import FormatAlignLeftRoundedIcon from "@mui/icons-material/FormatAlignLeftRounded";
+import FormatAlignCenterRoundedIcon from "@mui/icons-material/FormatAlignCenterRounded";
+import FormatAlignRightRoundedIcon from "@mui/icons-material/FormatAlignRightRounded";
+import FormatAlignJustifyRoundedIcon from "@mui/icons-material/FormatAlignJustifyRounded";
 import FormatClearRoundedIcon from "@mui/icons-material/FormatClearRounded";
 import FormatListBulletedRoundedIcon from "@mui/icons-material/FormatListBulletedRounded";
 import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
 import FormatQuoteRoundedIcon from "@mui/icons-material/FormatQuoteRounded";
+import HorizontalRuleRoundedIcon from "@mui/icons-material/HorizontalRuleRounded";
 import InsertLinkRoundedIcon from "@mui/icons-material/InsertLinkRounded";
 import LinkOffRoundedIcon from "@mui/icons-material/LinkOffRounded";
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
@@ -59,7 +74,7 @@ export function AdminNewsletters() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const data = await getDocs(collection(db, "newletter"));
+      const data = await getDocs(collection(db, "newsletter"));
       setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getPosts();
@@ -124,13 +139,16 @@ export function AdminNewsletters() {
   );
 }
 
-export function AdminNewlettersEditor() {
+export function AdminNewslettersEditor() {
   const [title, setTitle] = useState("");
   const [published, setPublished] = useState(Date.now());
   const [success, setSuccess] = useState(false);
   const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
   const [initialState, setInitialState] = useState(false);
   const [newPost, setNewPost] = useState(true);
+  const [inEditor, setInEditor] = useState(false);
+  const [hoverEditor, setHoverEditor] = useState(false);
+  const [openColor, setOpenColor] = useState(false);
 
   const { id } = useParams();
 
@@ -219,13 +237,20 @@ export function AdminNewlettersEditor() {
       Link.configure({
         openOnClick: false,
       }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      Color.configure({
+        types: ["textStyle"],
+      }),
+      TextStyle,
     ],
     content: "<p>Post</p>",
   });
 
   if (post !== null && !initialState) {
-    if (post.length === 0) {
-      navigate("/admin/newsletter");
+    if (post.length === 0 && id !== "new") {
+      navigate("/admin/newsletters");
     }
     if (id !== "new") {
       setTitle(post[0].title);
@@ -259,6 +284,8 @@ export function AdminNewlettersEditor() {
   if (!editor) {
     return null;
   }
+
+  console.log(openColor);
 
   if (success === "post") {
     return (
@@ -364,59 +391,267 @@ export function AdminNewlettersEditor() {
           />
         </div>
         <br />
-        <FormatBoldRoundedIcon
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive("bold") ? "isActive" : "isNotActive"}
-        />
-        <FormatItalicRoundedIcon
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive("italic") ? "isActive" : "isNotActive"}
-        />
-        <StrikethroughSRoundedIcon
-          onClick={() => editor.chain().focus().toggleStrikethrough().run()}
-          className={
-            editor.isActive("strikethrough") ? "isActive" : "isNotActive"
-          }
-        />
-        <FormatClearRoundedIcon
-          onClick={() => editor.chain().focus().clearNodes().run()}
-          className="isNotActive"
-        />
-        <FormatListBulletedRoundedIcon
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive("bulletList") ? "isActive" : "isNotActive"}
-        />
-        <FormatListNumberedRoundedIcon
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={
-            editor.isActive("orderedList") ? "isActive" : "isNotActive"
-          }
-        />
-        <FormatQuoteRoundedIcon
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive("blockquote") ? "isActive" : "isNotActive"}
-        />
-        <InsertLinkRoundedIcon
-          onClick={setLink}
-          className={editor.isActive("link") ? "isActive" : "isNotActive"}
-        />
-        <LinkOffRoundedIcon
-          onClick={setLink}
-          disabled={!editor.isActive("link")}
-          className="isNotActive"
-        />
-        <UndoRoundedIcon
-          onClick={() => editor.chain().focus().undo().run()}
-          className="isNotActive"
-        />
-        <RedoRoundedIcon
-          onClick={() => editor.chain().focus().redo().run()}
-          className="isNotActive"
-        />
-        <TittapCard variant="outlined">
-          <EditorContent editor={editor} />
-        </TittapCard>
-        <br />
+        <div style={{ display: "inline-flex" }}>
+          <Tooltip title="Bold">
+            <IconButton
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+            >
+              <FormatBoldRoundedIcon
+                className={editor.isActive("bold") ? "isActive" : "isNotActive"}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Italic">
+            <IconButton
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+            >
+              <FormatItalicRoundedIcon
+                className={
+                  editor.isActive("italic") ? "isActive" : "isNotActive"
+                }
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Strikethrough">
+            <IconButton
+              onClick={() => editor.chain().focus().toggleStrike().run()}
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <StrikethroughSRoundedIcon
+                className={
+                  editor.isActive("strike") ? "isActive" : "isNotActive"
+                }
+              />
+            </IconButton>
+          </Tooltip>
+          <div>
+            <Tooltip title="Text color">
+              <IconButton
+                component="label"
+                sx={{
+                  margin: "5px 5px 5px 0",
+                  color: editor.getAttributes("textStyle").color,
+                }}
+                onClick={() => setOpenColor(!openColor)}
+              >
+                <FormatColorTextRoundedIcon />
+              </IconButton>
+            </Tooltip>
+            <div
+              style={
+                openColor
+                  ? {
+                      display: "block",
+                      paddingTop: "10px",
+                      perspective: "1px",
+                      zIndex: "1000",
+                    }
+                  : { display: "none" }
+              }
+            >
+              <TwitterPicker
+                color={editor.getAttributes("textStyle").color}
+                onChange={(event) =>
+                  editor.chain().focus().setColor(event.hex).run()
+                }
+                colors={[
+                  "#000000",
+                  "#547c94",
+                  "#04a3d3",
+                  "#0975a2",
+                  "#7bc354",
+                  "#04848b",
+                ]}
+              />
+            </div>
+          </div>
+          <Tooltip title="Left align">
+            <IconButton
+              onClick={() =>
+                editor.chain().focus().setParagraphAlign("left").run()
+              }
+              className={
+                editor.isActive("alignLeft") ? "isActive" : "isNotActive"
+              }
+              sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+            >
+              <FormatAlignLeftRoundedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Center align">
+            <IconButton
+              onClick={() =>
+                editor.chain().focus().setTextAlign("center").run()
+              }
+              className={
+                editor.isActive({ textAlign: "center" })
+                  ? "isActive"
+                  : "isNotActive"
+              }
+              sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+            >
+              <FormatAlignCenterRoundedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Right align">
+            <IconButton
+              onClick={() => editor.chain().focus().setTextAlign("right").run()}
+              className={
+                editor.isActive({ textAlign: "right" })
+                  ? "isActive"
+                  : "isNotActive"
+              }
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <FormatAlignRightRoundedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Justify">
+            <IconButton
+              onClick={() =>
+                editor.chain().focus().setTextAlign("justify").run()
+              }
+              className={
+                editor.isActive({ textAlign: "justify" })
+                  ? "isActive"
+                  : "isNotActive"
+              }
+              sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+            >
+              <FormatAlignJustifyRoundedIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Clear Formatting">
+            <IconButton
+              onClick={() => editor.chain().focus().clearNodes().run()}
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <FormatClearRoundedIcon className="isNotActive" />
+            </IconButton>
+          </Tooltip>
+          <Button
+            onClick={() => editor.chain().focus().setParagraph().run()}
+            className={
+              editor.isActive("paragraph") ? "isActive" : "isNotActive"
+            }
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            paragraph
+          </Button>
+          <Button
+            onClick={() =>
+              editor.chain().focus().setHeading({ level: 1 }).run()
+            }
+            className={
+              editor.isActive("heading", { level: 1 })
+                ? "isActive"
+                : "isNotActive"
+            }
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            title
+          </Button>
+          <Button
+            onClick={() =>
+              editor.chain().focus().setHeading({ level: 2 }).run()
+            }
+            className={
+              editor.isActive("heading", { level: 2 })
+                ? "isActive"
+                : "isNotActive"
+            }
+            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+          >
+            subtitle
+          </Button>
+          <Tooltip title="Bulleted List">
+            <IconButton
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <FormatListBulletedRoundedIcon
+                className={
+                  editor.isActive("bulletList") ? "isActive" : "isNotActive"
+                }
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Numbered List">
+            <IconButton
+              onClick={() => editor.chain().focus().toggleOrderedList().run()}
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <FormatListNumberedRoundedIcon
+                className={
+                  editor.isActive("orderedList") ? "isActive" : "isNotActive"
+                }
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Block Quote">
+            <IconButton
+              onClick={() => editor.chain().focus().toggleBlockquote().run()}
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <FormatQuoteRoundedIcon
+                className={
+                  editor.isActive("blockquote") ? "isActive" : "isNotActive"
+                }
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Horizontal Rule">
+            <IconButton
+              onClick={() => editor.chain().focus().setHorizontalRule().run()}
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <HorizontalRuleRoundedIcon className="isNotActive" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Insert Link">
+            <IconButton
+              onClick={setLink}
+              sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+            >
+              <InsertLinkRoundedIcon
+                className={editor.isActive("link") ? "isActive" : "isNotActive"}
+              />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Link Off">
+            <IconButton onClick={setLink} disabled={!editor.isActive("link")}>
+              <LinkOffRoundedIcon className="isNotActive" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Undo">
+            <IconButton onClick={() => editor.chain().focus().undo().run()}>
+              <UndoRoundedIcon className="isNotActive" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Redo">
+            <IconButton onClick={() => editor.chain().focus().redo().run()}>
+              <RedoRoundedIcon className="isNotActive" />
+            </IconButton>
+          </Tooltip>
+        </div>
+        <ClickAwayListener onClickAway={() => setInEditor(false)}>
+          <TittapCard
+            variant="outlined"
+            onMouseEnter={() => setHoverEditor(true)}
+            onMouseLeave={() => setHoverEditor(false)}
+            onMouseDownCapture={() => setInEditor(true)}
+            sx={[
+              hoverEditor
+                ? { borderWidth: "1px", borderColor: "#547c94" }
+                : { borderWidth: "1px", borderColor: "rgba(0, 0, 0, 0.23)" },
+              inEditor ? { borderWidth: "2px", borderColor: "#547c94" } : {},
+            ]}
+          >
+            <EditorContent editor={editor} />
+          </TittapCard>
+        </ClickAwayListener>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             renderInput={(props) => (
@@ -428,24 +663,6 @@ export function AdminNewlettersEditor() {
             required
           />
         </LocalizationProvider>
-        <br />
-        <div style={!newPost ? { display: "none" } : { display: "flex" }}>
-          <Button
-            variant="outlined"
-            component="label"
-            style={{ color: "#547c94", borderColor: "#547c94" }}
-          >
-            Upload Thumbnail
-            <input
-              type="file"
-              onChange={(event) => {
-                setImageUpload(event.target.files[0]);
-              }}
-              hidden
-            />
-          </Button>
-          <p>&nbsp;&nbsp;{imageUpload.name}</p>
-        </div>
         <br />
         <div style={{ display: "flex" }}>
           <Button

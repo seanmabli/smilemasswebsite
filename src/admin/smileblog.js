@@ -52,7 +52,7 @@ import LinkOffRoundedIcon from "@mui/icons-material/LinkOffRounded";
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
 
-import "./smileblog.css";
+import "./tiptap.css";
 
 import { TittapCard } from "../components/mui";
 import { useNavigate } from "react-router";
