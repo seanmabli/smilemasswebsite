@@ -6,6 +6,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material/";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import { Footer } from "../components/footer";
+import "./testimonials.css";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -30,13 +31,7 @@ export default function Testimonials() {
 
     if (props.imageurls.length > 1) {
       return (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "200px auto",
-            gridGap: "10px",
-          }}
-        >
+        <div className="multiImage">
           <div style={{ width: "100%", margin: "0px" }}>
             <AutoPlaySwipeableViews
               index={activeStep}
@@ -63,7 +58,10 @@ export default function Testimonials() {
               position="static"
               variant="text"
               activeStep={activeStep}
-              sx={{ width: "200px", padding: "8px 0 0 0" }}
+              sx={{
+                width: "100%",
+                padding: "8px 0 0 0",
+              }}
               nextButton={
                 <Button
                   size="small"
@@ -97,13 +95,7 @@ export default function Testimonials() {
       );
     } else if (props.imageurls.length === 1) {
       return (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "200px auto",
-            gridGap: "10px",
-          }}
-        >
+        <div className="singleImage">
           <img
             src={props.imageurls[0]}
             alt="testimonial"

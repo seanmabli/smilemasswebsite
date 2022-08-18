@@ -1,0 +1,21 @@
+.multiImage {
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-gap: 10px;
+}
+
+.singleImage {
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-gap: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .multiImage {
+    display: block;
+  }
+  
+  .singleImage {
+    display: block;
+  }
+}

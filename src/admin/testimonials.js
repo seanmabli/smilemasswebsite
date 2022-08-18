@@ -25,22 +25,39 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  MobileStepper,
 } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { ColoredTextField } from "../components/mui";
 
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material/";
+import SwipeableViews from "react-swipeable-views";
+import { autoPlay } from "react-swipeable-views-utils";
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+
 export function AdminTestimonials() {
   const [testimonials, setTestimonials] = useState([]);
   const [content, setContent] = useState("");
   const [images, setImages] = useState([{ name: "No file chosen" }]);
+  const [imageNames, setImageNames] = useState(["No file chosen"]);
+  const [downloadURLs, setDownloadURLs] = useState([]);
   const [error, setError] = useState(false);
   const [run, setRun] = useState(false);
 
   const [editing, setEditing] = useState(false);
   const [editingId, setEditingId] = useState("");
   const [editingContent, setEditingContent] = useState("");
+  const [editingImages, setEditingImages] = useState([
+    { name: "No file chosen" },
+  ]);
+  const [editingImageNames, setEditingImageNames] = useState([
+    "No file chosen",
+  ]);
+  const [editingDownloadURLs, setEditingDownloadURLs] = useState([]);
   const [editingError, setEditingError] = useState(false);
+  const [editingRun, setEditingRun] = useState(false);
 
   const navigate = useNavigate();
 
@@ -55,8 +72,6 @@ export function AdminTestimonials() {
   testimonials.sort(function (first, second) {
     return first.index - second.index;
   });
-
-  const [downloadURLs, setDownloadURLs] = useState([]);
 
   function addTestimonial() {
     if (content === "") {
@@ -96,6 +111,9 @@ export function AdminTestimonials() {
   const [deletingResponse, setDeletingResponse] = useState({});
 
   function deleteTestimonial() {
+    for (let i = 0; i < deletingResponse.imageurls.length; i++) {
+      deleteObject(ref(storage, deletingResponse.imageurls[i]));
+    }
     const upload = async () => {
       await deleteDoc(doc(db, "testimonials", deletingResponse.id));
       setOpenDeletingResponse(false);
@@ -111,30 +129,62 @@ export function AdminTestimonials() {
     } else {
       setEditingError(false);
 
-      const upload = async () => {
-        await updateDoc(doc(db, "testimonials", editingId), {
-          content: editingContent,
-        });
-
-        setTestimonials(
-          testimonials.map((r) => {
-            if (r.id === editingId) {
-              return { ...r, content: editingContent };
+      if (editingImages[0].type !== undefined) {
+        for (let i = 0; i < testimonials.length; i++) {
+          if (testimonials[i].id === editingId) {
+            for (let j = 0; j < testimonials[i].imageurls.length; j++) {
+              deleteObject(ref(storage, testimonials[i].imageurls[j]));
             }
-            return r;
-          })
-        );
+          }
+        }
 
-        setEditing(false);
-        setEditingContent("");
-        setEditingId("");
-        setEditingError(false);
-      };
-      upload();
+        const uploadImages = async () => {
+          Array.from(editingImages).forEach(async (image) => {
+            if (image.name !== "No file chosen") {
+              const imageRef = ref(
+                storage,
+                `testimonials/${Math.round(
+                  Math.random() * 10000000000
+                ).toString()}`
+              );
+              uploadBytes(imageRef, image).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                  setEditingDownloadURLs((prev) => [...prev, url]);
+                });
+              });
+            }
+          });
+        };
+
+        setEditingRun(true);
+        uploadImages();
+      } else {
+        const upload = async () => {
+          await updateDoc(doc(db, "testimonials", editingId), {
+            content: editingContent,
+          });
+
+          setTestimonials(
+            testimonials.map((r) => {
+              if (r.id === editingId) {
+                return { ...r, content: editingContent };
+              }
+              return r;
+            })
+          );
+
+          setEditing(false);
+          setEditingContent("");
+          setEditingId("");
+          setEditingError(false);
+          setEditingImages([]);
+          setEditingImageNames([]);
+        };
+        upload();
+      }
     }
   }
 
-  const [imageNames, setImageNames] = useState(["No file chosen"]);
   function getImageNames(images) {
     setImageNames([]);
     for (let i = 0; i < images.length; i++) {
@@ -142,18 +192,24 @@ export function AdminTestimonials() {
     }
   }
 
+  function getEditingImageNames(images) {
+    setEditingImageNames([]);
+    for (let i = 0; i < images.length; i++) {
+      setEditingImageNames((prev) => [...prev, images[i].name]);
+    }
+  }
+
   if (downloadURLs.length === images.length && run) {
-    console.log("uploading");
-    const uploadDoc = async () => {
+    const upload = async () => {
       const id = await addDoc(collection(db, "testimonials"), {
         content: content,
         index: testimonials.length,
         imageurls: downloadURLs,
         imagenames: imageNames,
-      }).id;
+      });
       testimonials.push({
         content,
-        id,
+        id: id.id,
         index: testimonials.length,
         imageurls: downloadURLs,
       });
@@ -162,8 +218,128 @@ export function AdminTestimonials() {
       setImageNames(["No file chosen"]);
       setDownloadURLs([]);
     };
-    uploadDoc();
+    upload();
     setRun(false);
+  }
+
+  if (editingDownloadURLs.length === editingImages.length && editingRun) {
+    const upload = async () => {
+      await updateDoc(doc(db, "testimonials", editingId), {
+        content: editingContent,
+        imageurls: editingDownloadURLs,
+        imagenames: editingImageNames,
+      });
+
+      setTestimonials(
+        testimonials.map((r) => {
+          if (r.id === editingId) {
+            return {
+              ...r,
+              content: editingContent,
+              imageurls: editingDownloadURLs,
+              imagenames: editingImageNames,
+            };
+          }
+          return r;
+        })
+      );
+
+      setEditing(false);
+      setEditingContent("");
+      setEditingId("");
+      setEditingError(false);
+      setEditingImages([]);
+      setEditingImageNames([]);
+      setEditingDownloadURLs([]);
+    };
+    upload();
+    setEditingRun(false);
+  }
+
+  console.log(editingImageNames);
+
+  function ImageAndTestimonial(props) {
+    const [activeStep, setActiveStep] = useState(0);
+    const maxSteps = props.imageurls.length;
+
+    if (props.imageurls.length > 1) {
+      return (
+        <div className="multiImage">
+          <div style={{ width: "100%", margin: "0px" }}>
+            <AutoPlaySwipeableViews
+              index={activeStep}
+              onChangeIndex={(index) => setActiveStep(index)}
+              style={{ display: "flex", alignItems: "center" }}
+              enableMouseEvents
+            >
+              {props.imageurls.map((step, index) => (
+                <>
+                  {Math.abs(activeStep - index) <= 2 ? (
+                    <img
+                      style={{
+                        width: "100%",
+                      }}
+                      src={step}
+                      alt="testimonials"
+                    />
+                  ) : null}
+                </>
+              ))}
+            </AutoPlaySwipeableViews>
+            <MobileStepper
+              steps={maxSteps}
+              position="static"
+              variant="text"
+              activeStep={activeStep}
+              sx={{
+                width: "100%",
+                padding: "8px 0 0 0",
+              }}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={() =>
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+                  }
+                  disabled={activeStep === maxSteps - 1}
+                  sx={{ color: "#547c94" }}
+                >
+                  Next
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  onClick={() =>
+                    setActiveStep((prevActiveStep) => prevActiveStep - 1)
+                  }
+                  disabled={activeStep === 0}
+                  sx={{ color: "#547c94" }}
+                >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
+          </div>
+          <p style={{ whiteSpace: "pre-wrap" }}>{props.content}</p>
+        </div>
+      );
+    } else if (props.imageurls.length === 1) {
+      return (
+        <div className="singleImage">
+          <img
+            src={props.imageurls[0]}
+            alt="testimonial"
+            style={{ width: "100%" }}
+          />
+          <p style={{ whiteSpace: "pre-wrap" }}>{props.content}</p>
+        </div>
+      );
+    } else {
+      return <p style={{ whiteSpace: "pre-wrap" }}>{props.content}</p>;
+    }
   }
 
   return (
@@ -197,6 +373,31 @@ export function AdminTestimonials() {
                 required
                 multiline
               />
+              <div style={{ display: "flex", marginTop: "20px" }}>
+                <Button
+                  variant="outlined"
+                  component="label"
+                  style={{
+                    color: "#547c94",
+                    borderColor: "#547c94",
+                    height: "40px",
+                  }}
+                >
+                  Upload Images
+                  <input
+                    type="file"
+                    onChange={(event) => {
+                      if (event.target.files !== []) {
+                        setEditingImages(event.target.files);
+                        getEditingImageNames(event.target.files);
+                      }
+                    }}
+                    hidden
+                    multiple
+                  />
+                </Button>
+                <p>&nbsp;&nbsp;{editingImageNames.join(", ")}</p>
+              </div>
               <div style={{ display: "flex" }}>
                 <Button
                   onClick={updateTestimonial}
@@ -247,6 +448,7 @@ export function AdminTestimonials() {
                         setEditing(true);
                         setEditingId(testimonial.id);
                         setEditingContent(testimonial.content);
+                        setEditingImageNames(testimonial.imagenames);
                       }}
                     >
                       <EditRoundedIcon />
@@ -263,16 +465,10 @@ export function AdminTestimonials() {
                     </IconButton>
                   </Tooltip>
                 </div>
-                <p style={{ whiteSpace: "pre-wrap" }}>{testimonial.content}</p>
-                {testimonial.imageurls.map((image) => {
-                  return (
-                    <img
-                      src={image}
-                      alt="testimonial"
-                      style={{ width: "100px", height: "auto" }}
-                    />
-                  );
-                })}
+                <ImageAndTestimonial
+                  imageurls={testimonial.imageurls}
+                  content={testimonial.content}
+                />
               </div>
             </div>
           );
