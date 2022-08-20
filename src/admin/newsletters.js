@@ -35,11 +35,11 @@ import {
 } from "firebase/storage";
 import { db, storage } from "../firebase/firebase";
 
-import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import TextStyle from "@tiptap/extension-text-style";
+import { useEditor, EditorContent } from "@tiptap/react";
 import { Color } from "@tiptap/extension-color";
 
 import { TwitterPicker } from "react-color";
@@ -64,10 +64,12 @@ import LinkOffRoundedIcon from "@mui/icons-material/LinkOffRounded";
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
 
-import { TittapCard } from "../components/mui";
+import { TittapCard, TextSizeButton } from "../components/mui";
 import { useNavigate } from "react-router";
 import { SMILEBlogCardActionArea } from "../components/mui";
 import { useParams } from "react-router";
+
+import Dropdown from "../components/dropdown";
 
 export function AdminNewsletters() {
   const [posts, setPosts] = useState([]);
@@ -149,6 +151,7 @@ export function AdminNewslettersEditor() {
   const [inEditor, setInEditor] = useState(false);
   const [hoverEditor, setHoverEditor] = useState(false);
   const [openColor, setOpenColor] = useState(false);
+  const [openTextSize, setOpenTextSize] = useState(false);
 
   const { id } = useParams();
 
@@ -284,8 +287,6 @@ export function AdminNewslettersEditor() {
   if (!editor) {
     return null;
   }
-
-  console.log(openColor);
 
   if (success === "post") {
     return (
@@ -439,33 +440,25 @@ export function AdminNewslettersEditor() {
                 <FormatColorTextRoundedIcon />
               </IconButton>
             </Tooltip>
-            <div
-              style={
-                openColor
-                  ? {
-                      display: "block",
-                      paddingTop: "10px",
-                      perspective: "1px",
-                      zIndex: "1000",
-                    }
-                  : { display: "none" }
-              }
-            >
-              <TwitterPicker
-                color={editor.getAttributes("textStyle").color}
-                onChange={(event) =>
-                  editor.chain().focus().setColor(event.hex).run()
-                }
-                colors={[
-                  "#000000",
-                  "#547c94",
-                  "#04a3d3",
-                  "#0975a2",
-                  "#7bc354",
-                  "#04848b",
-                ]}
-              />
-            </div>
+            {openColor && (
+              <div className="colorSelector">
+                <TwitterPicker
+                  color={editor.getAttributes("textStyle").color}
+                  onChange={(event) => {
+                    editor.chain().focus().setColor(event.hex).run();
+                    setOpenColor(false);
+                  }}
+                  colors={[
+                    "#000000",
+                    "#547c94",
+                    "#04a3d3",
+                    "#0975a2",
+                    "#7bc354",
+                    "#04848b",
+                  ]}
+                />
+              </div>
+            )}
           </div>
           <Tooltip title="Left align">
             <IconButton
@@ -531,41 +524,6 @@ export function AdminNewslettersEditor() {
               <FormatClearRoundedIcon className="isNotActive" />
             </IconButton>
           </Tooltip>
-          <Button
-            onClick={() => editor.chain().focus().setParagraph().run()}
-            className={
-              editor.isActive("paragraph") ? "isActive" : "isNotActive"
-            }
-            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
-          >
-            paragraph
-          </Button>
-          <Button
-            onClick={() =>
-              editor.chain().focus().setHeading({ level: 1 }).run()
-            }
-            className={
-              editor.isActive("heading", { level: 1 })
-                ? "isActive"
-                : "isNotActive"
-            }
-            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
-          >
-            title
-          </Button>
-          <Button
-            onClick={() =>
-              editor.chain().focus().setHeading({ level: 2 }).run()
-            }
-            className={
-              editor.isActive("heading", { level: 2 })
-                ? "isActive"
-                : "isNotActive"
-            }
-            sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
-          >
-            subtitle
-          </Button>
           <Tooltip title="Bulleted List">
             <IconButton
               onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -635,6 +593,42 @@ export function AdminNewslettersEditor() {
               <RedoRoundedIcon className="isNotActive" />
             </IconButton>
           </Tooltip>
+          <div onClick={() => setOpenTextSize(!openTextSize)}>
+            <TextSizeButton
+              variant="text"
+              sx={{ color: "#547c94" }}
+              disableRipple
+            >
+              {editor.isActive("paragraph") ? "paragraph" : ""}
+              {editor.isActive("heading", { level: 1 }) ? "title" : ""}
+              {editor.isActive("heading", { level: 2 }) ? "subtitle" : ""}
+            </TextSizeButton>
+            {openTextSize && (
+              <ul className="textSizeSelectorContent" style={{ zIndex: 100 }}>
+                {["title", "subtitle", "paragraph"].map((option) => (
+                  <li
+                    onClick={() => {
+                      if (option == "paragraph") {
+                        editor.chain().focus().setParagraph().run();
+                      } else if (option == "title") {
+                        editor.chain().focus().setHeading({ level: 1 }).run();
+                      } else if (option == "subtitle") {
+                        editor.chain().focus().setHeading({ level: 2 }).run();
+                      }
+                    }}
+                  >
+                    <TextSizeButton
+                      variant="text"
+                      sx={{ color: "#547c94" }}
+                      className="button"
+                    >
+                      {option}
+                    </TextSizeButton>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
         <ClickAwayListener onClickAway={() => setInEditor(false)}>
           <TittapCard

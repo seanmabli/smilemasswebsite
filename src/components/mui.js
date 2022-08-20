@@ -123,3 +123,15 @@ export const AdminTab = styled(Tab)({
     backgroundColor: "#547c94",
   },
 });
+
+export const TextSizeButton = styled(Button)({
+  color: "#547c94",
+  boxShadow: "none",
+  textTransform: "none",
+  fontSize: 16,
+  lineHeight: 1.5,
+  backgroundColor: "#FFFFFF",
+  width: "80px",
+  margin: "0 5px 0 5px",
+  padding: "5px 0 5px 0",
+});

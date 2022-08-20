@@ -136,6 +136,7 @@ export default function BeachWheelchairLocations() {
         </div>
         <iframe
           src="https://www.google.com/maps/d/embed?mid=11sjOQqOCx4A_zoqpaTzASfqPOyJuoE-D&ehbc=2E312F"
+          title="Beach Wheelchair Locations Map"
           className="map"
         />
       </div>
