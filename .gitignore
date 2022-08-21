@@ -13,3 +13,4 @@ yarn-debug.log*
 yarn-error.log*
 .gitpod.yml
 functions/.runtimeconfig.json
+adminkey.json
