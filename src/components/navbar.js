@@ -6,11 +6,14 @@ import { NavButton } from "../components/mui";
 import "../index.css";
 import "./navbar.css";
 
+import { AccessiblePlaygrounds } from "../pages/accessibleplaygrounds";
 import Accomplishments from "../pages/accomplishments";
 import BeachHouse from "../pages/beachhouse";
 import ClubSmileMass from "../pages/clubsmilemass";
+import { CommunityRaceSponsors } from "../pages/communityracesponsors";
 import CommunityWithinACommunity from "../pages/communitywithinacommunity";
 import Contact from "../pages/contact";
+import { CorporateSponsorships } from "../pages/corporatesponsorships";
 import Donate from "../pages/donate";
 import EquipmentLoanerProgram from "../pages/equipmentloanerprogram";
 import Events from "../pages/events";
@@ -92,6 +95,7 @@ function MobileNavbar() {
                 "Beach House",
                 "Community within a Community",
                 "Equipment Loaner Program",
+                "Accessible Playgrounds",
               ]}
             />
           </li>
@@ -116,7 +120,12 @@ function MobileNavbar() {
           <li className="item">
             <Dropdown
               title="Support"
-              options={["Join the Coffee Club", "Donate"]}
+              options={[
+                "Donate",
+                "Join the Coffee Club",
+                "Corporate Sponsorships",
+                "Community / Race Sponsors",
+              ]}
               buttonStyle={{ backgroundColor: "#547c94", color: "#ffffff" }}
             />
           </li>
@@ -142,6 +151,11 @@ function PageContent() {
   return (
     <AuthProvider>
       <Routes>
+        <Route
+          path="/accessibleplaygrounds"
+          element={<AccessiblePlaygrounds />}
+        />
+
         <Route path="/accomplishments" element={<Accomplishments />} />
 
         <Route path="/admin" element={<AuthSkipLogin page={<Login />} />} />
@@ -205,7 +219,7 @@ function PageContent() {
           path="/admin/testimonials"
           element={<AuthRoute page={<AdminTestimonials />} />}
         />
-        
+
         <Route path="/admin/*" element={<Navigate to="/admin" />} />
 
         <Route path="/beachhouse" element={<BeachHouse />} />
@@ -221,6 +235,11 @@ function PageContent() {
         />
 
         <Route
+          path="/communityracesponsors"
+          element={<CommunityRaceSponsors />}
+        />
+
+        <Route
           path="/communitywithinacommunity"
           element={<CommunityWithinACommunity />}
         />
@@ -230,6 +249,11 @@ function PageContent() {
         />
 
         <Route path="/contact" element={<Contact />} />
+
+        <Route
+          path="/corporatesponsorships"
+          element={<CorporateSponsorships />}
+        />
 
         <Route path="/donate" element={<Donate />} />
         <Route path="/support-us" element={<Navigate to="/donate" />} />

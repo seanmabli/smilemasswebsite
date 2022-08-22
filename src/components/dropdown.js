@@ -27,7 +27,7 @@ export default function Dropdown(props) {
   const toggling = () => setIsOpen(!isOpen);
 
   const onOptionClicked = (value) => () => {
-    navigate(value.toLowerCase().replace(/\s+/g, ""));
+    navigate(value.toLowerCase().replace(/\s+/g, "").replace("/", ""));
     setIsOpen(false);
   };
 
@@ -40,7 +40,11 @@ export default function Dropdown(props) {
         <ul className="dropdowncontent">
           {props.options.map((option) => (
             <li onClick={onOptionClicked(option)}>
-              <NavButton variant="text" style={props.dropdownStyle} className="button">
+              <NavButton
+                variant="text"
+                style={props.dropdownStyle}
+                className="button"
+              >
                 {option}
               </NavButton>
             </li>

@@ -6,7 +6,7 @@ cred = credentials.Certificate("adminkey.json")
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
-for _ in range(500):
+for _ in range(100):
     db.collection(u'contact').add({
         u'name': u'John Doe',
         u'phone': u'1234567890',

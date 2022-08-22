@@ -27,10 +27,9 @@ exports.contact = functions.firestore
         });
       })
       .then(() => {
-        db.collection("tosend").add({
-          sender: "SMILE Mass Website <smilemasssite@gmail.com>",
-          email: emailList,
-          sendtype: "bcc",
+        const mailOptions = {
+          from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+          bcc: emailList,
           subject: `Contact Form Submission ${snap.id}`,
           html: `
           <div>
@@ -41,10 +40,40 @@ exports.contact = functions.firestore
               snap.data().message
             }</p>
           </div>`,
-        });
+        };
+
+        const isError = false;
+        transporter
+          .sendMail(mailOptions, (error, data) => {
+            if (error) {
+              console.log(error);
+              isError = true;
+            }
+            console.log("Sent Contact Email");
+          })
+          .then(() => {
+            if (isError) {
+              console.log("Error sending email");
+              db.collection("tosend").add({
+                sender: "SMILE Mass Website <smilemasssite@gmail.com>",
+                email: emailList,
+                sendtype: "bcc",
+                subject: `Contact Form Submission ${snap.id}`,
+                html: `
+              <div>
+                <p><b>Name: </b>${snap.data().name}</p>
+                <p><b>Email: </b>${snap.data().email}</p>
+                <p><b>Phone: </b>${snap.data().phone}</p>
+                <p style="white-space: pre-wrap"><b>Message: </b>${
+                  snap.data().message
+                }</p>
+              </div>`,
+              });
+            }
+          });
       });
 
-    return "Added to queue";
+    return "Done";
   });
 
 exports.volunteer = functions.firestore
@@ -59,10 +88,9 @@ exports.volunteer = functions.firestore
         });
       })
       .then(() => {
-        db.collection("tosend").add({
-          sender: "SMILE Mass Website <smilemasssite@gmail.com>",
-          email: emailList,
-          sendtype: "bcc",
+        const mailOptions = {
+          from: `SMILE Mass Website <smilemasssite@gmail.com>`,
+          bcc: emailList,
           subject: `Volunteer Form Submission ${snap.id}`,
           html: `
           <div>
@@ -78,10 +106,17 @@ exports.volunteer = functions.firestore
               snap.data().availability
             }</p>
           </div>`,
-        });
+        };
 
-        return "Added to queue";
+        transporter.sendMail(mailOptions, (error, data) => {
+          if (error) {
+            console.log(error);
+          }
+          console.log("Sent Volunteer Email");
+        });
       });
+
+    return "Done";
   });
 
 exports.beachnomination = functions.firestore
@@ -124,7 +159,7 @@ exports.beachnomination = functions.firestore
         });
       });
 
-    return "Added to queue";
+    return "Done";
   });
 
 exports.equiptmentloaner = functions.firestore
@@ -172,7 +207,7 @@ exports.equiptmentloaner = functions.firestore
         });
       });
 
-    return "Success";
+    return "Done";
   });
 
 exports.sendmail = functions.pubsub.schedule("*/5 * * * *").onRun((context) => {
@@ -192,10 +227,11 @@ exports.sendmail = functions.pubsub.schedule("*/5 * * * *").onRun((context) => {
             transporter.sendMail(mailOptions, (error, data) => {
               if (error) {
                 console.log(error);
+              } else {
+                console.log("Sent Email");
+                doc.ref.delete();
               }
-              console.log("Sent Email");
             });
-            doc.ref.delete();
           } else if (doc.data().sendtype === "to") {
             const mailOptions = {
               from: doc.data().sender,
@@ -206,10 +242,11 @@ exports.sendmail = functions.pubsub.schedule("*/5 * * * *").onRun((context) => {
             transporter.sendMail(mailOptions, (error, data) => {
               if (error) {
                 console.log(error);
+              } else {
+                console.log("Sent Email");
+                doc.ref.delete();
               }
-              console.log("Sent Email");
             });
-            doc.ref.delete();
           } else if (doc.data().sendtype === "cc") {
             const mailOptions = {
               from: doc.data().sender,
@@ -220,10 +257,11 @@ exports.sendmail = functions.pubsub.schedule("*/5 * * * *").onRun((context) => {
             transporter.sendMail(mailOptions, (error, data) => {
               if (error) {
                 console.log(error);
+              } else {
+                console.log("Sent Email");
+                doc.ref.delete();
               }
-              console.log("Sent Email");
             });
-            doc.ref.delete();
           }
           num++;
         }
