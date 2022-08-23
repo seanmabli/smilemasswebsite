@@ -21,6 +21,7 @@ donate
 admin/newsletter
 admin/our team
 admin/events
+admin/faq
 
 changes:
 f.a.q. -> faq

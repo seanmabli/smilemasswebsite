@@ -8,6 +8,16 @@
   background-color: #fff;
 }
 
+.rightcontainer {
+  float: right;
+  position: relative;
+  padding-top: 36px;
+}
+
+.rightcontent {
+  right: 0;
+}
+
 @media screen and (max-width: 1000px) {
   .dropdowncontent {
     position: relative;

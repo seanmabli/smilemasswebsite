@@ -90,6 +90,10 @@ export default function Dashboard() {
         <Link to="/admin/sponsors">Admin - Sponsors</Link>
         <br />
         <Link to="/admin/testimonials">Admin - Testimonials</Link>
+        <br />
+        <Link to="/admin/events">Admin - Events</Link>
+        <br />
+        <Link to="/admin/faq">Admin - FAQ</Link>
       </div>
     );
   } else {

@@ -7,11 +7,12 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
-import { SMILEBlogCardActionArea } from "../components/mui";
+import { SMILEBlogCardActionAreaNew } from "../components/mui";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import "./smileblog.css";
 import { Footer } from "../components/footer";
+import { Divider } from "@mui/material";
 
 export function SmileBlog() {
   const [posts, setPosts] = useState([]);
@@ -37,36 +38,39 @@ export function SmileBlog() {
       {posts.map((post) => {
         if (post.published.toDate() < new Date()) {
           return (
-            <SMILEBlogCardActionArea onClick={() => navigate(post.url)}>
-              <img
-                src={post.imageurl}
-                alt="Post Thumbnail"
-                className="postthumbnail"
-              />
-              <div>
-                <h2 style={{ color: "black" }}>{post.title}</h2>
-                <br />
-                <p style={{ color: "black" }}>
-                  {post.published
-                    .toDate()
-                    .toDateString()
-                    .split(" ")
-                    .slice(1)
-                    .join(" ")}
-                  &nbsp;&nbsp;
-                  <span className="bold">Joanna Buoniconti</span>
-                </p>
-                <br />
-                <p style={{ whiteSpace: "pre-line", color: "black" }}>
-                  {post.post
-                    .replace(/<[^>]+>/g, "")
-                    .split(" ")
-                    .slice(0, 50)
-                    .join(" ")}
-                  ...
-                </p>
-              </div>
-            </SMILEBlogCardActionArea>
+            <>
+              <Divider />
+              <SMILEBlogCardActionAreaNew onClick={() => navigate(post.url)}>
+                <img
+                  src={post.imageurl}
+                  alt="Post Thumbnail"
+                  className="postthumbnail"
+                />
+                <div>
+                  <h2 style={{ color: "black" }}>{post.title}</h2>
+                  <br />
+                  <p style={{ color: "black" }}>
+                    {post.published
+                      .toDate()
+                      .toDateString()
+                      .split(" ")
+                      .slice(1)
+                      .join(" ")}
+                    &nbsp;&nbsp;
+                    <span className="bold">Joanna Buoniconti</span>
+                  </p>
+                  <br />
+                  <p style={{ whiteSpace: "pre-line", color: "black" }}>
+                    {post.post
+                      .replace(/<[^>]+>/g, "")
+                      .split(" ")
+                      .slice(0, 50)
+                      .join(" ")}
+                    ...
+                  </p>
+                </div>
+              </SMILEBlogCardActionAreaNew>
+            </>
           );
         } else {
           return;

@@ -54,11 +54,22 @@ export const NewsItemCardActionArea = styled(CardActionArea)({
 });
 
 export const SMILEBlogCardActionArea = styled(CardActionArea)({
-  color: "#547c94",
+  color: "rgba(0, 0, 0, 0.12)",
+  marginTop: "10px",
   padding: "10px",
-  marginBottom: "10px",
-  border: "1px solid #547c94",
+  maxWidth: "1250px",
+  border: "1px solid rgba(0, 0, 0, 0.12)",
   borderRadius: "5px",
+  justifyContent: "left",
+  display: "flex",
+  ["@media (max-width:600px)"]: {
+    display: "block",
+  },
+});
+
+export const SMILEBlogCardActionAreaNew = styled(CardActionArea)({
+  color: "rgba(0, 0, 0, 0.12)",
+  padding: "10px",
   maxWidth: "1250px",
   justifyContent: "left",
   display: "flex",

@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Button, ThemeProvider, TextField } from "@mui/material";
+import { styled, createTheme } from "@mui/material/styles";
+import rtlPlugin from "stylis-plugin-rtl";
+import { prefixer } from "stylis";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+
 import "../index.css";
 import "./dropdown.css";
 
@@ -19,6 +24,15 @@ const NavButton = styled(Button)({
   },
 });
 
+const theme = createTheme({
+  direction: "rtl", // Both here and <body dir="rtl">
+});
+// Create rtl cache
+const cacheRtl = createCache({
+  key: "muirtl",
+  stylisPlugins: [prefixer, rtlPlugin],
+});
+
 export default function Dropdown(props) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -31,26 +45,59 @@ export default function Dropdown(props) {
     setIsOpen(false);
   };
 
-  return (
-    <div onMouseEnter={toggling} onMouseLeave={toggling}>
-      <NavButton variant="text" style={props.buttonStyle} disableRipple>
-        {props.title}
-      </NavButton>
-      {isOpen && (
-        <ul className="dropdowncontent">
-          {props.options.map((option) => (
-            <li onClick={onOptionClicked(option)}>
-              <NavButton
-                variant="text"
-                style={props.dropdownStyle}
-                className="button"
-              >
-                {option}
-              </NavButton>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+  if (props.direction === "left") {
+    return (
+      <div onClick={toggling}>
+        <NavButton variant="text" style={props.buttonStyle} disableRipple>
+          {props.title}
+        </NavButton>
+        {isOpen && (
+          <ul className="dropdowncontent">
+            {props.options.map((option) => (
+              <li onClick={onOptionClicked(option)}>
+                <NavButton
+                  variant="text"
+                  style={props.dropdownStyle}
+                  className="button"
+                >
+                  {option}
+                </NavButton>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <div onClick={toggling}>
+        <NavButton variant="text" style={props.buttonStyle} disableRipple>
+          {props.title}
+        </NavButton>
+        <div className="rightcontainer">
+          {isOpen && (
+            <ul className="dropdowncontent rightcontent">
+              {props.options.map((option) => (
+                <li onClick={onOptionClicked(option)}>
+                  <CacheProvider value={cacheRtl}>
+                    <ThemeProvider theme={theme}>
+                      <div dir="rtl">
+                        <NavButton
+                          variant="text"
+                          style={props.dropdownStyle}
+                          className="button"
+                        >
+                          {option}
+                        </NavButton>
+                      </div>
+                    </ThemeProvider>
+                  </CacheProvider>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    );
+  }
 }

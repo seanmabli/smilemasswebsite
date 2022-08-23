@@ -44,6 +44,8 @@ import AdminEquiptmentLoanerProgram from "../admin/equipmentloanerprogram";
 import AdminBeachWheelchairLocations from "../admin/beachwheelchairlocations";
 import { AdminSponsors } from "../admin/sponsors";
 import { AdminTestimonials } from "../admin/testimonials";
+import { AdminEvents } from "../admin/events";
+import { AdminFAQ } from "../admin/faq";
 
 import { AuthProvider, AuthRoute, AuthSkipLogin } from "../firebase/auth";
 
@@ -84,6 +86,7 @@ function MobileNavbar() {
                 "FAQ",
                 "Contact",
               ]}
+              direction="left"
             />
           </li>
           <li className="item">
@@ -97,6 +100,7 @@ function MobileNavbar() {
                 "Equipment Loaner Program",
                 "Accessible Playgrounds",
               ]}
+              direction="left"
             />
           </li>
           <li className="item">
@@ -104,12 +108,14 @@ function MobileNavbar() {
               title="Get Involved"
               options={["Running Team", "Volunteer"]}
               dropdownStyle={{ color: "#547c94" }}
+              direction="left"
             />
           </li>
           <li className="item">
             <Dropdown
               title="News & Events"
               options={["Events", "In The News", "Newsletters", "SMILE Blog"]}
+              direction="left"
             />
           </li>
           <li className="item">
@@ -127,6 +133,7 @@ function MobileNavbar() {
                 "Community / Race Sponsors",
               ]}
               buttonStyle={{ backgroundColor: "#547c94", color: "#ffffff" }}
+              direction="right"
             />
           </li>
         </ul>
@@ -160,13 +167,18 @@ function PageContent() {
 
         <Route path="/admin" element={<AuthSkipLogin page={<Login />} />} />
         <Route
+          path="/admin/contact"
+          element={<AuthRoute page={<AdminContact />} />}
+        />
+        <Route
           path="/admin/dashboard"
           element={<AuthRoute page={<Dashboard />} />}
         />
         <Route
-          path="/admin/contact"
-          element={<AuthRoute page={<AdminContact />} />}
+          path="/admin/events"
+          element={<AuthRoute page={<AdminEvents />} />}
         />
+        <Route path="/admin/faq" element={<AuthRoute page={<AdminFAQ />} />} />
         <Route
           path="/admin/smileblog"
           element={<AuthRoute page={<AdminSmileBlog />} />}
