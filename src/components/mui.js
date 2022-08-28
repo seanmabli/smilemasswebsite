@@ -85,15 +85,6 @@ export const TittapCard = styled(Card)({
   maxWidth: "1250px",
 });
 
-export const OurTeamCard = styled(Card)({
-  color: "#547c94",
-  padding: "10px",
-  margin: "10px",
-  border: "1px solid #547c94",
-  borderRadius: "5px",
-  width: "300px",
-});
-
 export const EquipmentLoanerProgramCard = styled(Card)({
   color: "rgba(0, 0, 0, 0.6)",
   border: "1px solid rgba(0, 0, 0, 0.23)",
