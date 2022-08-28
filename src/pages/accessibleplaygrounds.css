@@ -1,0 +1,24 @@
+.accessibleplaygroundsimage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+  border-radius: 5px;
+}
+
+.accessibleplaygroundstext {
+  padding: 10px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: white;
+  border-radius: 5px;
+  max-width: 325px;
+}
+
+.accessibleplaygroundscontainer {
+  position: relative;
+  width: 365px;
+  height: 400px;
+  margin: 10px;
+}

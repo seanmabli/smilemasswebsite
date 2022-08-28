@@ -1,6 +1,29 @@
 import { Footer } from "../components/footer";
+import haskell from "../images/accessibleplaygrounds/haskell.jpeg";
+import haynes from "../images/accessibleplaygrounds/haynes.jpg";
+import noyes from "../images/accessibleplaygrounds/noyes.jpg";
+import nixon from "../images/accessibleplaygrounds/nixon.jpg";
+import loring from "../images/accessibleplaygrounds/loring.jpg";
+import jones from "../images/accessibleplaygrounds/jones.jpg";
+import "./accessibleplaygrounds.css";
 
 export function AccessiblePlaygrounds() {
+  function Playground(props) {
+    return (
+      <div id={props.name} className="accessibleplaygroundscontainer">
+        <img
+          src={props.image}
+          alt={props.name}
+          className="accessibleplaygroundsimage"
+        />
+        <div className="accessibleplaygroundstext">
+          <h2 style={{ color: "black" }}>{props.name}</h2>
+          <p style={{ color: "black" }}>{props.town}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page">
       <h1>Accessible Playgrounds</h1>
@@ -46,6 +69,31 @@ export function AccessiblePlaygrounds() {
         Other communities have taken notice and we are now helping Acton and
         Hudson to create similar playgrounds.{" "}
       </p>
+      <br />
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <Playground name="Haskell Field" town="Sudbury" image={haskell} />
+        <Playground
+          name="Josiah Haynes Elementary School"
+          town="Sudbury"
+          image={haynes}
+        />
+        <Playground
+          name="Peter Noyes Elementary School"
+          town="Sudbury"
+          image={noyes}
+        />
+        <Playground
+          name="General John Nixon Elementary School"
+          town="Sudbury"
+          image={nixon}
+        />
+        <Playground
+          name="Israel Loring Elementary School"
+          town="Sudbury"
+          image={loring}
+        />
+        <Playground name="Jones Field Playground" town="Acton" image={jones} />
+      </div>
       <Footer />
     </div>
   );

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { Footer } from "../components/footer";
+import "./ourteam.css"
 
 export default function OurTeam() {
   let navigate = useNavigate();
@@ -45,33 +46,15 @@ export default function OurTeam() {
             return (
               <div
                 id={teamMember.id}
-                style={{
-                  position: "relative",
-                  width: "275px",
-                  height: "300px",
-                  margin: "10px",
-                }}
+                className="ourteamcontainer"
               >
                 <img
                   src={teamMember.imageurl}
-                  alt="Lotte Diomede"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    objectPosition: "top",
-                    borderRadius: "5px",
-                  }}
+                  alt={teamMember.name}
+                  className="ourteamimage"
                 />
                 <div
-                  style={{
-                    padding: "10px",
-                    position: "absolute",
-                    bottom: "10px",
-                    left: "10px",
-                    backgroundColor: "white",
-                    borderRadius: "5px",
-                  }}
+                className="ourteamtext"
                 >
                   <h2 style={{ color: "black" }}>{teamMember.name}</h2>
                   <p style={{ color: "black" }}>{teamMember.role}</p>
