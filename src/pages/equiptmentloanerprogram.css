@@ -1,7 +1,7 @@
 .largecontainer {
   display: grid;
   grid-template-columns: 250px 250px 250px;
-  grid-template-rows: auto auto auto auto auto auto auto;
+  grid-template-rows: 40px 40px 40px 40px 109px;
   row-gap: 20px;
   column-gap: 20px;
   column-width: 250px;

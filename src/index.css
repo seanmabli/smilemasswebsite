@@ -84,3 +84,65 @@ a {
   content: "- ";
   text-indent: -20px;
 }
+
+.formone {
+  width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.formtwo {
+  width: 520px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.formthree {
+  width: 790px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.formleft {
+  margin-left: 0px;
+  margin-right: 10px;
+}
+.formcenter {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.formright {
+  margin-left: 10px;
+  margin-right: 0px;
+}
+.formfull {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+@media screen and (max-width: 810px) {
+  .formone {
+    width: 100%;
+  }
+  .formtwo {
+    width: 100%;
+  }
+  .formthree {
+    width: 100%;
+  }
+
+  .formleft {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .formcenter {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .formright {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .formfull {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}

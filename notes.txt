@@ -13,14 +13,14 @@ pages todo:
 
 club smile Mass
 community within a community
-playgrounds
+donate
 
 events
+admin/events
+
 newsletters
-donate
 admin/newsletter
 admin/our team
-admin/events
 
 changes:
 f.a.q. -> faq
@@ -32,3 +32,8 @@ maybe deal with scrollbar on contact and voluteer pages
 add cool phone number thing to forms
 message after beach nominations
 add ToggleButton to smileblog text editor
+remove localhost permission from map api and other apis
+
+improve for mobile:
+- beach wheelchair locations
+- accessible playgrounds

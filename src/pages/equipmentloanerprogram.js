@@ -12,6 +12,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  ListSubheader,
   Checkbox,
 } from "@mui/material";
 import {
@@ -295,6 +296,13 @@ export default function EquipmentLoanerProgram() {
                   width: "100%",
                   padding: "0px",
                 }}
+                subheader={
+                  <ListSubheader
+                    sx={{ lineHeight: "20px", paddingTop: "10px", paddingBottom: "10px" }}
+                  >
+                    What type of equipment are you interested in?
+                  </ListSubheader>
+                }
               >
                 {[
                   "Beach Wheelchair",
@@ -421,7 +429,7 @@ export default function EquipmentLoanerProgram() {
                 label="Questions / Comments"
                 variant="outlined"
                 size="small"
-                rows={6}
+                rows={4}
                 value={questions}
                 onChange={(e) => setQuestions(e.target.value)}
                 multiline
