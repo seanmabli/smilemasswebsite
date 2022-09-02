@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { db } from "../firebase/firebase";
+import { collection, addDoc } from "firebase/firestore";
 import {
   ColoredTextField,
   EquipmentLoanerProgramCard,
@@ -29,7 +31,7 @@ export default function ClubSMILEMass() {
   const [birthday, setBirthday] = useState("");
   const [parentName, setParentName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
   const [address, setAddress] = useState("");
   const [emergencyName, setEmergencyName] = useState("");
   const [emergencyPhone, setEmergencyPhone] = useState("");
@@ -40,23 +42,246 @@ export default function ClubSMILEMass() {
   const [seizure, setSeizure] = useState(false);
   const [medicine, setMedicine] = useState(false);
   const [equiptment, setEquiptment] = useState([]);
-  const [error, setError] = useState([false, false, false, false]);
+  const [programs, setPrograms] = useState([]);
+  const [questions, setQuestions] = useState("");
+  const [error, setError] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
   const [success, setSuccess] = useState(false);
 
   const { predictions } = usePlacesAutocomplete(address);
 
-  const handleToggle = (value) => () => {
+  const handleToggleEquiptment = (value) => () => {
     const currentIndex = equiptment.indexOf(value);
-    const newEquiptment = [...equiptment];
+    const new_ = [...equiptment];
 
     if (currentIndex === -1) {
-      newEquiptment.push(value);
+      new_.push(value);
     } else {
-      newEquiptment.splice(currentIndex, 1);
+      new_.splice(currentIndex, 1);
     }
 
-    setEquiptment(newEquiptment);
+    setEquiptment(new_);
   };
+
+  const handleTogglePrograms = (value) => () => {
+    const currentIndex = programs.indexOf(value);
+    const new_ = [...programs];
+
+    if (currentIndex === -1) {
+      new_.push(value);
+    } else {
+      new_.splice(currentIndex, 1);
+    }
+
+    setPrograms(new_);
+  };
+
+  function submit() {
+    setError([false, false, false, false, false, false, false, false, false]);
+
+    // validate childName
+    var twoWordNameRegex = /^[a-zA-Z]+ [a-zA-Z]+$/;
+    var threeWordNameRegex = /^[a-zA-Z]+ [a-zA-Z]+ [a-zA-Z]+$/;
+    if (
+      !twoWordNameRegex.test(childName) &&
+      !threeWordNameRegex.test(childName)
+    ) {
+      setError((state) => [
+        true,
+        state[1],
+        state[2],
+        state[3],
+        state[4],
+        state[5],
+        state[6],
+        state[7],
+        state[8],
+      ]);
+    }
+
+    // validate birthday
+    if (birthday !== "") {
+      var birthdayRegex =
+        /^(0[1-9]|1[012]|[1-9])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
+      if (!birthdayRegex.test(birthday)) {
+        setError((state) => [
+          state[0],
+          true,
+          state[2],
+          state[3],
+          state[4],
+          state[5],
+          state[6],
+          state[7],
+          state[8],
+        ]);
+      }
+    }
+
+    // validate parentName
+    if (
+      !twoWordNameRegex.test(parentName) &&
+      !threeWordNameRegex.test(parentName)
+    ) {
+      setError((state) => [
+        state[0],
+        state[1],
+        true,
+        state[3],
+        state[4],
+        state[5],
+        state[6],
+        state[7],
+        state[8],
+      ]);
+    }
+
+    // validate email
+    var emailRegex =
+      /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailRegex.test(email)) {
+      setError((state) => [
+        state[0],
+        state[1],
+        state[2],
+        true,
+        state[4],
+        state[5],
+        state[6],
+        state[7],
+        state[8],
+      ]);
+    }
+
+    // validate parentPhone
+    var phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phoneRegex.test(parentPhone)) {
+      setError((state) => [
+        state[0],
+        state[1],
+        state[2],
+        state[3],
+        true,
+        state[5],
+        state[6],
+        state[7],
+        state[8],
+      ]);
+    }
+
+    // validate address
+    if (address === "") {
+      setError((state) => [
+        state[0],
+        state[1],
+        state[2],
+        state[3],
+        state[4],
+        true,
+        state[6],
+        state[7],
+        state[8],
+      ]);
+    }
+
+    // validate emergencyName
+    if (
+      !twoWordNameRegex.test(emergencyName) &&
+      !threeWordNameRegex.test(emergencyName)
+    ) {
+      setError((state) => [
+        state[0],
+        state[1],
+        state[2],
+        state[3],
+        state[4],
+        state[5],
+        true,
+        state[7],
+        state[8],
+      ]);
+    }
+
+    // validate emergencyPhone
+    if (!phoneRegex.test(emergencyPhone)) {
+      setError((state) => [
+        state[0],
+        state[1],
+        state[2],
+        state[3],
+        state[4],
+        state[5],
+        state[6],
+        true,
+        state[8],
+      ]);
+    }
+
+    if (diagnosis === "") {
+      setError((state) => [
+        state[0],
+        state[1],
+        state[2],
+        state[3],
+        state[4],
+        state[5],
+        state[6],
+        state[7],
+        true,
+      ]);
+    }
+
+    const upload = async () => {
+      await addDoc(collection(db, "clubsmilemass"), {
+        childname: childName,
+        birthday: birthday,
+        parentname: parentName,
+        email: email,
+        parentphone: parentPhone,
+        address: address,
+        emergencyname: emergencyName,
+        emergencyphone: emergencyPhone,
+        diagnosis: diagnosis,
+        staffing: staffing,
+        ambulate: ambulate,
+        wheelchair: wheelchair,
+        seizure: seizure,
+        medicine: medicine,
+        equiptment: equiptment,
+        programs: programs,
+        questions: questions,
+        status: "new",
+        time: new Date(),
+      });
+    };
+
+    setError((state) => {
+      if (
+        !state[0] &&
+        !state[1] &&
+        !state[2] &&
+        !state[3] &&
+        !state[4] &&
+        !state[5] &&
+        !state[6] &&
+        !state[7] &&
+        !state[8]
+      ) {
+        upload();
+        setSuccess(true);
+      }
+      return state;
+    });
+  }
 
   return (
     <div className="page">
@@ -211,7 +436,7 @@ export default function ClubSMILEMass() {
               }
               onChange={(e) => setChildName(e.target.value)}
               fullWidth
-              required
+              required //
             />
           </div>
           <div className="formone formcenter">
@@ -264,10 +489,10 @@ export default function ClubSMILEMass() {
               label="Parent/Guardian Phone"
               variant="outlined"
               size="small"
-              value={phone}
+              value={parentPhone}
               error={error[2]}
               helperText={error[2] ? "Please enter a valid phone number" : ""}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => setParentPhone(e.target.value)}
               fullWidth
               required
             />
@@ -336,125 +561,203 @@ export default function ClubSMILEMass() {
             minRows={4}
           />
         </div>
-        <EquipmentLoanerProgramCard className="equiptment">
-          <List
-            sx={{
-              width: "100%",
-              padding: "0px",
-            }}
-            subheader={
-              <ListSubheader sx={{ lineHeight: "20px", paddingTop: "10px"}}>
-                What type of equipment are you interested in?
-              </ListSubheader>
-            }
-          >
-            {["Adapted bike", "Stroller", "Home gym package"].map((value) => {
-              const labelId = `checkbox-list-label-${value}`;
-
-              return (
-                <ListItem
-                  key={value}
-                  disablePadding
-                  style={{ borderRadius: "5px" }}
-                >
-                  <ListItemButton
-                    role={undefined}
-                    onClick={handleToggle(value)}
-                    dense
+        <div className="clubsmilemassformgrid">
+          <div className="clubsmilemassformequiptment">
+            <EquipmentLoanerProgramCard className="equiptment">
+              <List
+                sx={{
+                  width: "100%",
+                  padding: "0px",
+                }}
+                subheader={
+                  <ListSubheader
+                    sx={{ lineHeight: "20px", paddingTop: "10px" }}
                   >
-                    <ListItemIcon>
-                      <Checkbox
-                        edge="start"
-                        checked={equiptment.indexOf(value) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ "aria-labelledby": labelId }}
-                        style={
-                          equiptment.indexOf(value) !== -1
-                            ? { color: "#547c94" }
-                            : {}
-                        }
-                      />
-                    </ListItemIcon>
-                    <ListItemText id={labelId} primary={value} />
-                  </ListItemButton>
-                </ListItem>
-              );
-            })}
-          </List>
-        </EquipmentLoanerProgramCard>
-        <div className="formthree formfull">
-          <FormControlLabel
-            control={
-              <Switch
-                style={{ color: "#547c94" }}
-                value={staffing}
-                onChange={(e) => setStaffing(e.target.checked)}
-              />
-            }
-            label="Do you need additional staffing? (additional $35/hr)"
-            labelPlacement="start"
-            style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
-          />
-        </div>
-        <div className="formthree formfull">
-          <FormControlLabel
-            control={
-              <Switch
-                style={{ color: "#547c94" }}
-                value={ambulate}
-                onChange={(e) => setAmbulate(e.target.checked)}
-              />
-            }
-            label="Can the individual ambulate?"
-            labelPlacement="start"
-            style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
-          />
-        </div>
-        <div className="formthree formfull">
-          <FormControlLabel
-            control={
-              <Switch
-                style={{ color: "#547c94" }}
-                value={wheelchair}
-                onChange={(e) => setWheelchair(e.target.checked)}
-              />
-            }
-            label="Does the individual use a wheelchair?"
-            labelPlacement="start"
-            style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
-          />
-        </div>
-        <div className="formthree formfull">
-          <FormControlLabel
-            control={
-              <Switch
-                style={{ color: "#547c94" }}
-                value={seizure}
-                onChange={(e) => setSeizure(e.target.checked)}
-              />
-            }
-            label="Does the individual have a seizure disorder?"
-            labelPlacement="start"
-            style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
-          />
-        </div>
-        <div className="formthree formfull">
-          <FormControlLabel
-            control={
-              <Switch
-                style={{ color: "#547c94" }}
-                value={medicine}
-                onChange={(e) => setMedicine(e.target.checked)}
-              />
-            }
-            label="Do they travel with rescue medicine/a plan?"
-            labelPlacement="start"
-            style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
-          />
+                    What type of equipment are you interested in?
+                  </ListSubheader>
+                }
+              >
+                {["Adapted bike", "Stroller", "Home gym package"].map(
+                  (value) => {
+                    const labelId = `checkbox-list-label-${value}`;
+
+                    return (
+                      <ListItem
+                        key={value}
+                        disablePadding
+                        style={{ borderRadius: "5px" }}
+                      >
+                        <ListItemButton
+                          role={undefined}
+                          onClick={handleToggleEquiptment(value)}
+                          dense
+                        >
+                          <ListItemIcon>
+                            <Checkbox
+                              edge="start"
+                              checked={equiptment.indexOf(value) !== -1}
+                              tabIndex={-1}
+                              disableRipple
+                              inputProps={{ "aria-labelledby": labelId }}
+                              style={
+                                equiptment.indexOf(value) !== -1
+                                  ? { color: "#547c94" }
+                                  : {}
+                              }
+                            />
+                          </ListItemIcon>
+                          <ListItemText id={labelId} primary={value} />
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  }
+                )}
+              </List>
+            </EquipmentLoanerProgramCard>
+            <div style={{ marginTop: "20px" }}>
+              <EquipmentLoanerProgramCard className="equiptment">
+                <List
+                  sx={{
+                    width: "100%",
+                    padding: "0",
+                  }}
+                  subheader={
+                    <ListSubheader
+                      sx={{ lineHeight: "20px", paddingTop: "10px" }}
+                    >
+                      When would you like to see the program?
+                    </ListSubheader>
+                  }
+                >
+                  {[
+                    "Workout coach (Wed)",
+                    "Swim coach (Tue)",
+                    "Swim coach (Wed)",
+                    "Swim coach (Fri)",
+                    "Swim coach (Sun)",
+                  ].map((value) => {
+                    const labelId = `checkbox-list-label-${value}`;
+
+                    return (
+                      <ListItem
+                        key={value}
+                        disablePadding
+                        style={{ borderRadius: "5px" }}
+                      >
+                        <ListItemButton
+                          role={undefined}
+                          onClick={handleTogglePrograms(value)}
+                          dense
+                        >
+                          <ListItemIcon>
+                            <Checkbox
+                              edge="start"
+                              checked={programs.indexOf(value) !== -1}
+                              tabIndex={-1}
+                              disableRipple
+                              inputProps={{ "aria-labelledby": labelId }}
+                              style={
+                                programs.indexOf(value) !== -1
+                                  ? { color: "#547c94" }
+                                  : {}
+                              }
+                            />
+                          </ListItemIcon>
+                          <ListItemText id={labelId} primary={value} />
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </EquipmentLoanerProgramCard>
+            </div>
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Switch
+                  style={{ color: "#547c94" }}
+                  value={staffing}
+                  onChange={(e) => setStaffing(e.target.checked)}
+                />
+              }
+              label="Do you need additional staffing? (additional $35/hr)"
+              labelPlacement="start"
+              style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
+            />
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Switch
+                  style={{ color: "#547c94" }}
+                  value={ambulate}
+                  onChange={(e) => setAmbulate(e.target.checked)}
+                />
+              }
+              label="Can the individual ambulate?"
+              labelPlacement="start"
+              style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
+            />
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Switch
+                  style={{ color: "#547c94" }}
+                  value={wheelchair}
+                  onChange={(e) => setWheelchair(e.target.checked)}
+                />
+              }
+              label="Does the individual use a wheelchair?"
+              labelPlacement="start"
+              style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
+            />
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Switch
+                  style={{ color: "#547c94" }}
+                  value={seizure}
+                  onChange={(e) => setSeizure(e.target.checked)}
+                />
+              }
+              label="Does the individual have a seizure disorder?"
+              labelPlacement="start"
+              style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
+            />
+          </div>
+          <div>
+            <FormControlLabel
+              control={
+                <Switch
+                  style={{ color: "#547c94" }}
+                  value={medicine}
+                  onChange={(e) => setMedicine(e.target.checked)}
+                />
+              }
+              label="Do they travel with rescue medicine/a plan?"
+              labelPlacement="start"
+              style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
+            />
+          </div>
+          <div>
+            <ColoredTextField
+              label="Any additional information you'd like us to know?"
+              variant="outlined"
+              size="small"
+              value={questions}
+              onChange={(e) => setQuestions(e.target.value)}
+              fullWidth
+              multiline
+              minRows={4}
+            />
+          </div>
         </div>
         <div style={{ marginTop: "20px" }}>
           <Button
+            onClick={submit}
             variant="outlined"
             style={{ color: "#547c94", borderColor: "#547c94" }}
           >
