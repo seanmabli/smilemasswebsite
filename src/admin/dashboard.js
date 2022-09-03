@@ -238,6 +238,8 @@ export default function Dashboard() {
       <Link to="/admin/events">Admin - Events</Link>
       <br />
       <Link to="/admin/faq">Admin - FAQ</Link>
+      <br />
+      <Link to="/admin/clubsmilemass">Admin - Club SMILE Mass</Link>
     </div>
   );
 }

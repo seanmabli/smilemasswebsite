@@ -4,7 +4,7 @@ import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { Footer } from "../components/footer";
-import "./ourteam.css"
+import "./ourteam.css";
 
 export default function OurTeam() {
   let navigate = useNavigate();
@@ -44,18 +44,13 @@ export default function OurTeam() {
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {teamMembers.map((teamMember) => {
             return (
-              <div
-                id={teamMember.id}
-                className="ourteamcontainer"
-              >
+              <div id={teamMember.id} className="ourteamcontainer">
                 <img
                   src={teamMember.imageurl}
                   alt={teamMember.name}
                   className="ourteamimage"
                 />
-                <div
-                className="ourteamtext"
-                >
+                <div className="ourteamtext">
                   <h2 style={{ color: "black" }}>{teamMember.name}</h2>
                   <p style={{ color: "black" }}>{teamMember.role}</p>
                 </div>

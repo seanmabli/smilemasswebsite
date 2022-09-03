@@ -61,3 +61,10 @@
   grid-row-start: 1;
   grid-row-end: 7;
 }
+
+@media screen and (max-width: 810px) {
+  .clubsmilemassformgrid {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -37,3 +37,4 @@ remove localhost permission from map api and other apis
 improve for mobile:
 - beach wheelchair locations
 - accessible playgrounds
+- club smile mass

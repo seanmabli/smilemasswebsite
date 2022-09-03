@@ -46,6 +46,7 @@ import { AdminSponsors } from "../admin/sponsors";
 import { AdminTestimonials } from "../admin/testimonials";
 import { AdminEvents } from "../admin/events";
 import { AdminFAQ } from "../admin/faq";
+import { AdminClubSmileMass } from "../admin/clubsmilemass";
 
 import { AuthProvider, AuthRoute, AuthSkipLogin } from "../firebase/auth";
 
@@ -169,6 +170,10 @@ function PageContent() {
         <Route
           path="/admin/contact"
           element={<AuthRoute page={<AdminContact />} />}
+        />
+        <Route
+          path="/admin/clubsmilemass"
+          element={<AuthRoute page={<AdminClubSmileMass />} />}
         />
         <Route
           path="/admin/dashboard"
