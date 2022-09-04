@@ -1,26 +1,34 @@
 import { Footer } from "../components/footer";
-import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 export default function Donate() {
-  const navigate = useNavigate();
-
   return (
     <div className="page">
       <h1>Donate</h1>
       <br />
       <p>
         SMILE Mass has set ambitious goals, and we need your help! With your
-        past support, we have established 6 projects. Click on each to learn
+        past support, we have established 5 projects. Click on each to learn
         more and donate to these worthy causes.
       </p>
       <br />
       <ul className="dashed">
-        <li><Link to="/beachwheelchairlocations">Beach Wheelchair</Link></li>
-        <li>Accessible Playgrounds</li>
-        <li>Beach House</li>
-        <li>Adapted Gym</li>
-        <li>Loaner Program</li>
+        <li>
+          <Link to="/clubsmilemass">Club SMILE Mass</Link>
+        </li>
+        <li>
+          <Link to="/beachwheelchairlocations">Beach Wheelchair</Link>
+        </li>
+        <li>
+          <Link to="/beachhouse">Beach House</Link>
+        </li>
+        <li>
+          <Link to="/equiptmentloanerprogram">Equiptment Loaner Program</Link>
+        </li>
+        <li>
+          <Link to="/accessibleplaygrounds">Accessible Playgrounds</Link>
+        </li>
       </ul>
       <br />
       <p>
@@ -33,10 +41,14 @@ export default function Donate() {
         </Link>
       </p>
       <br />
-      <p>
-        You can shop at Amazon and automatically donate a percentage of your
-        cart to SMILE Mass.
-      </p>
+      <Button
+        variant="outlined"
+        href="https://smilemass.giv.sh/a082"
+        target="_blank"
+        style={{ color: "#547c94", borderColor: "#547c94" }}
+      >
+        Donate to SMILE Mass
+      </Button>
       <Footer />
     </div>
   );

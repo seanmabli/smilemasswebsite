@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ColoredTextField } from "../components/mui";
+import { useState, useEffect, useCallback } from "react";
+import { ColoredTextField, TittapCard, SMILEBlogCardActionArea } from "../components/mui";
 import {
   Button,
   TextField,
@@ -38,7 +38,6 @@ import { db, storage } from "../firebase/firebase";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
-import React, { useCallback } from "react";
 
 import FormatBoldRoundedIcon from "@mui/icons-material/FormatBoldRounded";
 import FormatItalicRoundedIcon from "@mui/icons-material/FormatItalicRounded";
@@ -54,10 +53,7 @@ import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
 
 import "./tiptap.css";
 
-import { TittapCard } from "../components/mui";
-import { useNavigate } from "react-router";
-import { SMILEBlogCardActionArea } from "../components/mui";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export function AdminSmileBlog() {
   const [posts, setPosts] = useState([]);
@@ -359,7 +355,7 @@ export function AdminSmileBlogEditor() {
           <span style={{ color: "gray" }}>/</span> Editor
         </h1>
         <br />
-        <div style={{ maxWidth: "800px" }}>
+        <div className="formtwo">
           <ColoredTextField
             label="Title"
             variant="outlined"

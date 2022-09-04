@@ -1,4 +1,4 @@
-import { Button,} from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Footer } from "../components/footer";
 
@@ -25,7 +25,12 @@ export default function JoinTheCoffeeClub() {
         tomorrow, a world without barriers.
       </p>
       <br />
-      <Button variant="outlined" href="https://smilemass.giv.sh/fea2" style={{color: "#547c94", borderColor: "#547c94"}}>
+      <Button
+        variant="outlined"
+        href="https://smilemass.giv.sh/fea2"
+        target="_blank"
+        style={{ color: "#547c94", borderColor: "#547c94" }}
+      >
         Click Here To Join And Help Continue To Grow Our Communities
       </Button>
       <br />
@@ -40,7 +45,9 @@ export default function JoinTheCoffeeClub() {
           </Link>
         </li>
         <li>
-          <Link to="/equipmentloanerprogram" className="link">Equipment Loaner Program</Link>
+          <Link to="/equipmentloanerprogram" className="link">
+            Equipment Loaner Program
+          </Link>
         </li>
         <li>Scholarship Fund</li>
       </ul>

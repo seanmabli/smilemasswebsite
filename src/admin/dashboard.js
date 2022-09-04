@@ -102,144 +102,151 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="page">
-      <div className="dashboardprofile">
-        <p className="dashboardprofileinput">Public Profile</p>
-        <div className="dashboardprofileinput">
-          <ColoredTextField
-            label="Name"
-            variant="outlined"
-            size="small"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            fullWidth
-            required
-          />
+    <div className="page" style={{ display: "flex" }}>
+      <div style={{ marginRight: "20px" }}>
+        <div className="dashboardprofile">
+          <p className="dashboardprofileinput">Public Profile</p>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Name"
+              variant="outlined"
+              size="small"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              required
+            />
+          </div>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Role"
+              variant="outlined"
+              size="small"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              fullWidth
+              required
+            />
+          </div>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Bio"
+              variant="outlined"
+              size="small"
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              fullWidth
+              required
+              className="dashboardprofileinput"
+              multiline
+              minRows={3}
+            />
+          </div>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Email"
+              variant="outlined"
+              size="small"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              required
+              className="dashboardprofileinput"
+            />
+          </div>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Phone"
+              variant="outlined"
+              size="small"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              fullWidth
+              required
+              className="dashboardprofileinput"
+            />
+          </div>
+          <div className="dashboardprofileinput">
+            <Button
+              variant="outlined"
+              onClick={updateProfile}
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+            >
+              Update Profile
+            </Button>
+          </div>
+          <p className="dashboardprofileinput">Account</p>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Password"
+              variant="outlined"
+              size="small"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              fullWidth
+            />
+          </div>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Confirm Password"
+              variant="outlined"
+              size="small"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              fullWidth
+            />
+          </div>
+          <div className="dashboardprofileinput">
+            <Button
+              variant="outlined"
+              onClick={updateAccount}
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+            >
+              Update Account
+            </Button>
+          </div>
         </div>
-        <div className="dashboardprofileinput">
-          <ColoredTextField
-            label="Role"
-            variant="outlined"
-            size="small"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            fullWidth
-            required
-          />
-        </div>
-        <div className="dashboardprofileinput">
-          <ColoredTextField
-            label="Bio"
-            variant="outlined"
-            size="small"
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-            fullWidth
-            required
-            className="dashboardprofileinput"
-            multiline
-            minRows={3}
-          />
-        </div>
-        <div className="dashboardprofileinput">
-          <ColoredTextField
-            label="Email"
-            variant="outlined"
-            size="small"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            required
-            className="dashboardprofileinput"
-          />
-        </div>
-        <div className="dashboardprofileinput">
-          <ColoredTextField
-            label="Phone"
-            variant="outlined"
-            size="small"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            fullWidth
-            required
-            className="dashboardprofileinput"
-          />
-        </div>
-        <div className="dashboardprofileinput">
-          <Button
-            variant="outlined"
-            onClick={updateProfile}
-            style={{ color: "#547c94", borderColor: "#547c94" }}
-          >
-            Update Profile
-          </Button>
-        </div>
-        <p className="dashboardprofileinput">Account</p>
-        <div className="dashboardprofileinput">
-          <ColoredTextField
-            label="Password"
-            variant="outlined"
-            size="small"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            fullWidth
-          />
-        </div>
-        <div className="dashboardprofileinput">
-          <ColoredTextField
-            label="Confirm Password"
-            variant="outlined"
-            size="small"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            fullWidth
-          />
-        </div>
-        <div className="dashboardprofileinput">
-          <Button
-            variant="outlined"
-            onClick={updateAccount}
-            style={{ color: "#547c94", borderColor: "#547c94" }}
-          >
-            Update Account
-          </Button>
-        </div>
+        <p onClick={handleLogout} className="link">
+          Log Out
+        </p>
       </div>
-      <p onClick={handleLogout} className="link">
-        Log Out
-      </p>
-      <br />
-      <Link to="/admin/smileblog">Admin - SMILE Blog</Link>
-      <br />
-      <Link to="/admin/newsletters">Admin - Newsletters</Link>
-      <br />
-      <Link to="/admin/inthenews">Admin - In the News</Link>
-      <br />
-      <Link to="/admin/contact">Admin - Contact</Link>
-      <br />
-      <Link to="/admin/volunteer">Admin - Volunteer</Link>
-      <br />
-      <Link to="/admin/equiptmentloanerprogram">
-        Admin - Equipment Loaner Program
-      </Link>
-      <br />
-      <Link to="/admin/beachwheelchairlocations">
-        Admin - Beach Wheelchair Locations
-      </Link>
-      <br />
-      <Link to="/admin/sponsors">Admin - Sponsors</Link>
-      <br />
-      <Link to="/admin/testimonials">Admin - Testimonials</Link>
-      <br />
-      <Link to="/admin/events">Admin - Events</Link>
-      <br />
-      <Link to="/admin/faq">Admin - FAQ</Link>
-      <br />
-      <Link to="/admin/clubsmilemass">Admin - Club SMILE Mass</Link>
+      <div>
+        <p>Forms:</p>
+        <br />
+        <Link to="/admin/beachwheelchairlocations">
+          Admin - Beach Wheelchair Locations
+        </Link>
+        <br />
+        <Link to="/admin/contact">Admin - Contact</Link>
+        <br />
+        <Link to="/admin/clubsmilemass">Admin - Club SMILE Mass</Link>
+        <br />
+        <Link to="/admin/equiptmentloanerprogram">
+          Admin - Equipment Loaner Program
+        </Link>
+        <br />
+        <Link to="/admin/volunteer">Admin - Volunteer</Link>
+        <br />
+        <p>Other:</p>
+        <br />
+        <Link to="/admin/events">Admin - Events</Link>
+        <br />
+        <Link to="/admin/faq">Admin - FAQ</Link>
+        <br />
+        <Link to="/admin/smileblog">Admin - SMILE Blog</Link>
+        <br />
+        <Link to="/admin/newsletters">Admin - Newsletters</Link>
+        <br />
+        <Link to="/admin/inthenews">Admin - In the News</Link>
+        <br />
+        <Link to="/admin/sponsors">Admin - Sponsors</Link>
+        <br />
+        <Link to="/admin/testimonials">Admin - Testimonials</Link>
+      </div>
     </div>
   );
 }

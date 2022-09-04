@@ -11,7 +11,6 @@ on resource page the Mass Health & Medicaid information is copied in the financi
 
 pages todo:
 
-club smile Mass
 community within a community
 donate
 
@@ -33,6 +32,7 @@ add cool phone number thing to forms
 message after beach nominations
 add ToggleButton to smileblog text editor
 remove localhost permission from map api and other apis
+chaging thumbnail on smileblog
 
 improve for mobile:
 - beach wheelchair locations
