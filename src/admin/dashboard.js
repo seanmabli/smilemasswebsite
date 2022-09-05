@@ -1,25 +1,37 @@
 import { useRef, useState, useEffect } from "react";
 import { useAuth } from "../firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
-import { db } from "../firebase/firebase";
+import { db, auth } from "../firebase/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { ColoredTextField } from "../components/mui";
-import { Button } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Alert,
+  Collapse,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import "./dashboard.css";
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
   const { currentUser, logout, updatePassword_, updateEmail_ } = useAuth();
+  const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("");
   const [bio, setBio] = useState("");
   const [readmystory, setReadmystory] = useState(null);
   const [visable, setVisable] = useState(null);
 
+  const [originalEmail, setOriginalEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [accountError, setAccountError] = useState([false, ""]);
+  const [reLogin, setReLogin] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   let navigate = useNavigate();
 
@@ -27,7 +39,8 @@ export default function Dashboard() {
     const getinfo = async () => {
       const data = await getDoc(doc(db, "ourteam", currentUser.uid));
       setName(data.data().name);
-      setEmail(data.data().email);
+      setOriginalEmail(auth.currentUser.email);
+      setEmail(auth.currentUser.email);
       setPhone(data.data().phone);
       setRole(data.data().role);
       setBio(data.data().bio);
@@ -38,68 +51,54 @@ export default function Dashboard() {
   }, []);
 
   async function handleLogout() {
-    setError("");
-
-    try {
-      await logout();
-    } catch {
-      setError("Failed to log out");
-    }
+    await logout();
   }
-
-  /*
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-      return setError("Passwords do not match");
-    }
-
-    const promises = [];
-    setLoading(true);
-    setError("");
-
-    if (emailRef.current.value !== currentUser.email) {
-      promises.push(updateEmail_(emailRef.current.value));
-    }
-    if (passwordRef.current.value) {
-      promises.push(updatePassword_(passwordRef.current.value));
-    }
-
-    Promise.all(promises)
-      .then(() => {
-        navigate("/");
-      })
-      .catch(() => {
-        setError("Failed to update account");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
-*/
 
   function updateProfile() {}
 
   function updateAccount() {
+    setAccountError([false, ""]);
+
+    var emailRegex =
+      /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!emailRegex.test(email)) {
+      setAccountError((state) => [true, state[1]]);
+    }
+    if (0 < password.length && password.length < 7) {
+      setAccountError((state) => [state[0], "Password must be 6 characters"]);
+    }
     if (password !== confirmPassword) {
-      return setError("Passwords do not match");
+      setAccountError((state) => [state[0], "Passwords do not match"]);
     }
 
-    const promises = [];
-    setError("");
+    setAccountError((state) => {
+      if (!state[0] && state[1] === "") {
+        const promises = [];
+        if (email !== originalEmail) {
+          promises.push(updateEmail_(email));
+        }
+        if (password !== "") {
+          promises.push(updatePassword_(password));
+        }
 
-    if (password !== "") {
-      promises.push(updatePassword_(password));
-    }
+        Promise.all(promises).catch((error) => {
+          if (error.code === "auth/requires-recent-login") {
+            setReLogin(true);
+          } else {
+            console.log(error);
+          }
+          return state;
+        });
 
-    Promise.all(promises)
-      .then(() => {
-        navigate("/");
-      })
-      .catch(() => {
-        console.log("failed to update account");
-      });
+        setPassword("");
+        setConfirmPassword("");
+        setSuccess(true);
+      }
+      return state;
+    });
   }
+
+  console.log(readmystory, visable);
 
   return (
     <div className="page" style={{ display: "flex" }}>
@@ -144,18 +143,6 @@ export default function Dashboard() {
           </div>
           <div className="dashboardprofileinput">
             <ColoredTextField
-              label="Email"
-              variant="outlined"
-              size="small"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              fullWidth
-              required
-              className="dashboardprofileinput"
-            />
-          </div>
-          <div className="dashboardprofileinput">
-            <ColoredTextField
               label="Phone"
               variant="outlined"
               size="small"
@@ -164,6 +151,34 @@ export default function Dashboard() {
               fullWidth
               required
               className="dashboardprofileinput"
+            />
+          </div>
+          <div style={{ marginBottom: "20px" }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  style={{ color: "#547c94" }}
+                  value={readmystory}
+                  onChange={(e) => setReadmystory(e.target.checked)}
+                />
+              }
+              label="Do you have a Read My Story page?"
+              labelPlacement="start"
+              style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
+            />
+          </div>
+          <div style={{ marginBottom: "20px" }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  style={{ color: "#547c94" }}
+                  value={visable}
+                  onChange={(e) => setVisable(e.target.checked)}
+                />
+              }
+              label="Publicly visable?"
+              labelPlacement="start"
+              style={{ margin: "0", color: "rgba(0, 0, 0, 0.6)" }}
             />
           </div>
           <div className="dashboardprofileinput">
@@ -176,6 +191,65 @@ export default function Dashboard() {
             </Button>
           </div>
           <p className="dashboardprofileinput">Account</p>
+          <Collapse in={reLogin}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setReLogin(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              severity="error"
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            >
+              Unsucessful: please logout and login again
+            </Alert>
+          </Collapse>
+          <Collapse in={success}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setSuccess(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              severity="success"
+              variant="outlined"
+              sx={{ marginBottom: "20px" }}
+            >
+              Sucessfully updated
+            </Alert>
+          </Collapse>
+          <div className="dashboardprofileinput">
+            <ColoredTextField
+              label="Email"
+              variant="outlined"
+              size="small"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={accountError[0]}
+              helperText={
+                accountError[0]
+                  ? "Please enter a valid email"
+                  : "Note this is displayed publicly"
+              }
+              fullWidth
+              required
+            />
+          </div>
           <div className="dashboardprofileinput">
             <ColoredTextField
               label="Password"
@@ -184,6 +258,8 @@ export default function Dashboard() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              error={accountError[1] !== ""}
+              helperText={accountError[1]}
               required
               fullWidth
             />

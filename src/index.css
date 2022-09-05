@@ -63,6 +63,7 @@ a {
 .link {
   text-decoration: none;
   color: #547c94;
+  cursor: pointer;
 }
 
 .bold {

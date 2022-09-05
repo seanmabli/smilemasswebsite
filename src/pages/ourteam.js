@@ -44,7 +44,13 @@ export default function OurTeam() {
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {teamMembers.map((teamMember) => {
             return (
-              <div id={teamMember.id} className="ourteamcontainer">
+              <div
+                id={teamMember.id}
+                className="ourteamcontainer"
+                onClick={() =>
+                  navigate(teamMember.replace(/\s/g, "").toLowerCase())
+                }
+              >
                 <img
                   src={teamMember.imageurl}
                   alt={teamMember.name}

@@ -144,7 +144,6 @@ export function AdminNewsletters() {
 export function AdminNewslettersEditor() {
   const [title, setTitle] = useState("");
   const [published, setPublished] = useState(Date.now());
-  const [success, setSuccess] = useState(false);
   const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
   const [initialState, setInitialState] = useState(false);
   const [newPost, setNewPost] = useState(true);
@@ -201,7 +200,7 @@ export function AdminNewslettersEditor() {
               url: title.replace(/\s/g, "").toLowerCase(),
               imageurl: url,
             });
-            setSuccess("post");
+            navigate("/admin/newsletter");
           };
           upload();
         });
@@ -214,7 +213,7 @@ export function AdminNewslettersEditor() {
           published: new Date(published),
           url: title.replace(/\s/g, "").toLowerCase(),
         });
-        setSuccess("update");
+        navigate("/admin/newsletter");
       };
       upload();
     }
@@ -225,7 +224,7 @@ export function AdminNewslettersEditor() {
       .then(() => {
         const upload = async () => {
           await deleteDoc(doc(db, "newsletter", post[0].id));
-          setSuccess("delete");
+          navigate("/admin/newsletter");
         };
         upload();
       })
@@ -288,79 +287,7 @@ export function AdminNewslettersEditor() {
     return null;
   }
 
-  if (success === "post") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/newsletter")}
-            style={{ cursor: "pointer" }}
-          >
-            Newsletter
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>
-          Post Uploaded, this post will be published on{" "}
-          {new Date(published).toDateString()}
-        </p>
-      </div>
-    );
-  } else if (success === "update") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/newsletter")}
-            style={{ cursor: "pointer" }}
-          >
-            Newsletter
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>Post Updated</p>
-      </div>
-    );
-  } else if (success === "delete") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/newsletter")}
-            style={{ cursor: "pointer" }}
-          >
-            Newsletter
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>Post Deleted</p>
-      </div>
-    );
-  } else if (imageUpload.name !== undefined) {
+  if (imageUpload.name !== undefined) {
     return (
       <div className="page">
         <h1>
@@ -608,11 +535,11 @@ export function AdminNewslettersEditor() {
                 {["title", "subtitle", "paragraph"].map((option) => (
                   <li
                     onClick={() => {
-                      if (option == "paragraph") {
+                      if (option === "paragraph") {
                         editor.chain().focus().setParagraph().run();
-                      } else if (option == "title") {
+                      } else if (option === "title") {
                         editor.chain().focus().setHeading({ level: 1 }).run();
-                      } else if (option == "subtitle") {
+                      } else if (option === "subtitle") {
                         editor.chain().focus().setHeading({ level: 2 }).run();
                       }
                     }}

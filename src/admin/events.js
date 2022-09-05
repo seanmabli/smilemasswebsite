@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import {
   ColoredTextField,
   TittapCard,
-  SMILEBlogCardActionArea,
 } from "../components/mui";
 import {
   Button,
@@ -48,7 +47,7 @@ import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
 
 import "./tiptap.css";
 
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 export function AdminEvents() {
   const [posts, setPosts] = useState([]);

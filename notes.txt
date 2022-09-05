@@ -1,25 +1,18 @@
-there was no page for the "Sudbury Accesible Playgrounds" link so I didn't add the page
-get all sponsors and add them to the page
-where to put social icons?
-what is the diffrence between the news letters and SMILE blog, could we combine these pages?
-get higher resolution images of lotte and susan
-are all the testimonials reposted from a 5-star review received on the SMILE Mass Facebook page?
-on the join the coffee club page you reference the Scholarship Fund, what is this and is there a page?
-
 there is a missing closing parathesis on the guides section of the resource page?
 on resource page the Mass Health & Medicaid information is copied in the financial planing section (i deleted it form this other section is that ok?)
 
 pages todo:
 
-community within a community
-donate
+community within a community / support
 
-events
-admin/events
+events - display events
+admin/events - thumbnail image upload, sponsor upload
 
-newsletters
-admin/newsletter
-admin/our team
+newsletters - publicly display newletters and work on autolinking longer articles
+admin/newsletter - email list, email testing, upload images to tiptap, make similar style to constant contact
+admin/our team - profile on click on public page, tiptap readmystory editor on admin page, save with update button on admin
+
+footer - contact and social info, scrollable sposors
 
 changes:
 f.a.q. -> faq
@@ -27,7 +20,6 @@ f.a.q. -> faq
 todo:
 add sudburyplayground and beachwheelchair images to accomplishments page
 if get credit card add google maps api
-maybe deal with scrollbar on contact and voluteer pages
 add cool phone number thing to forms
 message after beach nominations
 add ToggleButton to smileblog text editor
