@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import { ColoredTextField, TittapCard, SMILEBlogCardActionArea } from "../components/mui";
+import {
+  ColoredTextField,
+  TittapCard,
+  SMILEBlogCardActionArea,
+} from "../components/mui";
 import {
   Button,
   TextField,
@@ -130,6 +134,7 @@ export function AdminSmileBlogEditor() {
   const [published, setPublished] = useState(Date.now());
   const [success, setSuccess] = useState(false);
   const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
+  const [realImageUpload, setRealImageUpload] = useState(null);
   const [initialState, setInitialState] = useState(false);
   const [newPost, setNewPost] = useState(true);
   const [inEditor, setInEditor] = useState(false);
@@ -163,17 +168,17 @@ export function AdminSmileBlogEditor() {
     setOpen(false);
   };
 
-  function save() {
+  function savePost() {
     const html = editor.getHTML().replace("<p></p>", "<br/>");
     if (newPost) {
-      if (imageUpload.name === "No file chosen") return;
+      if (realImageUpload.name === null) return;
 
       const imageRef = ref(
         storage,
         `smileblog/${Math.round(Math.random() * 10000000000).toString()}`
       );
 
-      uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      uploadBytes(imageRef, realImageUpload).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           const upload = async () => {
             await addDoc(collection(db, "smileblog"), {
@@ -182,23 +187,54 @@ export function AdminSmileBlogEditor() {
               published: new Date(published),
               url: title.replace(/\s/g, "").toLowerCase(),
               imageurl: url,
+              imagename: realImageUpload.name,
             });
-            setSuccess("post");
+            navigate("/admin/smileblog");
           };
           upload();
         });
       });
     } else {
-      const upload = async () => {
-        await updateDoc(doc(db, "smileblog", post[0].id), {
-          title: title,
-          post: html,
-          published: new Date(published),
-          url: title.replace(/\s/g, "").toLowerCase(),
+      if (realImageUpload.name === null) {
+        const upload = async () => {
+          await updateDoc(doc(db, "smileblog", post[0].id), {
+            title: title,
+            post: html,
+            published: new Date(published),
+            url: title.replace(/\s/g, "").toLowerCase(),
+          });
+          navigate("/admin/smileblog");
+        };
+        upload();
+      } else {
+        deleteObject(ref(storage, post[0].imageurl)).then(() => {
+          const imageRef = ref(
+            storage,
+            `smileblog/${Math.round(Math.random() * 10000000000).toString()}`
+          );
+
+          uploadBytes(imageRef, realImageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((url) => {
+                const upload = async () => {
+                  await updateDoc(doc(db, "smileblog", post[0].id), {
+                    title: title,
+                    post: html,
+                    published: new Date(published),
+                    url: title.replace(/\s/g, "").toLowerCase(),
+                    imageurl: url,
+                    imagename: realImageUpload.name,
+                  });
+                  navigate("/admin/smileblog");
+                };
+                upload();
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
         });
-        setSuccess("update");
-      };
-      upload();
+      }
     }
   }
 
@@ -207,7 +243,7 @@ export function AdminSmileBlogEditor() {
       .then(() => {
         const upload = async () => {
           await deleteDoc(doc(db, "smileblog", post[0].id));
-          setSuccess("delete");
+          navigate("/admin/smileblog");
         };
         upload();
       })
@@ -234,6 +270,7 @@ export function AdminSmileBlogEditor() {
       setTitle(post[0].title);
       setPublished(post[0].published.toDate());
       editor.commands.setContent(post[0].post);
+      setImageUpload({ fromurl: post[0].imageurl, name: post[0].imagename });
       setNewPost(false);
     }
     setInitialState(true);
@@ -263,79 +300,13 @@ export function AdminSmileBlogEditor() {
     return null;
   }
 
-  if (success === "post") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/smileblog")}
-            style={{ cursor: "pointer" }}
-          >
-            Smile Blog
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>
-          Post Uploaded, this post will be published on{" "}
-          {new Date(published).toDateString()}
-        </p>
-      </div>
-    );
-  } else if (success === "update") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/smileblog")}
-            style={{ cursor: "pointer" }}
-          >
-            Smile Blog
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>Post Updated</p>
-      </div>
-    );
-  } else if (success === "delete") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/smileblog")}
-            style={{ cursor: "pointer" }}
-          >
-            Smile Blog
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>Post Deleted</p>
-      </div>
-    );
-  } else if (imageUpload.name !== undefined) {
+  function Image(props) {
+    if (props.image.fromurl !== undefined) {
+      return <img src={props.image.fromurl} style={{ width: "400px" }} />;
+    }
+  }
+
+  if (imageUpload.name !== undefined) {
     return (
       <div className="page">
         <h1>
@@ -494,7 +465,9 @@ export function AdminSmileBlogEditor() {
           />
         </LocalizationProvider>
         <br />
-        <div style={!newPost ? { display: "none" } : { display: "flex" }}>
+        <Image image={imageUpload} />
+        <br />
+        <div style={{ display: "flex" }}>
           <Button
             variant="outlined"
             component="label"
@@ -504,7 +477,11 @@ export function AdminSmileBlogEditor() {
             <input
               type="file"
               onChange={(event) => {
-                setImageUpload(event.target.files[0]);
+                setImageUpload({
+                  fromurl: URL.createObjectURL(event.target.files[0]),
+                  name: event.target.files[0].name,
+                });
+                setRealImageUpload(event.target.files[0]);
               }}
               hidden
             />
@@ -515,7 +492,7 @@ export function AdminSmileBlogEditor() {
         <div style={{ display: "flex" }}>
           <Button
             variant="outlined"
-            onClick={save}
+            onClick={savePost}
             style={{ color: "#547c94", borderColor: "#547c94" }}
           >
             Save
