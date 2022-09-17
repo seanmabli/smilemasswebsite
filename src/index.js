@@ -11,8 +11,15 @@ root.render(
   <>
     <React.Fragment>
       <BrowserRouter>
-        <div>
-          <div className="site">
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            className="site"
+            style={
+              window.innerWidth > 1250
+                ? { minWidth: "1250px" }
+                : null
+            }
+          >
             <Navbar />
           </div>
         </div>
