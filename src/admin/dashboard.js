@@ -248,6 +248,7 @@ export default function Dashboard() {
               }
               fullWidth
               required
+              autocomplete="new-password"
             />
           </div>
           <div className="dashboardprofileinput">
@@ -262,6 +263,7 @@ export default function Dashboard() {
               helperText={accountError[1]}
               required
               fullWidth
+              autocomplete="new-password"
             />
           </div>
           <div className="dashboardprofileinput">
@@ -274,6 +276,7 @@ export default function Dashboard() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               fullWidth
+              autocomplete="new-password"
             />
           </div>
           <div className="dashboardprofileinput">

@@ -132,7 +132,6 @@ export function AdminSmileBlog() {
 export function AdminSmileBlogEditor() {
   const [title, setTitle] = useState("");
   const [published, setPublished] = useState(Date.now());
-  const [success, setSuccess] = useState(false);
   const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
   const [realImageUpload, setRealImageUpload] = useState(null);
   const [initialState, setInitialState] = useState(false);
