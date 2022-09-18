@@ -11,11 +11,10 @@ import Accomplishments from "../pages/accomplishments";
 import BeachHouse from "../pages/beachhouse";
 import ClubSmileMass from "../pages/clubsmilemass";
 import { CommunityRaceSponsors } from "../pages/communityracesponsors";
-import CommunityWithinACommunity from "../pages/communitywithinacommunity";
 import Contact from "../pages/contact";
 import { CorporateSponsorships } from "../pages/corporatesponsorships";
 import Donate from "../pages/donate";
-import EquipmentLoanerProgram from "../pages/equipmentloanerprogram";
+import EquipmentLoanerProgram from "../pages/equiptmentloanerprogram";
 import Events from "../pages/events";
 import FAQ from "../pages/faq";
 import Home from "../pages/home";
@@ -97,7 +96,6 @@ function MobileNavbar() {
                 "Club SMILE Mass",
                 "Beach Wheelchair Locations",
                 "Beach House",
-                "Community within a Community",
                 "Equipment Loaner Program",
                 "Accessible Playgrounds",
               ]}
@@ -254,15 +252,6 @@ function PageContent() {
         <Route
           path="/communityracesponsors"
           element={<CommunityRaceSponsors />}
-        />
-
-        <Route
-          path="/communitywithinacommunity"
-          element={<CommunityWithinACommunity />}
-        />
-        <Route
-          path="/initiative/community-within-a-community"
-          element={<Navigate to="/communitywithinacommunity" />}
         />
 
         <Route path="/contact" element={<Contact />} />
