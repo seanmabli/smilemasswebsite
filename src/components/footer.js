@@ -3,14 +3,8 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { Divider } from "@mui/material";
 
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import SwipeableViews from "react-swipeable-views";
-import { autoPlay } from "react-swipeable-views-utils";
-
+import footerlogo from "../images/footerlogo.jpg";
 import "./footer.css";
-
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 export function Footer() {
   const [responses, setResponses] = useState([]);
@@ -27,85 +21,19 @@ export function Footer() {
     return first.name.localeCompare(second.name);
   });
 
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
-
-  function getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height,
-    };
-  }
-
-  function useWindowDimensions() {
-    const [windowDimensions, setWindowDimensions] = useState(
-      getWindowDimensions()
-    );
-
-    useEffect(() => {
-      function handleResize() {
-        setWindowDimensions(getWindowDimensions());
-      }
-
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    return windowDimensions;
-  }
-
-  function Testing() {
-    const { height, width } = useWindowDimensions();
-
-     return (
-        <>
-          {responses.map((response, index) => (
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <div className="sponsor">
-                  <a href={response.url}>
-                    <img
-                      src={response.imageurl}
-                      alt={response.name}
-                      className="sponsorimage"
-                    />
-                  </a>
-                </div>
-              ) : null}
-            </div>
-          ))}
-        </>
-      );
-  }
-
   return (
     <>
       <br />
       <Divider />
       <br />
-      <p>Special Thanks To Our Sponsors:</p>
-      <br />
-      <AutoPlaySwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={activeStep}
-        onChangeIndex={handleStepChange}
-        enableMouseEvents
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
-        <Testing />
-      </AutoPlaySwipeableViews>
+        <h2>Our Sponsors</h2>
+      </div>
       <br />
       <div className="sponsorscontainer">
         {responses.map((response) => {
@@ -122,7 +50,17 @@ export function Footer() {
           );
         })}
       </div>
-      <div>
+      <br />
+      <Divider />
+      <br />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <img src={footerlogo} alt="footerlogo" className="footerlogo" />
         <div>
           <h2>Contact Us</h2>
           <p>617-967-7755</p>
@@ -130,13 +68,32 @@ export function Footer() {
         </div>
         <div>
           <h2>Connect with us</h2>
-          <a href="https://www.facebook.com/SmileMass">Facebook</a>
-          <br />
-          <a href="https://www.instagram.com/smilemassorg/">Instagram</a>
-          <br />
-          <a href="https://twitter.com/smilemassorg">Twitter</a>
-          <br />
-          <a href="https://www.linkedin.com/company/smile-mass/">LinkedIn</a>
+          <div style={{ display: "flex" }}>
+            <a target="_blank" href="https://www.facebook.com/SMILEMass">
+              <img
+                src="https://img.icons8.com/color/45/facebook--v1.png"
+                alt="facebook"
+              />
+            </a>
+            <a target="_blank" href="https://www.instagram.com/smilemassorg/">
+              <img
+                src="https://img.icons8.com/color/45/instagram-new--v1.png"
+                alt="instagram"
+              />
+            </a>
+            <a target="_blank" href="https://twitter.com/smilemassorg">
+              <img
+                src="https://img.icons8.com/color/45/twitter--v1.png"
+                alt="twitter"
+              />
+            </a>
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/company/smile-mass/"
+            >
+              <img src="https://img.icons8.com/color/45/linkedin--v1.png" />
+            </a>
+          </div>
         </div>
       </div>
     </>

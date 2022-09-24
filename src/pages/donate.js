@@ -32,7 +32,7 @@ export default function Donate() {
       </ul>
       <br />
       <p>
-        I hope you will consider supporting SMILE Mass with a tax-deductible
+        We hope you will consider supporting SMILE Mass with a tax-deductible
         gift. A donation of any denomination will make a tangible difference.
         Please do not hesitate to{" "}
         <Link to="/contact">
