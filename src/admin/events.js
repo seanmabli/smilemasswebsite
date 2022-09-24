@@ -57,12 +57,16 @@ import LinkOffRoundedIcon from "@mui/icons-material/LinkOffRounded";
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
 
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+
 import "./tiptap.css";
 
 import { useNavigate, useParams } from "react-router";
+import { set } from "date-fns";
 
 export function AdminEvents() {
-  const [posts, setPosts] = useState([]);
+  const [events, setEvents] = useState([]);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(Date.now());
   const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
@@ -70,21 +74,33 @@ export function AdminEvents() {
   const [inEditor, setInEditor] = useState(false);
   const [hoverEditor, setHoverEditor] = useState(false);
 
+  const [editing, setEditing] = useState(false);
+  const [editingId, setEditingId] = useState("");
+  const [editingTitle, setEditingTitle] = useState("");
+  const [editingDate, setEditingDate] = useState(Date.now());
+  const [editingImage, setEditingImage] = useState({ name: "No file chosen" });
+  const [editingImageNames, setEditingImageNames] = useState("No file chosen");
+  const [editingDownloadURLs, setEditingDownloadURLs] = useState([]);
+  const [editingError, setEditingError] = useState(false);
+  const [editingRun, setEditingRun] = useState(false);
+  const [inEditingEditor, setInEditingEditor] = useState(false);
+  const [hoverEditingEditor, setHoverEditingEditor] = useState(false);
+
   useEffect(() => {
-    const getPosts = async () => {
+    const getEvents = async () => {
       const data = await getDocs(collection(db, "events"));
-      setPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setEvents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
-    getPosts();
+    getEvents();
   }, []);
 
-  posts.sort(function (first, second) {
+  events.sort(function (first, second) {
     return first.date - second.date;
   });
 
   let navigate = useNavigate();
 
-  console.log(posts);
+  console.log(events);
 
   function addEvent() {
     if (realImageUpload.name === null) return;
@@ -105,8 +121,8 @@ export function AdminEvents() {
             imageurl: url,
             imagename: realImageUpload.name,
           });
-          setPosts([
-            ...posts,
+          setEvents([
+            ...events,
             {
               title: title,
               description: html,
@@ -126,6 +142,21 @@ export function AdminEvents() {
     });
   }
 
+  const [openDeletingEvent, setOpenDeletingEvent] = useState(false);
+  const [deletingEvent, setDeletingEvent] = useState({});
+
+  function deleteEvent() {
+    for (let i = 0; i < deletingEvent.imageurls.length; i++) {
+      deleteObject(ref(storage, deletingEvent.imageurls[i]));
+    }
+    const upload = async () => {
+      await deleteDoc(doc(db, "events", deletingEvent.id));
+      setOpenDeletingEvent(false);
+      setEvents(events.filter((r) => r.id !== deletingEvent.id));
+    };
+    upload();
+  }
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -134,6 +165,16 @@ export function AdminEvents() {
       }),
     ],
     content: "<p>Description</p>",
+  });
+
+  const editingEditor = useEditor({
+    extensions: [
+      StarterKit,
+      Link.configure({
+        openOnClick: false,
+      }),
+    ],
+    content: "",
   });
 
   const setLink = useCallback(() => {
@@ -178,36 +219,323 @@ export function AdminEvents() {
           </span>{" "}
           <span style={{ color: "gray" }}>/</span> Events
         </h1>
-        {posts.map((post) => {
-          return (
-            <div>
-              <br />
-              <Divider />
-              <br />
-              <img
-                src={post.imageurl}
-                alt={post.title}
-                style={{ height: "100px" }}
-              />
-              <br />
-              <h2 style={{ color: "black" }}>{post.title}</h2>
-              <br />
-              <p style={{ color: "black" }}>
-                {post.date
-                  .toDate()
-                  .toDateString()
-                  .split(" ")
-                  .slice(1)
-                  .join(" ")}
-                &nbsp;&nbsp;
-              </p>
-              <br />
-              <div
-                style={{ color: "black" }}
-                dangerouslySetInnerHTML={{ __html: post.description }}
-              />
-            </div>
-          );
+        {events.map((event) => {
+          if (editing && event.id === editingId) {
+            return (
+              <div>
+                <br />
+                <Divider />
+                <br />
+                <div className="formtwo">
+                  <ColoredTextField
+                    label="Title"
+                    variant="outlined"
+                    size="small"
+                    value={editingTitle}
+                    onChange={(e) => setEditingTitle(e.target.value)}
+                    fullWidth
+                    required
+                  />
+                </div>
+                <br />
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    renderInput={(props) => (
+                      <ColoredTextField
+                        {...props}
+                        size="small"
+                        sx={{ margin: "20px 0 0 0" }}
+                        required
+                      />
+                    )}
+                    label="Date"
+                    value={editingDate}
+                    onChange={(e) => setEditingDate(e)}
+                  />
+                </LocalizationProvider>
+                <br />
+                <Tooltip title="Bold">
+                  <IconButton
+                    onClick={() =>
+                      editingEditor.chain().focus().toggleBold().run()
+                    }
+                    sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+                  >
+                    <FormatBoldRoundedIcon
+                      className={
+                        editingEditor.isActive("bold")
+                          ? "isActive"
+                          : "isNotActive"
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Italic">
+                  <IconButton
+                    onClick={() =>
+                      editingEditor.chain().focus().toggleItalic().run()
+                    }
+                    sx={{ margin: "5px 5px 5px 0", color: "#547c94" }}
+                  >
+                    <FormatItalicRoundedIcon
+                      className={
+                        editingEditor.isActive("italic")
+                          ? "isActive"
+                          : "isNotActive"
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Strikethrough">
+                  <IconButton
+                    onClick={() =>
+                      editingEditor.chain().focus().toggleStrike().run()
+                    }
+                    sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+                  >
+                    <StrikethroughSRoundedIcon
+                      className={
+                        editingEditor.isActive("strike")
+                          ? "isActive"
+                          : "isNotActive"
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Clear Formatting">
+                  <IconButton
+                    onClick={() =>
+                      editingEditor.chain().focus().clearNodes().run()
+                    }
+                    sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+                  >
+                    <FormatClearRoundedIcon className="isNotActive" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Bulleted List">
+                  <IconButton
+                    onClick={() =>
+                      editingEditor.chain().focus().toggleBulletList().run()
+                    }
+                    sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+                  >
+                    <FormatListBulletedRoundedIcon
+                      className={
+                        editingEditor.isActive("bulletList")
+                          ? "isActive"
+                          : "isNotActive"
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Numbered List">
+                  <IconButton
+                    onClick={() =>
+                      editingEditor.chain().focus().toggleOrderedList().run()
+                    }
+                    sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+                  >
+                    <FormatListNumberedRoundedIcon
+                      className={
+                        editingEditor.isActive("orderedList")
+                          ? "isActive"
+                          : "isNotActive"
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Block Quote">
+                  <IconButton
+                    onClick={() =>
+                      editingEditor.chain().focus().toggleBlockquote().run()
+                    }
+                    sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+                  >
+                    <FormatQuoteRoundedIcon
+                      className={
+                        editingEditor.isActive("blockquote")
+                          ? "isActive"
+                          : "isNotActive"
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Insert Link">
+                  <IconButton
+                    onClick={setLink}
+                    sx={{ margin: "5px 0 5px 0", color: "#547c94" }}
+                  >
+                    <InsertLinkRoundedIcon
+                      className={
+                        editingEditor.isActive("link")
+                          ? "isActive"
+                          : "isNotActive"
+                      }
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Link Off">
+                  <IconButton
+                    onClick={setLink}
+                    disabled={!editingEditor.isActive("link")}
+                  >
+                    <LinkOffRoundedIcon className="isNotActive" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Undo">
+                  <IconButton
+                    onClick={() => editingEditor.chain().focus().undo().run()}
+                  >
+                    <UndoRoundedIcon className="isNotActive" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Redo">
+                  <IconButton
+                    onClick={() => editingEditor.chain().focus().redo().run()}
+                  >
+                    <RedoRoundedIcon className="isNotActive" />
+                  </IconButton>
+                </Tooltip>
+                <ClickAwayListener
+                  onClickAway={() => setInEditingEditor(false)}
+                >
+                  <TittapCard
+                    variant="outlined"
+                    onMouseEnter={() => setHoverEditingEditor(true)}
+                    onMouseLeave={() => setHoverEditingEditor(false)}
+                    onMouseDownCapture={() => setInEditingEditor(true)}
+                    sx={[
+                      hoverEditingEditor
+                        ? { borderWidth: "1px", borderColor: "#547c94" }
+                        : {
+                            borderWidth: "1px",
+                            borderColor: "rgba(0, 0, 0, 0.23)",
+                          },
+                      inEditingEditor
+                        ? { borderWidth: "2px", borderColor: "#547c94" }
+                        : {},
+                    ]}
+                  >
+                    <EditorContent editor={editingEditor} />
+                  </TittapCard>
+                </ClickAwayListener>
+                <br />
+                <Image image={editingImage} />
+                <br />
+                <div style={{ display: "flex" }}>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    style={{ color: "#547c94", borderColor: "#547c94" }}
+                  >
+                    Upload Thumbnail
+                    <input
+                      type="file"
+                      onChange={(event) => {
+                        setImageUpload({
+                          fromurl: URL.createObjectURL(event.target.files[0]),
+                          name: event.target.files[0].name,
+                        });
+                        setRealImageUpload(event.target.files[0]);
+                      }}
+                      hidden
+                    />
+                  </Button>
+                  <p>&nbsp;&nbsp;{imageUpload.name}</p>
+                </div>
+                <br />
+                <div style={{ display: "flex" }}>
+                  <Button
+                    variant="outlined"
+                    style={{ color: "#547c94", borderColor: "#547c94" }}
+                  >
+                    Update Event
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    style={{
+                      color: "#547c94",
+                      borderColor: "#547c94",
+                      marginLeft: "10px",
+                    }}
+                    onClick={() => setEditing(false)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            );
+          } else {
+            return (
+              <div>
+                <br />
+                <Divider />
+                <br />
+                <div style={{ position: "relative", display: "flex" }}>
+                  <div
+                    style={{
+                      color: "#547c94",
+                      position: "absolute",
+                      top: "0px",
+                      right: "0px",
+                    }}
+                  >
+                    <Tooltip title="Edit">
+                      <IconButton
+                        onClick={() => {
+                          setEditing(true);
+                          setEditingId(event.id);
+                          setEditingTitle(event.title);
+                          setEditingDate(event.date.toDate());
+                          setEditingImageNames(event.imagename);
+                          editingEditor.commands.setContent(event.description);
+                        }}
+                      >
+                        <EditRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                      <IconButton
+                        onClick={() => {
+                          setOpenDeletingEvent(true);
+                          setDeletingEvent(event);
+                        }}
+                      >
+                        <DeleteRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                </div>
+                <div className="eventcontainer">
+                  <div>
+                    <img
+                      src={event.imageurl}
+                      alt={event.title}
+                      className="eventthumbnail"
+                    />
+                  </div>
+                  <div>
+                    <h2 style={{ color: "black" }}>{event.title}</h2>
+                    <br />
+                    <p style={{ color: "black" }}>
+                      {event.date
+                        .toDate()
+                        .toDateString()
+                        .split(" ")
+                        .slice(1)
+                        .join(" ")}
+                      &nbsp;&nbsp;
+                    </p>
+                    <br />
+                    <div
+                      style={{ color: "black" }}
+                      dangerouslySetInnerHTML={{ __html: event.description }}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          }
         })}
         <br />
         <Divider />
