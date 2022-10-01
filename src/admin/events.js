@@ -79,10 +79,7 @@ export function AdminEvents() {
   const [editingTitle, setEditingTitle] = useState("");
   const [editingDate, setEditingDate] = useState(Date.now());
   const [editingImage, setEditingImage] = useState({ name: "No file chosen" });
-  const [editingImageNames, setEditingImageNames] = useState("No file chosen");
-  const [editingDownloadURLs, setEditingDownloadURLs] = useState([]);
-  const [editingError, setEditingError] = useState(false);
-  const [editingRun, setEditingRun] = useState(false);
+  const [editingRealImage, setEditingRealImage] = useState(null);
   const [inEditingEditor, setInEditingEditor] = useState(false);
   const [hoverEditingEditor, setHoverEditingEditor] = useState(false);
 
@@ -99,8 +96,6 @@ export function AdminEvents() {
   });
 
   let navigate = useNavigate();
-
-  console.log(events);
 
   function addEvent() {
     if (realImageUpload.name === null) return;
@@ -144,11 +139,10 @@ export function AdminEvents() {
 
   const [openDeletingEvent, setOpenDeletingEvent] = useState(false);
   const [deletingEvent, setDeletingEvent] = useState({});
+  const [confirm, setConfirm] = useState("");
 
   function deleteEvent() {
-    for (let i = 0; i < deletingEvent.imageurls.length; i++) {
-      deleteObject(ref(storage, deletingEvent.imageurls[i]));
-    }
+    deleteObject(ref(storage, deletingEvent.imageurl));
     const upload = async () => {
       await deleteDoc(doc(db, "events", deletingEvent.id));
       setOpenDeletingEvent(false);
@@ -156,6 +150,83 @@ export function AdminEvents() {
     };
     upload();
   }
+
+  function updateEvent() {
+    const html = editingEditor.getHTML().replace("<p></p>", "<br/>");
+    if (editingRealImage === null) {
+      const upload = async () => {
+        await updateDoc(doc(db, "events", editingId), {
+          title: editingTitle,
+          description: html,
+          date: new Date(date),
+        });
+      };
+      upload();
+      setEditing(false);
+      setEvents(
+        events.map((r) => {
+          if (r.id === editingId) {
+            return {
+              title: editingTitle,
+              description: html,
+              date: Timestamp.fromDate(editingDate),
+              imageurl: r.imageurl,
+              imagename: r.imagename,
+              id: r.id,
+            };
+          } else {
+            return r;
+          }
+        })
+      );
+    } else {
+      deleteObject(
+        ref(storage, events.filter((r) => r.id !== editingId)[0])
+      ).then(() => {
+        const imageRef = ref(
+          storage,
+          `events/${Math.round(Math.random() * 10000000000).toString()}`
+        );
+
+        uploadBytes(imageRef, editingRealImage).then((snapshot) => {
+          getDownloadURL(snapshot.ref)
+            .then((url) => {
+              const upload = async () => {
+                await updateDoc(doc(db, "events", editingId), {
+                  title: editingTitle,
+                  description: html,
+                  date: new Date(editingDate),
+                  imageurl: url,
+                  imagename: editingRealImage.name,
+                });
+              };
+              upload();
+              setEditing(false);
+              setEvents(
+                events.map((r) => {
+                  if (r.id === editingId) {
+                    return {
+                      title: editingTitle,
+                      description: html,
+                      date: Timestamp.fromDate(editingDate),
+                      imageurl: url,
+                      imagename: editingRealImage.name,
+                    };
+                  } else {
+                    return r;
+                  }
+                })
+              );
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        });
+      });
+    }
+  }
+
+  console.log(events);
 
   const editor = useEditor({
     extensions: [
@@ -432,22 +503,23 @@ export function AdminEvents() {
                     <input
                       type="file"
                       onChange={(event) => {
-                        setImageUpload({
+                        setEditingImage({
                           fromurl: URL.createObjectURL(event.target.files[0]),
                           name: event.target.files[0].name,
                         });
-                        setRealImageUpload(event.target.files[0]);
+                        setEditingRealImage(event.target.files[0]);
                       }}
                       hidden
                     />
                   </Button>
-                  <p>&nbsp;&nbsp;{imageUpload.name}</p>
+                  <p>&nbsp;&nbsp;{editingImage.name}</p>
                 </div>
                 <br />
                 <div style={{ display: "flex" }}>
                   <Button
                     variant="outlined"
                     style={{ color: "#547c94", borderColor: "#547c94" }}
+                    onClick={updateEvent}
                   >
                     Update Event
                   </Button>
@@ -487,7 +559,11 @@ export function AdminEvents() {
                           setEditingId(event.id);
                           setEditingTitle(event.title);
                           setEditingDate(event.date.toDate());
-                          setEditingImageNames(event.imagename);
+                          console.log(event.imagename);
+                          setEditingImage({
+                            fromurl: event.imageurl,
+                            name: event.imagename,
+                          });
                           editingEditor.commands.setContent(event.description);
                         }}
                       >
@@ -715,6 +791,57 @@ export function AdminEvents() {
         >
           Add Event
         </Button>
+        <Dialog
+          open={openDeletingEvent}
+          onClose={() => setOpenDeletingEvent(false)}
+        >
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              This action cannot be undone. This will permanently delete{" "}
+              <span className="bold" style={{ color: "#000" }}>
+                {deletingEvent.title}
+              </span>
+              .
+            </DialogContentText>
+            <br />
+            <DialogContentText fontSize={"14px"}>
+              Please type{" "}
+              <span className="bold" style={{ color: "#000" }}>
+                {deletingEvent.title}
+              </span>{" "}
+              to confirm.
+            </DialogContentText>
+            <ColoredTextField
+              autoFocus
+              margin="dense"
+              id="name"
+              size="small"
+              type="email"
+              fullWidth
+              variant="outlined"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => setOpenDeletingEvent(false)}
+              variant="outlined"
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+            >
+              Cancel
+            </Button>
+            <Button
+              disabled={confirm !== deletingEvent.title}
+              onClick={deleteEvent}
+              variant="outlined"
+              color="error"
+            >
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

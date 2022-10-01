@@ -170,7 +170,7 @@ export function AdminSmileBlogEditor() {
   function savePost() {
     const html = editor.getHTML().replace("<p></p>", "<br/>");
     if (newPost) {
-      if (realImageUpload.name === null) return;
+      if (realImageUpload === null) return;
 
       const imageRef = ref(
         storage,
@@ -194,7 +194,7 @@ export function AdminSmileBlogEditor() {
         });
       });
     } else {
-      if (realImageUpload.name === null) {
+      if (realImageUpload === null) {
         const upload = async () => {
           await updateDoc(doc(db, "smileblog", post[0].id), {
             title: title,
@@ -522,7 +522,7 @@ export function AdminSmileBlogEditor() {
                 </span>{" "}
                 to confirm.
               </DialogContentText>
-              <TextField
+              <ColoredTextField
                 autoFocus
                 margin="dense"
                 id="name"
@@ -535,7 +535,11 @@ export function AdminSmileBlogEditor() {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} variant="outlined">
+              <Button
+                onClick={handleClose}
+                variant="outlined"
+                style={{ color: "#547c94", borderColor: "#547c94" }}
+              >
                 Cancel
               </Button>
               <Button
