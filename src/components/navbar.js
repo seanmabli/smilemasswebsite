@@ -28,7 +28,7 @@ import RunningTeam from "../pages/runningteam";
 import { SmileBlog, SmileBlogPost } from "../pages/smileblog";
 import SusanBrown from "../pages/susanbrown";
 import Testimonials from "../pages/testimonials";
-import OurTeam from "../pages/ourteam";
+import { OurTeam, OurTeamProfile } from "../pages/ourteam";
 import OurMission from "../pages/ourmission";
 import Volunteer from "../pages/volunteer";
 
@@ -323,6 +323,7 @@ function PageContent() {
 
         <Route path="/ourteam" element={<OurTeam />} />
         <Route path="/our-team" element={<Navigate to="/ourteam" />} />
+        <Route path="/ourteam/:id" element={<OurTeamProfile />} />
 
         <Route path="/volunteer" element={<Volunteer />} />
         <Route

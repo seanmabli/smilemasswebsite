@@ -2,11 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import {
   ColoredTextField,
   TittapCard,
-  SMILEBlogCardActionArea,
 } from "../components/mui";
 import {
   Button,
-  TextField,
   Dialog,
   DialogActions,
   DialogContent,
@@ -27,10 +25,7 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
-  query,
-  where,
   doc,
-  onSnapshot,
   Timestamp,
 } from "firebase/firestore";
 import {
@@ -62,8 +57,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import "./tiptap.css";
 
-import { useNavigate, useParams } from "react-router";
-import { set } from "date-fns";
+import { useNavigate } from "react-router";
 
 export function AdminEvents() {
   const [events, setEvents] = useState([]);

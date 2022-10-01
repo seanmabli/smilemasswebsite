@@ -1,24 +1,26 @@
-import { useNavigate, Link } from "react-router-dom";
-import { ReadMyStoryButton } from "../components/mui";
-import { useState } from "react";
+import { useNavigate, Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { Footer } from "../components/footer";
 import "./ourteam.css";
 
-export default function OurTeam() {
+export function OurTeam() {
   let navigate = useNavigate();
 
   const [teamMembers, setTeamMembers] = useState([]);
 
-  onSnapshot(
-    query(collection(db, "ourteam"), where("visable", "==", true)),
-    (snapshot) => {
-      setTeamMembers(
-        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+  useEffect(() => {
+    const getTeamMembers = async () => {
+      const querySnapshot = await getDocs(
+        query(collection(db, "ourteam"), where("visable", "==", true))
       );
-    }
-  );
+      setTeamMembers(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    };
+    getTeamMembers();
+  }, []);
 
   teamMembers.sort(function (first, second) {
     return first.index - second.index;
@@ -48,7 +50,7 @@ export default function OurTeam() {
                 id={teamMember.id}
                 className="ourteamcontainer"
                 onClick={() =>
-                  navigate(teamMember.replace(/\s/g, "").toLowerCase())
+                  navigate(teamMember.name.replace(/\s/g, "").toLowerCase())
                 }
               >
                 <img
@@ -65,6 +67,54 @@ export default function OurTeam() {
           })}
         </div>
       </div>
+      <Footer />
+    </div>
+  );
+}
+
+export function OurTeamProfile() {
+  const { id } = useParams();
+  const [teamMembers, setTeamMembers] = useState([]);
+
+  useEffect(() => {
+    const getTeamMembers = async () => {
+      const querySnapshot = await getDocs(
+        query(collection(db, "ourteam"), where("visable", "==", true))
+      );
+      setTeamMembers(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+      setTeamMembers((teamMembers) =>
+        teamMembers.filter(
+          (teamMember) =>
+            teamMember.name.replace(/\s/g, "").toLowerCase() === id
+        )
+      );
+    };
+    getTeamMembers();
+  }, []);
+
+  console.log(teamMembers, id);
+
+  return (
+    <div className="page">
+      {teamMembers.map((teamMember) => {
+        return (
+          <div className="ourteamcontainer">
+            <h1>{teamMember.name}</h1>
+            <br />
+            <img
+              src={teamMember.imageurl}
+              alt={teamMember.name}
+              className="ourteamimage"
+            />
+            <br />
+            <p>{teamMember.role}</p>
+            <br />
+            <p>{teamMember.bio}</p>
+          </div>
+        );
+      })}
     </div>
   );
 }
