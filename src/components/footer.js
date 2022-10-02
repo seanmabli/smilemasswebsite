@@ -53,20 +53,14 @@ export function Footer() {
       <br />
       <Divider />
       <br />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
+      <div className="footeradditionalcontainer">
         <img src={footerlogo} alt="footerlogo" className="footerlogo" />
-        <div>
+        <div className="footercontact">
           <h2>Contact Us</h2>
           <p>617-967-7755</p>
           <p>info@smilemass.org</p>
         </div>
-        <div>
+        <div className="footersocial">
           <h2>Connect with us</h2>
           <div style={{ display: "flex" }}>
             <a target="_blank" href="https://www.facebook.com/SMILEMass">

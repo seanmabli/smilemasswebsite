@@ -22,3 +22,15 @@
   height: 300px;
   margin: 10px;
 }
+
+.ourteamprofilecontainer {
+  position: relative;
+}
+
+.ourteamprofileimage {
+  width: 275px;
+  height: 300px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 5px;
+}

@@ -4,6 +4,7 @@ import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Footer } from "../components/footer";
 import "./ourteam.css";
+import { Divider } from "@mui/material";
 
 export function OurTeam() {
   let navigate = useNavigate();
@@ -100,18 +101,29 @@ export function OurTeamProfile() {
     <div className="page">
       {teamMembers.map((teamMember) => {
         return (
-          <div className="ourteamcontainer">
-            <h1>{teamMember.name}</h1>
-            <br />
-            <img
-              src={teamMember.imageurl}
-              alt={teamMember.name}
-              className="ourteamimage"
-            />
-            <br />
-            <p>{teamMember.role}</p>
-            <br />
-            <p>{teamMember.bio}</p>
+          <div>
+            <div className="ourteamprofilecontainer">
+              <img
+                src={teamMember.imageurl}
+                alt={teamMember.name}
+                className="ourteamprofileimage"
+              />
+              <h1>{teamMember.name}</h1>
+              <br />
+              <p>{teamMember.role}</p>
+              <br />
+              <p>{teamMember.bio}</p>
+              <br />
+            </div>
+            <div>
+              <br />
+              <Divider />
+              <br />
+              <h2>Lotte's Story</h2>
+              <br />
+              <p>{teamMember.story}</p>
+              <br />
+            </div>
           </div>
         );
       })}

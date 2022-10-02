@@ -24,3 +24,27 @@
   height: 200px;
   margin: 10px;
 }
+
+.footeradditionalcontainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+  .footerlogo {
+    margin-bottom: 20px;
+  }
+
+  .footercontact {
+    margin-bottom: 20px;
+  }
+
+  .footersocial {
+    margin-bottom: 20px;
+  }
+
+  .footeradditionalcontainer {
+    flex-direction: column;
+  }
+}
