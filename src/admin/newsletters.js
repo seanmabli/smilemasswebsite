@@ -25,7 +25,6 @@ import {
   query,
   where,
   doc,
-  onSnapshot,
 } from "firebase/firestore";
 import {
   ref,
@@ -154,18 +153,17 @@ export function AdminNewslettersEditor() {
 
   const { id } = useParams();
 
-  const newsletterRef = collection(db, "newsletter");
-  const q = query(newsletterRef, where("url", "==", id));
-
   const [post, setPost] = useState(null);
 
-  onSnapshot(q, (snapshot) => {
-    const data = [];
-    snapshot.docs.forEach((doc) => {
-      data.push({ ...doc.data(), id: doc.id });
-    });
-    setPost(data);
-  });
+  useEffect(() => {
+    const getPost = async () => {
+      const querySnapshot = await getDocs(
+        query(collection(db, "newsletter"), where("url", "==", id))
+      );
+      setPost(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getPost();
+  }, []);
 
   let navigate = useNavigate();
 

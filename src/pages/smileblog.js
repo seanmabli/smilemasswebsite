@@ -5,14 +5,13 @@ import {
   getDocs,
   query,
   where,
-  onSnapshot,
 } from "firebase/firestore";
 import { SMILEBlogCardActionAreaNew } from "../components/mui";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import "./smileblog.css";
 import { Footer } from "../components/footer";
 import { Divider } from "@mui/material";
+import "./smileblog.css";
 
 export function SmileBlog() {
   const [posts, setPosts] = useState([]);
@@ -84,18 +83,17 @@ export function SmileBlog() {
 export function SmileBlogPost() {
   const { id } = useParams();
 
-  const smileblogRef = collection(db, "smileblog");
-  const q = query(smileblogRef, where("url", "==", id));
-
   const [post, setPost] = useState(null);
 
-  onSnapshot(q, (snapshot) => {
-    const data = [];
-    snapshot.docs.forEach((doc) => {
-      data.push({ ...doc.data(), id: doc.id });
-    });
-    setPost(data);
-  });
+  useEffect(() => {
+    const getPost = async () => {
+      const querySnapshot = await getDocs(
+        query(collection(db, "smileblog"), where("url", "==", id))
+      );
+      setPost(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getPost();
+  }, []);
 
   let navigate = useNavigate();
 
