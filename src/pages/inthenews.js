@@ -22,6 +22,16 @@ export default function InTheNews() {
     <div className="page">
       <h1>In The News</h1>
       <br />
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/AcvFW6vxqZE"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <br />
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {newsItems.map((newsItem) => {
           return (
@@ -30,7 +40,7 @@ export default function InTheNews() {
                 src={newsItem.imageurl}
                 alt="News Logo"
                 className="newslogo"
-                style={{ height: "50px" }}
+                style={{ maxHeight: "50px", maxWidth: "268px" }}
               />
               <br />
               <p>

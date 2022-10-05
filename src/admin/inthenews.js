@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, DesktopDatePicker } from "@mui/x-date-pickers";
 
 import {
   collection,
@@ -78,7 +78,7 @@ export function AdminInTheNews() {
                 src={newsItem.imageurl}
                 alt="News Logo"
                 className="newslogo"
-                style={{ height: "50px" }}
+                style={{ maxHeight: "50px", maxWidth: "268px" }}
               />
               <br />
               <p>
@@ -106,7 +106,6 @@ export function AdminInTheNewsEditor() {
 
   const [initialState, setInitialState] = useState(false);
   const [newPost, setNewPost] = useState(true);
-  const [success, setSuccess] = useState(false);
 
   let navigate = useNavigate();
 
@@ -163,7 +162,7 @@ export function AdminInTheNewsEditor() {
               url: url,
               imageurl: imageurl,
             });
-            setSuccess("post");
+            navigate("/admin/inthenews");
           };
           upload();
         });
@@ -175,7 +174,7 @@ export function AdminInTheNewsEditor() {
           published: new Date(published),
           url: url,
         });
-        setSuccess("update");
+        navigate("/admin/inthenews");
       };
       upload();
     }
@@ -186,7 +185,7 @@ export function AdminInTheNewsEditor() {
       .then(() => {
         const upload = async () => {
           await deleteDoc(doc(db, "inthenews", id));
-          setSuccess("delete");
+          navigate("/admin/inthenews");
         };
         upload();
       })
@@ -195,79 +194,7 @@ export function AdminInTheNewsEditor() {
       });
   }
 
-  if (success === "post") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/inthenews")}
-            style={{ cursor: "pointer" }}
-          >
-            In The News
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>
-          Post Uploaded, this post will be published on{" "}
-          {new Date(published).toDateString()}
-        </p>
-      </div>
-    );
-  } else if (success === "update") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/inthenews")}
-            style={{ cursor: "pointer" }}
-          >
-            In The News
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>Post Updated</p>
-      </div>
-    );
-  } else if (success === "delete") {
-    return (
-      <div className="page">
-        <h1>
-          <span
-            onClick={() => navigate("/admin/dashboard")}
-            style={{ cursor: "pointer" }}
-          >
-            Admin
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span>{" "}
-          <span
-            onClick={() => navigate("/admin/inthenews")}
-            style={{ cursor: "pointer" }}
-          >
-            In The News
-          </span>{" "}
-          <span style={{ color: "gray" }}>/</span> Editor
-        </h1>
-        <br />
-        <p>Post Deleted</p>
-      </div>
-    );
-  } else if (image.name !== undefined) {
+  if (image.name !== undefined) {
     return (
       <div className="page">
         <h1>
@@ -299,7 +226,7 @@ export function AdminInTheNewsEditor() {
           />
         </div>
         <br />
-        <div style={{ maxWidth: "800px" }}>
+        <div style={{ maxWidth: "800px", margin: "20px 0 0 0" }}>
           <ColoredTextField
             label="Url"
             variant="outlined"
@@ -312,19 +239,21 @@ export function AdminInTheNewsEditor() {
           />
         </div>
         <br />
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateTimePicker
-            renderInput={(props) => (
-              <ColoredTextField {...props} size="small" />
-            )}
-            label="Publish Date Time"
-            value={published}
-            onChange={(e) => setPublished(e)}
-            required
-          />
-        </LocalizationProvider>
+        <div style={{ margin: "20px 0 0 0" }}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DesktopDatePicker
+              renderInput={(props) => (
+                <ColoredTextField {...props} size="small" />
+              )}
+              label="Publish Date"
+              value={published}
+              onChange={(e) => setPublished(e)}
+              required
+            />
+          </LocalizationProvider>
+        </div>
         <br />
-        <div style={!newPost ? { display: "none" } : { display: "flex" }}>
+        <div style={!newPost ? { display: "none" } : { display: "flex", margin: "20px 0 0 0" }}>
           <Button
             variant="outlined"
             component="label"
@@ -350,7 +279,7 @@ export function AdminInTheNewsEditor() {
             */}
         </div>
         <br />
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", margin: "20px 0 0 0" }}>
           <Button
             variant="outlined"
             onClick={save}
