@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link, Routes, Route, Navigate } from "react-router-dom";
-import logo from "../images/logo.jpg";
+import logo from "../images/logo.webp";
 import Dropdown from "./dropdown";
 import { NavButton } from "../components/mui";
 import "../index.css";

@@ -268,7 +268,7 @@ export function AdminEvents() {
 
   function Image(props) {
     if (props.image.fromurl !== undefined) {
-      return <img src={props.image.fromurl} style={{ width: "400px" }} />;
+      return <img src={props.image.fromurl} style={{ width: "400px" }} alt="Editing Image" />;
     }
   }
 

@@ -3,7 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { Divider } from "@mui/material";
 
-import footerlogo from "../images/footerlogo.jpg";
+import footerlogo from "../images/footerlogo.webp";
 import "./footer.css";
 
 export function Footer() {
@@ -63,19 +63,31 @@ export function Footer() {
         <div className="footersocial">
           <h2>Connect with us</h2>
           <div style={{ display: "flex" }}>
-            <a target="_blank" href="https://www.facebook.com/SMILEMass">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.facebook.com/SMILEMass"
+            >
               <img
                 src="https://img.icons8.com/color/45/facebook--v1.png"
                 alt="facebook"
               />
             </a>
-            <a target="_blank" href="https://www.instagram.com/smilemassorg/">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://www.instagram.com/smilemassorg/"
+            >
               <img
                 src="https://img.icons8.com/color/45/instagram-new--v1.png"
                 alt="instagram"
               />
             </a>
-            <a target="_blank" href="https://twitter.com/smilemassorg">
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://twitter.com/smilemassorg"
+            >
               <img
                 src="https://img.icons8.com/color/45/twitter--v1.png"
                 alt="twitter"
@@ -83,9 +95,13 @@ export function Footer() {
             </a>
             <a
               target="_blank"
+              rel="noreferrer"
               href="https://www.linkedin.com/company/smile-mass/"
             >
-              <img src="https://img.icons8.com/color/45/linkedin--v1.png" />
+              <img
+                src="https://img.icons8.com/color/45/linkedin--v1.png"
+                alt="linkedin"
+              />
             </a>
           </div>
         </div>

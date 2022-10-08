@@ -68,8 +68,6 @@ import { useNavigate } from "react-router";
 import { SMILEBlogCardActionArea } from "../components/mui";
 import { useParams } from "react-router";
 
-import Dropdown from "../components/dropdown";
-
 export function AdminNewsletters() {
   const [posts, setPosts] = useState([]);
 
