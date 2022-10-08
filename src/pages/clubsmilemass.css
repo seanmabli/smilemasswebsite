@@ -63,6 +63,37 @@
 }
 
 @media screen and (max-width: 810px) {
+  .clubsmilemassgrid {
+    display: grid;
+    grid-template-columns: 100%;
+  }
+
+  .clubsmilemasspremiumimage {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .clubsmilemassplusimage {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .clubsmilemassbaseimage {
+    grid-column: 1;
+    grid-row: 5;
+  }
+  
+  .clubsmilemasspremium {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .clubsmilemassplus {
+    grid-column: 1;
+    grid-row: 4;
+  }
+  .clubsmilemassbase {
+    grid-column: 1;
+    grid-row: 6;
+  }
+
   .clubsmilemassformgrid {
     display: flex;
     flex-direction: column;

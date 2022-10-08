@@ -358,7 +358,7 @@ export default function Navbar() {
     );
   } else {
     return (
-      <nav className="navbar">
+      <nav className="navbar" style={{ width: (window.innerWidth - 20) }}>
         <Link className="link" to="/">
           <img
             src={logo}

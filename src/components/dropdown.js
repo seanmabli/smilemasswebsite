@@ -17,20 +17,28 @@ const NavButton = styled(Button)({
   fontSize: 16,
   lineHeight: 1.5,
   backgroundColor: "#FFFFFF",
-  width: "100%",
   justifyContent: "left",
   "&:hover": {
     backgroundColor: "#f0f0f0",
   },
 });
 
-const theme = createTheme({
+const rightTheme = createTheme({
   direction: "rtl",
+});
+
+const leftTheme = createTheme({
+  direction: "ltr",
 });
 
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
+});
+
+const cacheLtr = createCache({
+  key: "muiltr",
+  stylisPlugins: [prefixer],
 });
 
 export default function Dropdown(props) {
@@ -59,6 +67,7 @@ export default function Dropdown(props) {
                   variant="text"
                   style={props.dropdownStyle}
                   className="button"
+                  sx={{ margin: "2px 0" }}
                 >
                   {option}
                 </NavButton>
@@ -79,13 +88,18 @@ export default function Dropdown(props) {
             <ul className="dropdowncontent rightcontent">
               {props.options.map((option) => (
                 <li onClick={onOptionClicked(option)}>
-                  <CacheProvider value={cacheRtl}>
-                    <ThemeProvider theme={theme}>
-                      <div dir="rtl">
+                  <CacheProvider
+                    value={window.innerWidth > 1000 ? cacheRtl : cacheLtr}
+                  >
+                    <ThemeProvider
+                      theme={window.innerWidth > 1000 ? rightTheme : leftTheme}
+                    >
+                      <div dir={window.innerWidth > 1000 ? "rtl" : "ltr"}>
                         <NavButton
                           variant="text"
                           style={props.dropdownStyle}
                           className="button"
+                          sx={{ margin: "2px 0" }}
                         >
                           {option}
                         </NavButton>

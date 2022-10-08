@@ -25,4 +25,13 @@
     margin-left: 10px;
     z-index: 100;
   }
+
+  .rightcontainer {
+    float: none;
+    padding: 0px;
+  }
+
+  .rightcontent {
+    left: auto;
+  }
 }

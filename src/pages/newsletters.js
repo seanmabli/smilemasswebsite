@@ -152,9 +152,6 @@ export default function Newsletters() {
           </div>
         </Box>
       </div>
-      <br />
-      <h2>Recent Newsletters</h2>
-      <br />
       <Footer />
     </div>
   );
