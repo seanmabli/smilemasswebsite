@@ -51,12 +51,16 @@ import { AuthProvider, AuthRoute, AuthSkipLogin } from "../firebase/auth";
 
 function MobileNavbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [previousLocation, setPreviousLocation] = useState(null);
 
   if (!isOpen && window.innerWidth > 1000) {
     setIsOpen(true);
   }
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => {
+    setIsOpen(!isOpen);
+    setPreviousLocation(window.location.pathname);
+  };
 
   let navigate = useNavigate();
 
@@ -64,6 +68,11 @@ function MobileNavbar() {
     setIsOpen(false); // why not work???
     navigate(value);
   };
+
+  if (previousLocation !== window.location.pathname) {
+    setIsOpen(false);
+    setPreviousLocation(window.location.pathname);
+  }
 
   if (isOpen) {
     return (
@@ -358,7 +367,7 @@ export default function Navbar() {
     );
   } else {
     return (
-      <nav className="navbar" style={{ width: (window.innerWidth - 20) }}>
+      <nav className="navbar" style={{ width: window.innerWidth - 20 }}>
         <Link className="link" to="/">
           <img
             src={logo}
