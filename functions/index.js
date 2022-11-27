@@ -1,10 +1,17 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
+
 admin.initializeApp();
 
-const db = admin.firestore();
+// const db = admin.firestore();
 
+const spawn = require("child-process-promise").spawn;
+const path = require("path");
+const os = require("os");
+const fs = require("fs");
+
+/*
 let transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -209,8 +216,9 @@ exports.equiptmentloaner = functions.firestore
 
     return "Done";
   });
-
-exports.sendmail = functions.pubsub.schedule("*/5 * * * *").onRun((context) => {
+*/
+//exports.sendmail = functions.pubsub.schedule("*/5 * * * *").onRun((context) => {
+/*
   db.collection("tosend")
     .get()
     .then((querySnapshot) => {
@@ -269,3 +277,39 @@ exports.sendmail = functions.pubsub.schedule("*/5 * * * *").onRun((context) => {
     });
   return;
 });
+*/
+
+exports.generateThumbnail = functions.storage
+  .object()
+  .onFinalize(async (object) => {
+    const fileBucket = object.bucket;
+    const filePath = object.name;
+    const contentType = object.contentType;
+
+    if (!contentType.startsWith("image/")) {
+      return functions.logger.log("This is not an image.");
+    }
+
+    const fileName = path.basename(filePath);
+    if (fileName.startsWith("thumb_")) {
+      return functions.logger.log("Already a Thumbnail.");
+    }
+
+    const bucket = admin.storage().bucket(fileBucket);
+    const tempFilePath = path.join(os.tmpdir(), fileName);
+    const metadata = {
+      contentType: "image/webp",
+    };
+    await bucket.file(filePath).download({ destination: tempFilePath });
+    functions.logger.log("Image downloaded locally to", tempFilePath);
+    await spawn("convert", [tempFilePath, "/tmp/test.webp"]);
+    functions.logger.log("Thumbnail created at", tempFilePath);
+    functions.logger.log(metadata);
+    // const thumbFileName = `thumb_${fileName}`;
+    const thumbFilePath = path.join(path.dirname(filePath), "test.webp");
+    await bucket.upload("/tmp/test.webp", {
+      destination: thumbFilePath,
+      metadata: metadata,
+    });
+    return fs.unlinkSync(tempFilePath);
+  });

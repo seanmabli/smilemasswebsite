@@ -21,7 +21,7 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8094
+      "port": 8093
     },
     "hosting": {
       "port": 3000
@@ -30,7 +30,16 @@
       "enabled": true
     },
     "pubsub": {
-      "port": 8093
+      "port": 8063
+    },
+    "auth": {
+      "port": 9099
+    },
+    "storage": {
+      "port": 9199
     }
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }
