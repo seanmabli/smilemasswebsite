@@ -78,7 +78,7 @@ function MobileNavbar() {
       <>
         <img
           className="hamburger"
-          src="https://img.icons8.com/small/32/547c94/delete-sign.png"
+          src="https://img.icons8.com/small/32/547c94/delete-sign..webp"
           alt="mobile navbar button"
           onClick={toggle}
         />
@@ -150,7 +150,7 @@ function MobileNavbar() {
       <>
         <img
           className="hamburger"
-          src="https://img.icons8.com/small/32/547c94/menu.png"
+          src="https://img.icons8.com/small/32/547c94/menu..webp"
           alt="mobile navbar button"
           onClick={toggle}
         />

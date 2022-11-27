@@ -69,7 +69,7 @@ export function Footer() {
               href="https://www.facebook.com/SMILEMass"
             >
               <img
-                src="https://img.icons8.com/color/45/facebook--v1.png"
+                src="https://img.icons8.com/color/45/facebook--v1..webp"
                 alt="facebook"
               />
             </a>
@@ -79,7 +79,7 @@ export function Footer() {
               href="https://www.instagram.com/smilemassorg/"
             >
               <img
-                src="https://img.icons8.com/color/45/instagram-new--v1.png"
+                src="https://img.icons8.com/color/45/instagram-new--v1..webp"
                 alt="instagram"
               />
             </a>
@@ -89,7 +89,7 @@ export function Footer() {
               href="https://twitter.com/smilemassorg"
             >
               <img
-                src="https://img.icons8.com/color/45/twitter--v1.png"
+                src="https://img.icons8.com/color/45/twitter--v1..webp"
                 alt="twitter"
               />
             </a>
@@ -99,7 +99,7 @@ export function Footer() {
               href="https://www.linkedin.com/company/smile-mass/"
             >
               <img
-                src="https://img.icons8.com/color/45/linkedin--v1.png"
+                src="https://img.icons8.com/color/45/linkedin--v1..webp"
                 alt="linkedin"
               />
             </a>

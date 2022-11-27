@@ -1,12 +1,12 @@
-import beachhouse from "../images/homesplash/beachhouse.jpg";
-import communityinacommunity from "../images/homesplash/communityinacommunity.jpeg";
-import equiptment from "../images/homesplash/equiptment.jpg";
-import jones from "../images/homesplash/jones.jpg";
-import music from "../images/homesplash/music.jpg";
-import pool from "../images/homesplash/pool.jpeg";
-import races from "../images/homesplash/races.jpg";
-import races2 from "../images/homesplash/races2.jpeg";
-import wheelchair from "../images/homesplash/wheelchair.jpg";
+import beachhouse from "../images/homesplash/beachhouse.webp";
+import communityinacommunity from "../images/homesplash/communityinacommunity.webp";
+import equiptment from "../images/homesplash/equiptment.webp";
+import jones from "../images/homesplash/jones.webp";
+import music from "../images/homesplash/music.webp";
+import pool from "../images/homesplash/pool.webp";
+import races from "../images/homesplash/races.webp";
+import races2 from "../images/homesplash/races2.webp";
+import wheelchair from "../images/homesplash/wheelchair.webp";
 import { Footer } from "../components/footer";
 import "./home.css";
 

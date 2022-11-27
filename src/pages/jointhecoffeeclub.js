@@ -51,10 +51,10 @@ export default function JoinTheCoffeeClub() {
         </li>
         <li>Scholarship Fund</li>
       </ul>
-      <img src="https://img.icons8.com/ios-glyphs/90/null/coffee-pot.png" />
-      <img src="https://img.icons8.com/windows/96/null/coffee.png" />
-      <img src="https://img.icons8.com/ios/100/null/coffee-to-go.png"/>
-      <img src="https://img.icons8.com/ios-filled/100/null/coffee-beans---v1.png"/>
+      <img src="https://img.icons8.com/ios-glyphs/90/null/coffee-pot..webp" />
+      <img src="https://img.icons8.com/windows/96/null/coffee..webp" />
+      <img src="https://img.icons8.com/ios/100/null/coffee-to-go..webp"/>
+      <img src="https://img.icons8.com/ios-filled/100/null/coffee-beans---v1..webp"/>
       <Footer />
     </div>
   );

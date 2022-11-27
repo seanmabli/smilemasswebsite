@@ -1,10 +1,10 @@
 import { Footer } from "../components/footer";
-import haskell from "../images/accessibleplaygrounds/haskell.jpeg";
-import haynes from "../images/accessibleplaygrounds/haynes.jpg";
-import noyes from "../images/accessibleplaygrounds/noyes.jpg";
-import nixon from "../images/accessibleplaygrounds/nixon.jpg";
-import loring from "../images/accessibleplaygrounds/loring.jpg";
-import jones from "../images/accessibleplaygrounds/jones.jpg";
+import haskell from "../images/accessibleplaygrounds/haskell.webp";
+import haynes from "../images/accessibleplaygrounds/haynes.webp";
+import noyes from "../images/accessibleplaygrounds/noyes.webp";
+import nixon from "../images/accessibleplaygrounds/nixon.webp";
+import loring from "../images/accessibleplaygrounds/loring.webp";
+import jones from "../images/accessibleplaygrounds/jones.webp";
 import "./accessibleplaygrounds.css";
 
 export function AccessiblePlaygrounds() {

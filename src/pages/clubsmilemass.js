@@ -20,9 +20,9 @@ import {
   ListSubheader,
   Checkbox,
 } from "@mui/material";
-import premium from "../images/clubsmilemass/premium.jpeg";
-import plus from "../images/clubsmilemass/plus.jpg";
-import base from "../images/clubsmilemass/base.jpg";
+import premium from "../images/clubsmilemass/premium.webp";
+import plus from "../images/clubsmilemass/plus.webp";
+import base from "../images/clubsmilemass/base.webp";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./clubsmilemass.css";
 
