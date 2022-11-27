@@ -29,7 +29,6 @@ import { SmileBlog, SmileBlogPost } from "../pages/smileblog";
 import SusanBrown from "../pages/susanbrown";
 import Testimonials from "../pages/testimonials";
 import { OurTeam, OurTeamProfile } from "../pages/ourteam";
-import OurMission from "../pages/ourmission";
 import Volunteer from "../pages/volunteer";
 
 import Login from "../admin/login";
@@ -88,7 +87,6 @@ function MobileNavbar() {
             <Dropdown
               title="About"
               options={[
-                "Our Mission",
                 "Our Team",
                 "Testimonials",
                 "Accomplishments",
@@ -310,9 +308,6 @@ function PageContent() {
         <Route path="/lottediomede" element={<LotteDiomede />} />
 
         <Route path="/newsletters" element={<NewsLetters />} />
-
-        <Route path="/ourmission" element={<OurMission />} />
-        <Route path="/our-mission" element={<Navigate to="/ourmission" />} />
 
         <Route path="/resources" element={<Resources />} />
 

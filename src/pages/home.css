@@ -1,0 +1,28 @@
+.missionimage {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+}
+
+.descriptivetext {
+  padding: 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  background-color: white;
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.missiontext {
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.missioncontainer {
+  position: relative;
+  margin: 10px;
+}

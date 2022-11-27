@@ -8,8 +8,8 @@ todo for now:
     - admin/our team - profile on click on public page, tiptap readmystory editor on admin page, save with update button on admin
 
 todo for later:
-newsletters - publicly display newletters and work on autolinking longer articles
-admin/newsletter - email list, email testing, upload images to tiptap, make similar style to constant contact
+- newsletters - publicly display newletters and work on autolinking longer articles
+- admin/newsletter - email list, email testing, upload images to tiptap, make similar style to constant contact
 
 
 changes:

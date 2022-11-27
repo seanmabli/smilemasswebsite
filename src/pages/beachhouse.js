@@ -27,7 +27,7 @@ import image29 from "../images/beachhouse/544ShoreRdU3-29-w.jpg";
 
 import "./beachhouse.css";
 
-import * as React from "react";
+import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MobileStepper from "@mui/material/MobileStepper";
@@ -71,7 +71,7 @@ const images = [
 
 export default function BeachHouse() {
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
   const maxSteps = images.length;
 
   const handleNext = () => {
