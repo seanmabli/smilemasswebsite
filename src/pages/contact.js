@@ -4,7 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { Box, Button } from "@mui/material";
 import { ColoredTextField } from "../components/mui";
 import "./contact.css";
-import { Footer } from "../components/footer";
+
 
 export default function Contact() {
   const [name, setName] = useState("");

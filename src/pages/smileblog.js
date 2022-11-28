@@ -9,7 +9,7 @@ import {
 import { SMILEBlogCardActionAreaNew } from "../components/mui";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import { Footer } from "../components/footer";
+
 import { Divider } from "@mui/material";
 import "./smileblog.css";
 

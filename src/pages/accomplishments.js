@@ -8,7 +8,7 @@ import {
   TimelineDot,
   TimelineOppositeContent,
 } from "@mui/lab";
-import { Footer } from "../components/footer";
+
 
 export default function Accomplishments() {
   return (

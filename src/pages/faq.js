@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import { Footer } from "../components/footer";
+
 import { Divider } from "@mui/material";
 
 export default function FAQ() {

@@ -7,7 +7,7 @@ import pool from "../images/homesplash/pool.webp";
 import races from "../images/homesplash/races.webp";
 import races2 from "../images/homesplash/races2.webp";
 import wheelchair from "../images/homesplash/wheelchair.webp";
-import { Footer } from "../components/footer";
+
 import "./home.css";
 
 import { useState } from "react";

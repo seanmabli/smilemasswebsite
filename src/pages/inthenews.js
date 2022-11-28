@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { NewsItemCardActionArea } from "../components/mui";
-import { Footer } from "../components/footer";
+
 
 export default function InTheNews() {
   const [newsItems, setNewsItems] = useState([]);

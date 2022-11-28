@@ -11,7 +11,7 @@ import {
 import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./beachwheelchairlocations.css";
-import { Footer } from "../components/footer";
+
 
 export default function BeachWheelchairLocations() {
   const [name, setName] = useState("");

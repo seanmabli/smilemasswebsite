@@ -5,7 +5,7 @@ import {
   ColoredTextField,
   EquipmentLoanerProgramCard,
 } from "../components/mui";
-import { Footer } from "../components/footer";
+
 import {
   Box,
   Button,

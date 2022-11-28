@@ -1,4 +1,4 @@
-import { Footer } from "../components/footer";
+
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 

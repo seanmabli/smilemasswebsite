@@ -6,7 +6,7 @@ import { Box, Button, Autocomplete } from "@mui/material";
 import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./volunteer.css";
-import { Footer } from "../components/footer";
+
 
 export default function Volunteer() {
   const [name, setName] = useState("");

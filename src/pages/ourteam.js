@@ -2,7 +2,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { Footer } from "../components/footer";
+
 import "./ourteam.css";
 import { Divider } from "@mui/material";
 

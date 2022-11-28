@@ -1,4 +1,4 @@
-import { Footer } from "../components/footer";
+
 import haskell from "../images/accessibleplaygrounds/haskell.webp";
 import haynes from "../images/accessibleplaygrounds/haynes.webp";
 import noyes from "../images/accessibleplaygrounds/noyes.webp";

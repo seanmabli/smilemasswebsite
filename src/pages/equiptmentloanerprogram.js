@@ -21,7 +21,7 @@ import {
 } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 import "./equiptmentloanerprogram.css";
-import { Footer } from "../components/footer";
+
 
 export default function EquipmentLoanerProgram() {
   const [name, setName] = useState("");

@@ -5,7 +5,7 @@ import { Divider, MobileStepper, Button } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material/";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import { Footer } from "../components/footer";
+
 import "./testimonials.css";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);

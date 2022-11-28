@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Footer } from "../components/footer";
+
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
