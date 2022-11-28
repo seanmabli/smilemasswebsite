@@ -42,7 +42,7 @@ export default function SusanBrown() {
         program.&nbsp; Together we are creating an inclusive community for all
         abilities.&nbsp; &nbsp;
       </p>
-      <Footer />
+      
     </div>
   );
 }

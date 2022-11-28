@@ -91,7 +91,7 @@ export default function Home() {
         name a few of the benefits of a moving body. Welcome to Club SMILE Mass.
       </p>
 
-      <Footer />
+      
     </div>
   );
 }

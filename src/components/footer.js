@@ -22,7 +22,7 @@ export function Footer() {
   });
 
   return (
-    <>
+    <div className="footerContainer">
       <br />
       <Divider />
       <br />
@@ -106,6 +106,6 @@ export function Footer() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

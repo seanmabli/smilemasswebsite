@@ -917,7 +917,7 @@ export default function ClubSMILEMass() {
             </Button>
           </div>
         </Box>
-        <Footer />
+        
       </div>
     );
   }

@@ -524,7 +524,7 @@ export default function BeachWheelchairLocations() {
         </p>
         <p>We will be in touch with you shortly.</p>
       </div>
-      <Footer />
+      
     </div>
   );
 }

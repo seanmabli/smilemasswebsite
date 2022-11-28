@@ -74,7 +74,7 @@ export default function RunningTeam() {
           race bib number (if they wish to receive a recorded time).
         </li>
       </ul>
-      <Footer />
+      
     </div>
   );
 }

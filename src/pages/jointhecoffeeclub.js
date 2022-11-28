@@ -55,7 +55,7 @@ export default function JoinTheCoffeeClub() {
       <img src="https://img.icons8.com/windows/96/null/coffee..webp" />
       <img src="https://img.icons8.com/ios/100/null/coffee-to-go..webp"/>
       <img src="https://img.icons8.com/ios-filled/100/null/coffee-beans---v1..webp"/>
-      <Footer />
+      
     </div>
   );
 }

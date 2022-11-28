@@ -139,7 +139,7 @@ export default function Contact() {
             </Button>
           </div>
         </Box>
-        <Footer />
+        
       </div>
     );
   } else {
@@ -153,7 +153,7 @@ export default function Contact() {
         <br />
         <p>Thank you for your interest in Smile Mass.</p>
         <p>We will be in touch with you shortly.</p>
-        <Footer />
+        
       </div>
     );
   }

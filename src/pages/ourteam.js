@@ -68,7 +68,7 @@ export function OurTeam() {
           })}
         </div>
       </div>
-      <Footer />
+      
     </div>
   );
 }

@@ -172,7 +172,7 @@ export default function BeachHouse() {
           />
         </Box>
       </div>
-      <Footer />
+      
     </div>
   );
 }

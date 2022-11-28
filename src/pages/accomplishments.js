@@ -209,7 +209,7 @@ export default function Accomplishments() {
           </TimelineContent>
         </TimelineItem>
       </Timeline>
-      <Footer />
+      
     </div>
   );
 }

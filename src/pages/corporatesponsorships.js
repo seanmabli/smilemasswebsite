@@ -13,7 +13,7 @@ export function CorporateSponsorships() {
         opportunities. To bring this to life, we must raise $2.5 Million and
         every penny of our corporate sponsorships will help us get there.
       </p>
-      <Footer />
+      
     </div>
   );
 }

@@ -49,7 +49,7 @@ export default function Donate() {
       >
         Donate to SMILE Mass
       </Button>
-      <Footer />
+      
     </div>
   );
 }

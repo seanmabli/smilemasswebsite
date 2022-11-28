@@ -152,7 +152,7 @@ export default function Newsletters() {
           </div>
         </Box>
       </div>
-      <Footer />
+      
     </div>
   );
 }

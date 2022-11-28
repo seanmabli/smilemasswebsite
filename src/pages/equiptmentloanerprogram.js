@@ -466,7 +466,7 @@ export default function EquipmentLoanerProgram() {
         <p>You equiptment loaner request has been submited.</p>
         <p>We will be in touch with you shortly.</p>
       </div>
-      <Footer />
+      
     </div>
   );
 }

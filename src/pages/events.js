@@ -57,7 +57,7 @@ export default function Events() {
           </div>
         );
       })}
-      <Footer />
+      
     </div>
   );
 }

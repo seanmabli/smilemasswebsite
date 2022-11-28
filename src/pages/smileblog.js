@@ -75,7 +75,7 @@ export function SmileBlog() {
           return;
         }
       })}
-      <Footer />
+      
     </div>
   );
 }
@@ -127,7 +127,7 @@ export function SmileBlogPost() {
             </>
           );
         })}
-        <Footer />
+        
       </div>
     );
   }

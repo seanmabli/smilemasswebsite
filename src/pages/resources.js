@@ -477,7 +477,7 @@ export default function Resources() {
         Males must register within 30 days of their 18<sup>th</sup> birthday,
         even if disabled
       </a>
-      <Footer />
+      
     </div>
   );
 }

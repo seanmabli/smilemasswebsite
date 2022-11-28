@@ -14,7 +14,7 @@ export function CommunityRaceSponsors() {
         more. We value your partnership and look forward to another incredible
         year.
       </p>
-      <Footer />
+      
     </div>
   );
 }

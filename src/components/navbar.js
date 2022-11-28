@@ -5,6 +5,7 @@ import Dropdown from "./dropdown";
 import { NavButton } from "../components/mui";
 import "../index.css";
 import "./navbar.css";
+import { Footer } from "./footer"
 
 import { AccessiblePlaygrounds } from "../pages/accessibleplaygrounds";
 import Accomplishments from "../pages/accomplishments";
@@ -358,6 +359,7 @@ export default function Navbar() {
           <MobileNavbar />
         </nav>
         <PageContent />
+        <Footer />
       </>
     );
   } else {

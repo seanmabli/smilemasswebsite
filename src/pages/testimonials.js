@@ -125,7 +125,7 @@ export default function Testimonials() {
           </>
         );
       })}
-      <Footer />
+      
     </div>
   );
 }

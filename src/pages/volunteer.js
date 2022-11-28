@@ -249,7 +249,7 @@ export default function Volunteer() {
             </Button>
           </div>
         </Box>
-        <Footer />
+        
       </div>
     );
   } else {
@@ -309,7 +309,7 @@ export default function Volunteer() {
         <br />
         <p>Thank you for your interest in volunteering with SMILE Mass.</p>
         <p>We will be in touch with you shortly.</p>
-        <Footer />
+        
       </div>
     );
   }

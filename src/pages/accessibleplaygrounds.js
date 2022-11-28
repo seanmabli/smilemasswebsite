@@ -94,7 +94,7 @@ export function AccessiblePlaygrounds() {
         />
         <Playground name="Jones Field Playground" town="Acton" image={jones} />
       </div>
-      <Footer />
+      
     </div>
   );
 }
