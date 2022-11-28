@@ -1,5 +1,6 @@
-from os import listdir
+from os import listdir, remove
 from os.path import isfile, join
+from PIL import Image
 
 def loop(path):
   both = [f for f in listdir(path)]
@@ -14,6 +15,12 @@ def loop(path):
     loop(path + "\\" + directory)
 
 allfiles = []
-mypath = "C:\\Users\\smdro\\smilemasswebsite\\src"
+mypath = "C:\\Users\\smdro\\smilemasswebsite\\converttowebp\\copy"
 loop(mypath)
 print(allfiles)
+
+for i in allfiles:
+  if i.endswith(".jpg") or i.endswith(".png") or i.endswith(".jpeg"):
+    img = Image.open(i)
+    img.save(i.replace(".jpg", ".webp").replace(".png", ".webp").replace(".jpeg", ".webp"))
+    remove(i)
