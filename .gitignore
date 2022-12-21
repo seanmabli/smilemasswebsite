@@ -14,3 +14,4 @@ yarn-error.log*
 .gitpod.yml
 functions/.runtimeconfig.json
 adminkey.json
+storage.rules
