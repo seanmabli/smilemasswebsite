@@ -34,3 +34,11 @@
   object-position: top;
   border-radius: 5px;
 }
+
+/* not the usual 600px because of images */
+@media (max-width: 500px) {
+  .ourteamcontainer {
+    width: 100%;
+    margin: 10px 0;
+  }
+}

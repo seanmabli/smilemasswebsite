@@ -3,15 +3,10 @@ Navbar:
 - Display on mobile (not currently working)
 
 Our Team:
-- Remove margin from images on mobile
-- Full image width on mobile
 - Make images links to Read My Story pages
 
 Accomplishments:
 - Remove left margin on mobile
-
-FAQ:
-- Remove margin between title and first bar on mobile, maybe remove first bar
 
 Club Smile Mass:
 - Add custom images
@@ -19,13 +14,7 @@ Club Smile Mass:
 
 Beach Wheelchair Locations:
 - Add search feature
-- Fix width of map on mobile 
-
-Beach House:
-- Have images be above text on mobile
-
-Accessible Playgrounds:
-- Fix width of page (due to image width or title width)
+- Fix width of map on mobile
 
 Running Team:
 - Add images
@@ -33,18 +22,12 @@ Running Team:
 Volunteer:
 - Add images
 
-Events:
-- Maybe remove top bar
-
 In The News:
 - Try to wrap around video or add text next to video
 - Fix mobile video width
 
 Newsletter:
 - Connect with direct signup
-
-SMILE Blog:
-- Maybe remove top bar
 
 Join The Coffee Club:
 - Add images

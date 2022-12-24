@@ -8,6 +8,7 @@ import {
   TimelineDot,
   TimelineOppositeContent,
 } from "@mui/lab";
+import "./accomplishments.css"
 
 
 export default function Accomplishments() {

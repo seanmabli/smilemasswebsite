@@ -1,0 +1,18 @@
+.accomplismentsnoyear {
+    flex: 0;
+}
+
+.accomplismentsyear {
+    flex: 0;
+    color: #547c94;
+    margin-top: 2px;
+    margin-right: 5px;
+}
+
+/*
+@media (max-width: 500px) {
+    .accomplismentsyear {
+        margin-right: 0px;
+    }
+  }
+  */

@@ -33,7 +33,6 @@ export default function FAQ() {
   return (
     <div className="page">
       <h1>Frequently Asked Questions</h1>
-      <br />
       {faqs.map((faq) => {
         return (
           <>
