@@ -11,9 +11,8 @@ import { AccessiblePlaygrounds } from "../pages/accessibleplaygrounds";
 import Accomplishments from "../pages/accomplishments";
 import BeachHouse from "../pages/beachhouse";
 import ClubSmileMass from "../pages/clubsmilemass";
-import { CommunityRaceSponsors } from "../pages/communityracesponsors";
 import Contact from "../pages/contact";
-import { CorporateSponsorships } from "../pages/corporatesponsorships";
+import { Sponsorships } from "../pages/sponsorships";
 import Donate from "../pages/donate";
 import EquipmentLoanerProgram from "../pages/equiptmentloanerprogram";
 import Events from "../pages/events";
@@ -136,8 +135,7 @@ function MobileNavbar() {
               options={[
                 "Donate",
                 "Join the Coffee Club",
-                "Corporate Sponsorships",
-                "Community / Race Sponsors",
+                "Sponsorships",
               ]}
               buttonStyle={{ backgroundColor: "#547c94", color: "#ffffff" }}
               direction="right"
@@ -257,17 +255,7 @@ function PageContent() {
           element={<Navigate to="/clubsmilemass" />}
         />
 
-        <Route
-          path="/communityracesponsors"
-          element={<CommunityRaceSponsors />}
-        />
-
         <Route path="/contact" element={<Contact />} />
-
-        <Route
-          path="/corporatesponsorships"
-          element={<CorporateSponsorships />}
-        />
 
         <Route path="/donate" element={<Donate />} />
         <Route path="/support-us" element={<Navigate to="/donate" />} />
@@ -321,6 +309,11 @@ function PageContent() {
         <Route path="/smileblog" element={<SmileBlog />} />
         <Route path="/smileblog/:id" element={<SmileBlogPost />} />
         <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
+        
+        <Route
+          path="/sponsorships"
+          element={<Sponsorships />}
+        />
 
         <Route path="/susanbrown" element={<SusanBrown />} />
 

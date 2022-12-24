@@ -86,93 +86,183 @@ export default function BeachHouse() {
     setActiveStep(step);
   };
 
-  return (
-    <div className="page">
-      <h1>Beach House</h1>
-      <div className="container">
-        <Box sx={{ flexGrow: 1 }} className="image">
-          <AutoPlaySwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-            index={activeStep}
-            onChangeIndex={handleStepChange}
-            enableMouseEvents
-          >
-            {images.map((step, index) => (
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                {Math.abs(activeStep - index) <= 2 ? (
-                  <Box
-                    component="img"
-                    sx={{
-                      display: "block",
-                      overflow: "hidden",
-                      width: "90%",
-                      margin: "20px",
-                    }}
-                    src={step.imgPath}
-                    alt={step.label}
-                  />
-                ) : null}
-              </div>
-            ))}
-          </AutoPlaySwipeableViews>
-          <MobileStepper
-            steps={maxSteps}
-            position="static"
-            variant="text"
-            activeStep={activeStep}
-            nextButton={
-              <Button
-                size="small"
-                onClick={handleNext}
-                disabled={activeStep === maxSteps - 1}
-                sx={{ color: "#547c94" }}
-              >
-                Next
-                <KeyboardArrowRight />
-              </Button>
-            }
-            backButton={
-              <Button
-                size="small"
-                onClick={handleBack}
-                disabled={activeStep === 0}
-                sx={{ color: "#547c94" }}
-              >
-                <KeyboardArrowLeft />
-                Back
-              </Button>
-            }
-          />
-        </Box>
-        <div className="info">
-          <br />
-          <p>
-            The SMILE Mass Beach House is a fully handicapped accessible space,
-            that is aesthetically pleasing and offers families equal
-            opportunity, with minimum barriers. Everyone deserves to relax, have
-            fun with friends and family, play outside and soak up the sun
-            despite having a disability. That is what our home offers!
-          </p>
-          <br />
-          <p>Location: Truro, MA on the beach</p>
-          <br />
-          <p>
-            Want to spend an unforgettable week down the Cape with your family
-            at a state-of-the-art accessible house? Contact us here for more
-            information.
-          </p>
-          <br />
-          <Button
-            variant="outlined"
-            href="https://www.vrbo.com/4982108ha/"
-            target="_blank"
-            style={{ color: "#547c94", borderColor: "#547c94" }}
-          >
-           Check Availablity
-          </Button>
+  if (window.innerWidth < 600) {
+    return (
+      <div className="page">
+        <h1>Beach House</h1>
+        <div className="container">
+          <Box sx={{ flexGrow: 1 }} className="image">
+            <AutoPlaySwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              onChangeIndex={handleStepChange}
+              enableMouseEvents
+            >
+              {images.map((step, index) => (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {Math.abs(activeStep - index) <= 2 ? (
+                    <Box
+                      component="img"
+                      sx={{
+                        display: "block",
+                        overflow: "hidden",
+                        width: "90%",
+                        margin: "20px",
+                      }}
+                      src={step.imgPath}
+                      alt={step.label}
+                    />
+                  ) : null}
+                </div>
+              ))}
+            </AutoPlaySwipeableViews>
+            <MobileStepper
+              steps={maxSteps}
+              position="static"
+              variant="text"
+              activeStep={activeStep}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleNext}
+                  disabled={activeStep === maxSteps - 1}
+                  sx={{ color: "#547c94" }}
+                >
+                  Next
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  sx={{ color: "#547c94" }}
+                >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
+          </Box>
+          <div className="info">
+            <br />
+            <p>
+              The SMILE Mass Beach House is a fully handicapped accessible space,
+              that is aesthetically pleasing and offers families equal
+              opportunity, with minimum barriers. Everyone deserves to relax, have
+              fun with friends and family, play outside and soak up the sun
+              despite having a disability. That is what our home offers!
+            </p>
+            <br />
+            <p>Location: Truro, MA on the beach</p>
+            <br />
+            <p>
+              Want to spend an unforgettable week down the Cape with your family
+              at a state-of-the-art accessible house? Contact us here for more
+              information.
+            </p>
+            <br />
+            <Button
+              variant="outlined"
+              href="https://www.vrbo.com/4982108ha/"
+              target="_blank"
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+            >
+             Check Availablity
+            </Button>
+          </div>
         </div>
       </div>
-      
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div className="page">
+        <h1>Beach House</h1>
+        <div className="container">
+          <div className="info">
+            <br />
+            <p>
+              The SMILE Mass Beach House is a fully handicapped accessible space,
+              that is aesthetically pleasing and offers families equal
+              opportunity, with minimum barriers. Everyone deserves to relax, have
+              fun with friends and family, play outside and soak up the sun
+              despite having a disability. That is what our home offers!
+            </p>
+            <br />
+            <p>Location: Truro, MA on the beach</p>
+            <br />
+            <p>
+              Want to spend an unforgettable week down the Cape with your family
+              at a state-of-the-art accessible house? Contact us here for more
+              information.
+            </p>
+            <br />
+            <Button
+              variant="outlined"
+              href="https://www.vrbo.com/4982108ha/"
+              target="_blank"
+              style={{ color: "#547c94", borderColor: "#547c94" }}
+            >
+             Check Availablity
+            </Button>
+          </div>
+          <Box sx={{ flexGrow: 1 }} className="image">
+            <AutoPlaySwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              onChangeIndex={handleStepChange}
+              enableMouseEvents
+            >
+              {images.map((step, index) => (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  {Math.abs(activeStep - index) <= 2 ? (
+                    <Box
+                      component="img"
+                      sx={{
+                        display: "block",
+                        overflow: "hidden",
+                        width: "90%",
+                        margin: "20px",
+                      }}
+                      src={step.imgPath}
+                      alt={step.label}
+                    />
+                  ) : null}
+                </div>
+              ))}
+            </AutoPlaySwipeableViews>
+            <MobileStepper
+              steps={maxSteps}
+              position="static"
+              variant="text"
+              activeStep={activeStep}
+              nextButton={
+                <Button
+                  size="small"
+                  onClick={handleNext}
+                  disabled={activeStep === maxSteps - 1}
+                  sx={{ color: "#547c94" }}
+                >
+                  Next
+                  <KeyboardArrowRight />
+                </Button>
+              }
+              backButton={
+                <Button
+                  size="small"
+                  onClick={handleBack}
+                  disabled={activeStep === 0}
+                  sx={{ color: "#547c94" }}
+                >
+                  <KeyboardArrowLeft />
+                  Back
+                </Button>
+              }
+            />
+          </Box>
+        </div>
+      </div>
+    );
+  }
 }
