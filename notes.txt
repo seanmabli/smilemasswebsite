@@ -28,3 +28,6 @@ improve for mobile:
 - beach wheelchair locations
 - accessible playgrounds
 - club smile mass
+
+ask:
+- get links to Supporter Sponsor, Patron Sponsor, Angel Sponsor
