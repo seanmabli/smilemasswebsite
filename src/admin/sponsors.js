@@ -75,7 +75,7 @@ export function AdminSponsors() {
           });
           setResponses([
             ...responses,
-            { name, url, imagename: imageUpload.name, imageurl },
+            { name: name, url: url, imagename: imageUpload.name, imageurl: imageurl },
           ]);
           setName("");
           setUrl("");

@@ -352,7 +352,7 @@ export default function Navbar() {
           <MobileNavbar />
         </nav>
         <PageContent />
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   } else {
