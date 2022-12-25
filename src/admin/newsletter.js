@@ -68,7 +68,7 @@ import { useNavigate } from "react-router";
 import { SMILEBlogCardActionArea } from "../components/mui";
 import { useParams } from "react-router";
 
-export function AdminNewsletters() {
+export function AdminNewsletter() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export function AdminNewsletters() {
         >
           Admin
         </span>{" "}
-        <span style={{ color: "gray" }}>/</span> Newsletters
+        <span style={{ color: "gray" }}>/</span> newsletter
       </h1>
       <br />
       <SMILEBlogCardActionArea onClick={() => navigate("new")}>
@@ -138,7 +138,7 @@ export function AdminNewsletters() {
   );
 }
 
-export function AdminNewslettersEditor() {
+export function AdminNewsletterEditor() {
   const [title, setTitle] = useState("");
   const [published, setPublished] = useState(Date.now());
   const [imageUpload, setImageUpload] = useState({ name: "No file chosen" });
@@ -248,7 +248,7 @@ export function AdminNewslettersEditor() {
 
   if (post !== null && !initialState) {
     if (post.length === 0 && id !== "new") {
-      navigate("/admin/newsletters");
+      navigate("/admin/newsletter");
     }
     if (id !== "new") {
       setTitle(post[0].title);

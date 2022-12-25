@@ -6,7 +6,7 @@ import { ColoredTextField } from "../components/mui";
 import usePlacesAutocomplete from "@atomap/use-places-autocomplete";
 
 
-export default function Newsletters() {
+export default function Newsletter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -45,7 +45,7 @@ export default function Newsletters() {
     }
 
     const upload = async () => {
-      await addDoc(collection(db, "newslettersignup"), {
+      await addDoc(collection(db, "newsletterignup"), {
         name: name,
         email: email,
         phone: phone,
@@ -66,9 +66,7 @@ export default function Newsletters() {
 
   return (
     <div className="page">
-      <h1>Newsletters</h1>
-      <br />
-      <h2>Sign Up</h2>
+      <h1>Newsletter Signup</h1>
       <br />
       <div style={success ? { display: "none" } : {}}>
         <Box component="form" noValidate autoComplete="off">

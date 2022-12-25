@@ -318,7 +318,7 @@ export default function Dashboard() {
         <br />
         <Link to="/admin/smileblog">Admin - SMILE Blog</Link>
         <br />
-        <Link to="/admin/newsletters">Admin - Newsletters</Link>
+        <Link to="/admin/newsletter">Admin - newsletter</Link>
         <br />
         <Link to="/admin/inthenews">Admin - In the News</Link>
         <br />

@@ -8,8 +8,48 @@ import {
   TimelineDot,
   TimelineOppositeContent,
 } from "@mui/lab";
-import "./accomplishments.css"
+import "./accomplishments.css";
 
+const TimelineItemSimple = (props) => {
+  return (
+    <TimelineItem>
+      <TimelineOppositeContent
+        variant="body2"
+        color="text.secondary"
+        sx={{ flex: 0 }}
+      >
+        <div style={{ width: "25px" }} />
+      </TimelineOppositeContent>
+      <TimelineSeparator>
+        <TimelineDot />
+        <TimelineConnector />
+      </TimelineSeparator>
+      <TimelineContent>
+        <p>{props.children}</p>
+      </TimelineContent>
+    </TimelineItem>
+  );
+};
+
+const TimelineItemSimpleWithYear = (props) => {
+  return (
+    <TimelineItem>
+      <TimelineOppositeContent
+        variant="body2"
+        sx={{ flex: 0, color: "#04a3d3", marginTop: "2px", marginRight: "5px" }}
+      >
+        <div style={{ width: "20px" }}>{props.year}</div>
+      </TimelineOppositeContent>
+      <TimelineSeparator>
+        <TimelineDot sx={{ backgroundColor: "#04a3d3" }} />
+        <TimelineConnector />
+      </TimelineSeparator>
+      <TimelineContent>
+        <p>{props.children}</p>
+      </TimelineContent>
+    </TimelineItem>
+  );
+};
 
 export default function Accomplishments() {
   return (
@@ -77,7 +117,7 @@ export default function Accomplishments() {
         to contribute.
       </p>
       <br />
-      <h2>Timeline of Our Accomplishments</h2>
+      <h1 style={{ color: "#04a3d3" }}>Timeline of Our Accomplishments</h1>
       <br />
       <Timeline
         sx={{
@@ -192,7 +232,7 @@ export default function Accomplishments() {
             variant="body2"
             sx={{
               flex: 0,
-              color: "#547c94",
+              color: "#04a3d3",
               marginTop: "2px",
               marginRight: "5px",
             }}
@@ -200,7 +240,7 @@ export default function Accomplishments() {
             <div style={{ width: "20px" }}>2009</div>
           </TimelineOppositeContent>
           <TimelineSeparator>
-            <TimelineDot sx={{ backgroundColor: "#547c94" }} />
+            <TimelineDot sx={{ backgroundColor: "#04a3d3" }} />
           </TimelineSeparator>
           <TimelineContent>
             <p>
@@ -210,48 +250,6 @@ export default function Accomplishments() {
           </TimelineContent>
         </TimelineItem>
       </Timeline>
-      
     </div>
   );
 }
-
-const TimelineItemSimple = (props) => {
-  return (
-    <TimelineItem>
-      <TimelineOppositeContent
-        variant="body2"
-        color="text.secondary"
-        sx={{ flex: 0 }}
-      >
-        <div style={{ width: "25px" }} />
-      </TimelineOppositeContent>
-      <TimelineSeparator>
-        <TimelineDot />
-        <TimelineConnector />
-      </TimelineSeparator>
-      <TimelineContent>
-        <p>{props.children}</p>
-      </TimelineContent>
-    </TimelineItem>
-  );
-};
-
-const TimelineItemSimpleWithYear = (props) => {
-  return (
-    <TimelineItem>
-      <TimelineOppositeContent
-        variant="body2"
-        sx={{ flex: 0, color: "#547c94", marginTop: "2px", marginRight: "5px" }}
-      >
-        <div style={{ width: "20px" }}>{props.year}</div>
-      </TimelineOppositeContent>
-      <TimelineSeparator>
-        <TimelineDot sx={{ backgroundColor: "#547c94" }} />
-        <TimelineConnector />
-      </TimelineSeparator>
-      <TimelineContent>
-        <p>{props.children}</p>
-      </TimelineContent>
-    </TimelineItem>
-  );
-};

@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import { Card, styled } from "@mui/material";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -28,6 +29,18 @@ const images = [
   { imgPath: races2 },
   { imgPath: wheelchair },
 ];
+
+export const HomeCard = styled(Card)({
+  border: "1px solid rgba(0, 0, 0, 0.23)",
+  borderRadius: "5px",
+  boxShadow: "none",
+  maxWidth: "410px",
+  padding: "10px",
+  margin: "10px",
+  ["@media (max-width:600px)"]: {
+    width: "100%",
+  },
+});
 
 export default function Home() {
   const theme = useTheme();
@@ -63,35 +76,52 @@ export default function Home() {
         ))}
       </AutoPlaySwipeableViews>
       <br />
-
-      <p>We are a 501 C3 non-profit organization.</p>
-      <h2>Our Mission</h2>
-      <br />
-      <p>
-        <span className="bold">Mission:</span> Small Miracles in Life Exist
-        (SMILE Mass) is a 501 C3 non-profit organization dedicated to helping
-        families raising children or adults with disabilities enjoy happy,
-        healthy memories through vacation and recreation experiences. ​
-      </p>
-      <br />
-      <p>
-        <span className="bold">Vision:</span> The future of SMILE Mass is about
-        creating an inclusive community based in Metrowest with a
-        state-of-the-art recreational facility dedicated to those with
-        disabilities with access to outdoor recreation space and indoor meeting
-        and enrichment programs.
-      </p>
-      <br />
-      <p>
-        <span className="bold">Promise:</span> Movement matters to all of us.
-        For people with medical, physical and intellectual disabilities movement
-        can often be challenging, yet the benefit is the same. A moving body is
-        a healthy body and we need to move to stimulate the frontal lobe so we
-        can stimulate communication, happiness, personality, behavior just to
-        name a few of the benefits of a moving body. Welcome to Club SMILE Mass.
-      </p>
-
-      
+      <div style={{ display: "flex" }}>
+        <HomeCard style={{ marginLeft: "0px" }}>
+          <h1 style={{ color: "#04a3d3" }}>Mission</h1>
+          <p
+            style={{
+              textAlign: "justify",
+              textJustify: "inter-word",
+            }}
+          >
+            Small Miracles in Life Exist (SMILE Mass) is a 501 C3 non-profit
+            organization dedicated to helping families raising children or
+            adults with disabilities enjoy happy, healthy memories through
+            vacation and recreation experiences.
+          </p>
+        </HomeCard>
+        <HomeCard>
+          <h1 style={{ color: "#7bc354" }}>Vision</h1>
+          <p
+            style={{
+              textAlign: "justify",
+              textJustify: "inter-word",
+            }}
+          >
+            The future of SMILE Mass is about creating an inclusive community
+            based in Metrowest with a state-of-the-art recreational facility
+            dedicated to those with disabilities with access to outdoor
+            recreation space and indoor meeting and enrichment programs.
+          </p>
+        </HomeCard>
+        <HomeCard style={{ marginRight: "0px" }}>
+          <h1 style={{ color: "#04848b" }}>Promise</h1>
+          <p
+            style={{
+              textAlign: "justify",
+              textJustify: "inter-word",
+            }}
+          >
+            Movement matters to all of us. For people with medical, physical and
+            intellectual disabilities movement can often be challenging, yet the
+            benefit is the same. A moving body is a healthy body and we need to
+            move to stimulate the frontal lobe so we can stimulate
+            communication, happiness, personality, behavior just to name a few
+            of the benefits of a moving body. Welcome to Club SMILE Mass.
+          </p>
+        </HomeCard>
+      </div>
     </div>
   );
 }

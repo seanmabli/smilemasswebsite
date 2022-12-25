@@ -22,7 +22,7 @@ import InTheNews from "../pages/inthenews";
 import JoinTheCoffeeClub from "../pages/jointhecoffeeclub";
 import BeachWheelchairLocations from "../pages/beachwheelchairlocations";
 import LotteDiomede from "../pages/lottediomede";
-import NewsLetters from "../pages/newsletters";
+import Newsletter from "../pages/newsletter";
 import Resources from "../pages/resources";
 import RunningTeam from "../pages/runningteam";
 import { SmileBlog, SmileBlogPost } from "../pages/smileblog";
@@ -35,7 +35,7 @@ import Login from "../admin/login";
 import Dashboard from "../admin/dashboard";
 import AdminContact from "../admin/contact";
 import { AdminSmileBlog, AdminSmileBlogEditor } from "../admin/smileblog";
-import { AdminNewsletters, AdminNewslettersEditor } from "../admin/newsletters";
+import { AdminNewsletter, AdminNewsletterEditor } from "../admin/newsletter";
 import AdminVollunteer from "../admin/volunteer";
 import { AdminInTheNews, AdminInTheNewsEditor } from "../admin/inthenews";
 import AdminEquiptmentLoanerProgram from "../admin/equipmentloanerprogram";
@@ -120,7 +120,7 @@ function MobileNavbar() {
           <li className="item">
             <Dropdown
               title="News & Events"
-              options={["Events", "In The News", "Newsletters", "SMILE Blog"]}
+              options={["Events", "In The News", "Newsletter", "SMILE Blog"]}
               direction="left"
             />
           </li>
@@ -199,12 +199,12 @@ function PageContent() {
         />
 
         <Route
-          path="/admin/newsletters"
-          element={<AuthRoute page={<AdminNewsletters />} />}
+          path="/admin/newsletter"
+          element={<AuthRoute page={<AdminNewsletter />} />}
         />
         <Route
-          path="/admin/newsletters/:id"
-          element={<AuthRoute page={<AdminNewslettersEditor />} />}
+          path="/admin/newsletter/:id"
+          element={<AuthRoute page={<AdminNewsletterEditor />} />}
         />
 
         <Route
@@ -296,7 +296,7 @@ function PageContent() {
 
         <Route path="/lottediomede" element={<LotteDiomede />} />
 
-        <Route path="/newsletters" element={<NewsLetters />} />
+        <Route path="/newsletter" element={<Newsletter />} />
 
         <Route path="/resources" element={<Resources />} />
 
