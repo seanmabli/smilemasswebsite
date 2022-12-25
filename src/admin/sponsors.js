@@ -73,15 +73,16 @@ export function AdminSponsors() {
             imagename: imageUpload.name,
             imageurl: imageurl,
           });
+        };
+        upload().then(() => {
           setResponses([
             ...responses,
             { name: name, url: url, imagename: imageUpload.name, imageurl: imageurl },
           ]);
           setName("");
           setUrl("");
-          setImageUpload({ name: "No file chosen" });
-        };
-        upload();
+          setImageUpload({ name: "No file chosen" });}
+        );
       });
     });
   }
