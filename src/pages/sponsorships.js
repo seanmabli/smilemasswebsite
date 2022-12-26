@@ -1,6 +1,3 @@
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-
 import { CardActionArea } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -63,6 +60,7 @@ export function Sponsorships() {
           </ul>
         </SponsorshipsCardActionArea>
       </div>
+      <br />
       <h2>Corporate</h2>
       <br />
       <p>

@@ -17,9 +17,16 @@
   font-size: 30px;
 }
 
+.missiontextcontainer {
+  position: relative;
+  text-align: center;
+  display: flex;
+}
+
 .missiontext {
-  border-radius: 5px;
-  font-size: 30px;
+  font-size: 21px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .missioncontainer {

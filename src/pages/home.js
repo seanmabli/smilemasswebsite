@@ -5,34 +5,23 @@ import jones from "../images/homesplash/jones.webp";
 import music from "../images/homesplash/music.webp";
 import pool from "../images/homesplash/pool.webp";
 import races from "../images/homesplash/races.webp";
-import races2 from "../images/homesplash/races2.webp";
 import wheelchair from "../images/homesplash/wheelchair.webp";
 
 import "./home.css";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
-import SwipeableViews from "react-swipeable-views";
-import { autoPlay } from "react-swipeable-views-utils";
-import { Card, styled } from "@mui/material";
+import { Card, styled, Button, Divider } from "@mui/material";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import { NewsItemCardActionArea } from "../components/mui";
+import { useNavigate } from "react-router";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-
-const images = [
-  { imgPath: beachhouse },
-  { imgPath: communityinacommunity },
-  { imgPath: equiptment },
-  { imgPath: jones },
-  { imgPath: music },
-  { imgPath: pool },
-  { imgPath: races },
-  { imgPath: races2 },
-  { imgPath: wheelchair },
-];
+import "./events.css";
 
 export const HomeCard = styled(Card)({
-  border: "1px solid rgba(0, 0, 0, 0.23)",
-  borderRadius: "5px",
   boxShadow: "none",
   maxWidth: "410px",
   padding: "10px",
@@ -46,35 +35,66 @@ export default function Home() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
 
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    const getEvents = async () => {
+      const data = await getDocs(collection(db, "events"));
+      setEvents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getEvents();
+  }, []);
+
+  const [newsItems, setNewsItems] = useState([]);
+  useEffect(() => {
+    const getNewsItems = async () => {
+      const data = await getDocs(collection(db, "inthenews"));
+      setNewsItems(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getNewsItems();
+  }, []);
+
+  newsItems.sort(function (first, second) {
+    return second.published["seconds"] - first.published["seconds"];
+  });
+
+  let navigate = useNavigate();
+
   return (
     <div className="page">
-      <p className="missiontext">
-        Dedicated to helping families raising children or adults with
-        disabilities enjoy happy, healthy memories through vacation and
-        recreation experiences.
-      </p>
-      <br />
-      <AutoPlaySwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={activeStep}
-        onChangeIndex={(step) => setActiveStep(step)}
-        enableMouseEvents
-      >
-        {images.map((step, index) => (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            {Math.abs(activeStep - index) <= 2 ? (
-              <div className="missioncontainer">
+      <ImageList variant="quilted" cols={4} rowHeight={250}>
+        {itemData.map((item) => {
+          if (item.isText === true) {
+            return (
+              <ImageListItem
+                key="text"
+                cols={2}
+                rows={1}
+                className="missiontextcontainer"
+              >
+                <p className="missiontext">
+                  Dedicated to helping families raising children or adults with
+                  disabilities enjoy happy, healthy memories through vacation
+                  and recreation experiences
+                </p>
+              </ImageListItem>
+            );
+          } else {
+            return (
+              <ImageListItem
+                key={item.img}
+                cols={item.cols || 1}
+                rows={item.rows || 1}
+              >
                 <img
-                  src={step.imgPath}
-                  alt={step.label}
-                  className="missionimage"
+                  {...srcset(item.img, 121, item.rows, item.cols)}
+                  alt={item.title}
+                  loading="lazy"
                 />
-                <p className="missiontext"></p>
-              </div>
-            ) : null}
-          </div>
-        ))}
-      </AutoPlaySwipeableViews>
+              </ImageListItem>
+            );
+          }
+        })}
+      </ImageList>
       <br />
       <div style={{ display: "flex" }}>
         <HomeCard style={{ marginLeft: "0px" }}>
@@ -91,6 +111,7 @@ export default function Home() {
             vacation and recreation experiences.
           </p>
         </HomeCard>
+        <Divider orientation="vertical" flexItem />
         <HomeCard>
           <h1 style={{ color: "#7bc354" }}>Vision</h1>
           <p
@@ -105,6 +126,7 @@ export default function Home() {
             recreation space and indoor meeting and enrichment programs.
           </p>
         </HomeCard>
+        <Divider orientation="vertical" flexItem />
         <HomeCard style={{ marginRight: "0px" }}>
           <h1 style={{ color: "#04848b" }}>Promise</h1>
           <p
@@ -122,16 +144,112 @@ export default function Home() {
           </p>
         </HomeCard>
       </div>
+      <br />
+      <h1>Upcoming Events</h1>
+      <br />
+      {events.map((event) => {
+        return (
+          <div>
+            <br />
+            <div className="eventcontainer">
+              <div>
+                <img
+                  src={event.imageurl}
+                  alt={event.title}
+                  className="eventthumbnail"
+                />
+              </div>
+              <div>
+                <h2 style={{ color: "black" }}>{event.title}</h2>
+                <br />
+                <p style={{ color: "black" }}>
+                  {event.date
+                    .toDate()
+                    .toDateString()
+                    .split(" ")
+                    .slice(1)
+                    .join(" ")}
+                  &nbsp;&nbsp;
+                </p>
+                <br />
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() => navigate("/events")}
+                  style={{ color: "#547c94", borderColor: "#547c94" }}
+                >
+                  More Details
+                </Button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+      <br />
+      <h1>In The News</h1>
+      <br />
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {newsItems
+          .slice(0, Math.floor((window.innerWidth - 20) / 310) * 2 - 1)
+          .map((newsItem) => {
+            return (
+              <NewsItemCardActionArea className="newsitem" href={newsItem.url}>
+                <img
+                  src={newsItem.imageurl}
+                  alt="News Logo"
+                  className="newslogo"
+                  style={{ maxHeight: "50px", maxWidth: "268px" }}
+                />
+                <br />
+                <p>
+                  {newsItem.published
+                    .toDate()
+                    .toDateString()
+                    .split(" ")
+                    .slice(1)
+                    .join(" ")}
+                </p>
+                <p>{newsItem.title}</p>
+              </NewsItemCardActionArea>
+            );
+          })}
+        <NewsItemCardActionArea
+          className="newsitem"
+          onClick={() => navigate("inthenews")}
+          style={{ borderWidth: "0" }}
+        >
+          <h2 style={{ color: "black" }}>View More</h2>
+        </NewsItemCardActionArea>
+      </div>
     </div>
   );
 }
 
-/*
+function srcset(image: string, size: number, rows = 1, cols = 1) {
+  return {
+    src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
+    srcSet: `${image}?w=${size * cols}&h=${
+      size * rows
+    }&fit=crop&auto=format&dpr=2 2x`,
+  };
+}
 
-      <p>
-        SMILE Mass strives to become the leading resource for handicap
-        accessibility in vacation and recreation experiences. Please help us see
-        our vision through. Read letters from some of our supporters right here.
-      </p>
-
-      */
+const itemData = [
+  { img: wheelchair, cols: 2, isText: false },
+  { img: jones, isText: false },
+  { img: equiptment, isText: false },
+  { img: pool, isText: false },
+  {
+    isText: true,
+    cols: 2,
+  },
+  { img: races, isText: false },
+  {
+    img: beachhouse,
+    title: "Accessible Beach House",
+    isText: false,
+    cols: 2,
+  },
+  { img: music },
+  { img: communityinacommunity, isText: false },
+];

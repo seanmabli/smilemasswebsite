@@ -3,7 +3,6 @@ import { db } from "../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { NewsItemCardActionArea } from "../components/mui";
 
-
 export default function InTheNews() {
   const [newsItems, setNewsItems] = useState([]);
   useEffect(() => {
@@ -21,16 +20,6 @@ export default function InTheNews() {
   return (
     <div className="page">
       <h1>In The News</h1>
-      <br />
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/AcvFW6vxqZE"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
       <br />
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {newsItems.map((newsItem) => {
@@ -56,7 +45,6 @@ export default function InTheNews() {
           );
         })}
       </div>
-      
     </div>
   );
 }
