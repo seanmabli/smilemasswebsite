@@ -348,7 +348,7 @@ export default function Navbar() {
             backgroundColor: "white",
           }}
         >
-          <Link className="link" to="/">
+          <Link className="link" to="/" onClick={() => window.scrollTo(0, 0)}>
             <img
               src={logo}
               rel="preload"
@@ -366,7 +366,7 @@ export default function Navbar() {
   } else {
     return (
       <nav className="navbar" style={{ width: window.innerWidth - 20 }}>
-        <Link className="link" to="/">
+        <Link className="link" to="/" onClick={() => window.scrollTo(0, 0)}>
           <img
             src={logo}
             rel="preload"

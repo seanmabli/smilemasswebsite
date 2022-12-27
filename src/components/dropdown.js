@@ -51,6 +51,7 @@ export default function Dropdown(props) {
   const onOptionClicked = (value) => () => {
     navigate(value.toLowerCase().replace(/\s+/g, "").replace("/", ""));
     setIsOpen(false);
+    window.scrollTo(0, 0);
   };
 
   if (props.direction === "left") {

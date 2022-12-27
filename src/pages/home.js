@@ -171,7 +171,10 @@ export default function Home() {
                 <Button
                   size="small"
                   variant="outlined"
-                  onClick={() => navigate("/events")}
+                  onClick={() => {
+                    navigate("/events");
+                    window.scrollTo(0, 0);
+                  }}
                   style={{ color: "#547c94", borderColor: "#547c94" }}
                 >
                   More Details
@@ -211,7 +214,10 @@ export default function Home() {
           })}
         <NewsItemCardActionArea
           className="newsitem"
-          onClick={() => navigate("inthenews")}
+          onClick={() => {
+            navigate("inthenews");
+            window.scrollTo(0, 0);
+          }}
           style={{ borderWidth: "0" }}
         >
           <h2 style={{ color: "black" }}>View More</h2>

@@ -71,7 +71,11 @@ export function Sponsorships() {
       </p>
       <br />
       <div style={{ display: "flex" }}>
-        <SponsorshipsCardActionArea href="https://smilemass.giv.sh/067d">
+        <SponsorshipsCardActionArea
+          href="https://smilemass.giv.sh/067d"
+          target="_blank"
+          rel="noreferrer"
+        >
           <h2>$1,500 Arts Sponsor</h2>
           <br />
           <ul className="dashed">
@@ -81,7 +85,11 @@ export function Sponsorships() {
             <li>Inclusion in sponsor list on website</li>
           </ul>
         </SponsorshipsCardActionArea>
-        <SponsorshipsCardActionArea href="https://smilemass.giv.sh/f15c">
+        <SponsorshipsCardActionArea
+          href="https://smilemass.giv.sh/f15c"
+          target="_blank"
+          rel="noreferrer"
+        >
           <h2>$2,500 Recreation Sponsor</h2>
           <br />
           <ul className="dashed">
@@ -94,7 +102,11 @@ export function Sponsorships() {
             <li>Inclusion in sponsor list on website</li>
           </ul>
         </SponsorshipsCardActionArea>
-        <SponsorshipsCardActionArea href="https://smilemass.giv.sh/b1ff">
+        <SponsorshipsCardActionArea
+          href="https://smilemass.giv.sh/b1ff"
+          target="_blank"
+          rel="noreferrer"
+        >
           <h2>$5,000 Equipment Sponsor</h2>
           <br />
           <ul className="dashed">
@@ -108,7 +120,11 @@ export function Sponsorships() {
             <li>Inclusion in sponsor list on website</li>
           </ul>
         </SponsorshipsCardActionArea>
-        <SponsorshipsCardActionArea href="https://smilemass.giv.sh/e079">
+        <SponsorshipsCardActionArea
+          href="https://smilemass.giv.sh/e079"
+          target="_blank"
+          rel="noreferrer"
+        >
           <h2>$10,000 Pavillion Sponsor</h2>
           <br />
           <ul className="dashed">

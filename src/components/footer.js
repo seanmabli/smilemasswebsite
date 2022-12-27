@@ -39,7 +39,7 @@ export function Footer() {
         {responses.map((response) => {
           return (
             <div className="sponsor">
-              <a href={response.url}>
+              <a href={response.url} target="_blank" rel="noreferrer">
                 <img
                   src={response.imageurl}
                   alt={response.name}
@@ -54,7 +54,12 @@ export function Footer() {
       <Divider />
       <br />
       <div className="footeradditionalcontainer">
-        <img src={footerlogo} rel="preload" alt="footerlogo" className="footerlogo" />
+        <img
+          src={footerlogo}
+          rel="preload"
+          alt="footerlogo"
+          className="footerlogo"
+        />
         <div className="footercontact">
           <h2>Contact Us</h2>
           <p>617-967-7755</p>

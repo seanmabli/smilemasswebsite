@@ -26,7 +26,7 @@
 .missiontext {
   font-size: 21px;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 65px auto; /* fix later */
 }
 
 .missioncontainer {
