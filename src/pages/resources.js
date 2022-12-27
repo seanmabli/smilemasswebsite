@@ -197,14 +197,14 @@ export default function Resources() {
       <br />
       <a href="http://www.legalplanningforspecialneeds.com/tablet/afc-program.html">
         Adult Family Care (AFC) and the Co-Guardianship Dilemma (Barbara
-        Jackins, Esq.
+        Jackins, Esq.)
       </a>
       <br />
       <h2 id="alternativestoguardianship">Alternatives to Guardianship</h2>
       <br />
       <a href="https://www.dlc-ma.org/wp-content/uploads/2017/12/Alternatives-to-Guardianship-and-Guardianship.pdf">
         <em>Alternatives to Guardianship &amp; Guardianship </em>(Disability Law
-        Center
+        Center)
       </a>
       <br />
       <a href="https://www.brighamandwomensfaulkner.org/patients-and-families/advance-care-directives/ma-health-care-proxy">
