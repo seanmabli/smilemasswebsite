@@ -126,7 +126,7 @@ export default function Resources() {
       <a href="https://fcsn.org/linkcenter/wp-content/uploads/sites/25/2018/04/transition_guide_int.pdf">
         <em>A Family Guide to Transition Services in Massachusetts </em>
         (Massachusetts Rehabilitation Commission &amp; Federation for Children
-        with Special Needs, 2013
+        with Special Needs, 2013)
       </a>
       <br />
       <a href="https://www.mass.gov/files/documents/2016/07/vy/may2015-transition-sheets.pdf">
@@ -134,16 +134,16 @@ export default function Resources() {
           Important Transition Information Every Family Should Know: Transition
         </em>{" "}
         <em>Information Fact Sheets</em> (Massachusetts Department of
-        Developmental Services, April, 2015
+        Developmental Services, April, 2015)
       </a>
       <br />
       <a href="https://massnaela.com/wp-content/uploads/2018/12/Special-Needs-Advocacy-Toolkit-October-2018-Final-.pdf">
-        <em>Special Needs Advocacy Toolkit</em> (Mass NAELA, 2018
+        <em>Special Needs Advocacy Toolkit</em> (Mass NAELA, 2018)
       </a>
       <br />
       <a href="https://www.mass.gov/files/documents/2016/07/sc/transition-planning-road-forward.pdf">
         <em>The Road Forward: A DDS Guide for Transition Planning </em>
-        (Massachusetts Department of Developmental Services, 2013
+        (Massachusetts Department of Developmental Services, 2013)
       </a>
       <br />
       <a href="http://www.jfcsboston.org/Portals/0/Uploads/Documents/Unlocking_the_Doors_to_Community_Living.pdf">
@@ -151,23 +151,23 @@ export default function Resources() {
           Unlocking the Door to Community Living: a guide for families of people
           with disabilities{" "}
         </em>
-        (Jewish Family &amp; Children’s Service,&nbsp; June 2011
+        (Jewish Family &amp; Children’s Service,&nbsp; June 2011)
       </a>
       <br />
       <h2 id="timelines&checklists">Timelines & Checklists</h2>
       <br />
       <a href="http://www.thearcofghn.org/web/wp-content/uploads/2018/04/Timeline-updated.pdf">
         <em>Transition from School to Adult Life – Time Lines</em> (The ARC of
-        Greater Haverill-Newburyport
+        Greater Haverill-Newburyport)
       </a>
       <br />
       <a href="https://specialneeds-law.com/wp-content/uploads/2019/07/SNLG-Transition-Checklist-simple.pdf">
         <em>Transition Checklist</em> (Special Needs Law Group of Massachusetts,
-        PC, 2018
+        PC, 2018)
       </a>
       <br />
       <a href="http://autismhousingpathways.org/wp-content/uploads/2018/03/Turning18checklist_03-18.pdf">
-        <em>Turning 18 Checklist </em>(Autism Housing Pathways
+        <em>Turning 18 Checklist </em>(Autism Housing Pathways)
       </a>
       <br />
       <h2 id="guardianship">Guardianship</h2>
