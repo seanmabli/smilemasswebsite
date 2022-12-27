@@ -5,7 +5,7 @@ import Dropdown from "./dropdown";
 import { NavButton } from "../components/mui";
 import "../index.css";
 import "./navbar.css";
-import { Footer } from "./footer"
+import { Footer } from "./footer";
 
 import { AccessiblePlaygrounds } from "../pages/accessibleplaygrounds";
 import Accomplishments from "../pages/accomplishments";
@@ -132,11 +132,7 @@ function MobileNavbar() {
           <li className="item">
             <Dropdown
               title="Support"
-              options={[
-                "Donate",
-                "Join the Coffee Club",
-                "Sponsorships",
-              ]}
+              options={["Donate", "Join the Coffee Club", "Sponsorships"]}
               buttonStyle={{ backgroundColor: "#547c94", color: "#ffffff" }}
               direction="right"
             />
@@ -161,177 +157,179 @@ function MobileNavbar() {
 
 function PageContent() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route
-          path="/accessibleplaygrounds"
-          element={<AccessiblePlaygrounds />}
-        />
+    <div style={{ marginTop: "85px" }}>
+      <AuthProvider>
+        <Routes>
+          <Route
+            path="/accessibleplaygrounds"
+            element={<AccessiblePlaygrounds />}
+          />
 
-        <Route path="/accomplishments" element={<Accomplishments />} />
+          <Route path="/accomplishments" element={<Accomplishments />} />
 
-        <Route path="/admin" element={<AuthSkipLogin page={<Login />} />} />
-        <Route
-          path="/admin/contact"
-          element={<AuthRoute page={<AdminContact />} />}
-        />
-        <Route
-          path="/admin/clubsmilemass"
-          element={<AuthRoute page={<AdminClubSmileMass />} />}
-        />
-        <Route
-          path="/admin/dashboard"
-          element={<AuthRoute page={<Dashboard />} />}
-        />
-        <Route
-          path="/admin/events"
-          element={<AuthRoute page={<AdminEvents />} />}
-        />
-        <Route path="/admin/faq" element={<AuthRoute page={<AdminFAQ />} />} />
-        <Route
-          path="/admin/smileblog"
-          element={<AuthRoute page={<AdminSmileBlog />} />}
-        />
+          <Route path="/admin" element={<AuthSkipLogin page={<Login />} />} />
+          <Route
+            path="/admin/contact"
+            element={<AuthRoute page={<AdminContact />} />}
+          />
+          <Route
+            path="/admin/clubsmilemass"
+            element={<AuthRoute page={<AdminClubSmileMass />} />}
+          />
+          <Route
+            path="/admin/dashboard"
+            element={<AuthRoute page={<Dashboard />} />}
+          />
+          <Route
+            path="/admin/events"
+            element={<AuthRoute page={<AdminEvents />} />}
+          />
+          <Route
+            path="/admin/faq"
+            element={<AuthRoute page={<AdminFAQ />} />}
+          />
+          <Route
+            path="/admin/smileblog"
+            element={<AuthRoute page={<AdminSmileBlog />} />}
+          />
 
-        <Route
-          path="/admin/smileblog/:id"
-          element={<AuthRoute page={<AdminSmileBlogEditor />} />}
-        />
+          <Route
+            path="/admin/smileblog/:id"
+            element={<AuthRoute page={<AdminSmileBlogEditor />} />}
+          />
 
-        <Route
-          path="/admin/newsletter"
-          element={<AuthRoute page={<AdminNewsletter />} />}
-        />
-        <Route
-          path="/admin/newsletter/:id"
-          element={<AuthRoute page={<AdminNewsletterEditor />} />}
-        />
+          <Route
+            path="/admin/newsletter"
+            element={<AuthRoute page={<AdminNewsletter />} />}
+          />
+          <Route
+            path="/admin/newsletter/:id"
+            element={<AuthRoute page={<AdminNewsletterEditor />} />}
+          />
 
-        <Route
-          path="/admin/volunteer"
-          element={<AuthRoute page={<AdminVollunteer />} />}
-        />
+          <Route
+            path="/admin/volunteer"
+            element={<AuthRoute page={<AdminVollunteer />} />}
+          />
 
-        <Route
-          path="/admin/inthenews"
-          element={<AuthRoute page={<AdminInTheNews />} />}
-        />
-        <Route
-          path="/admin/inthenews/:id"
-          element={<AuthRoute page={<AdminInTheNewsEditor />} />}
-        />
+          <Route
+            path="/admin/inthenews"
+            element={<AuthRoute page={<AdminInTheNews />} />}
+          />
+          <Route
+            path="/admin/inthenews/:id"
+            element={<AuthRoute page={<AdminInTheNewsEditor />} />}
+          />
 
-        <Route
-          path="/admin/equiptmentloanerprogram"
-          element={<AuthRoute page={<AdminEquiptmentLoanerProgram />} />}
-        />
+          <Route
+            path="/admin/equiptmentloanerprogram"
+            element={<AuthRoute page={<AdminEquiptmentLoanerProgram />} />}
+          />
 
-        <Route
-          path="/admin/beachwheelchairlocations"
-          element={<AuthRoute page={<AdminBeachWheelchairLocations />} />}
-        />
+          <Route
+            path="/admin/beachwheelchairlocations"
+            element={<AuthRoute page={<AdminBeachWheelchairLocations />} />}
+          />
 
-        <Route
-          path="/admin/sponsors"
-          element={<AuthRoute page={<AdminSponsors />} />}
-        />
+          <Route
+            path="/admin/sponsors"
+            element={<AuthRoute page={<AdminSponsors />} />}
+          />
 
-        <Route
-          path="/admin/testimonials"
-          element={<AuthRoute page={<AdminTestimonials />} />}
-        />
+          <Route
+            path="/admin/testimonials"
+            element={<AuthRoute page={<AdminTestimonials />} />}
+          />
 
-        <Route path="/admin/*" element={<Navigate to="/admin" />} />
+          <Route path="/admin/*" element={<Navigate to="/admin" />} />
 
-        <Route path="/beachhouse" element={<BeachHouse />} />
-        <Route
-          path="initiative/beach-house"
-          element={<Navigate to="/beachhouse" />}
-        />
+          <Route path="/beachhouse" element={<BeachHouse />} />
+          <Route
+            path="initiative/beach-house"
+            element={<Navigate to="/beachhouse" />}
+          />
 
-        <Route path="/clubsmilemass" element={<ClubSmileMass />} />
-        <Route
-          path="/initiative/monthly-program-club-smile-mass"
-          element={<Navigate to="/clubsmilemass" />}
-        />
+          <Route path="/clubsmilemass" element={<ClubSmileMass />} />
+          <Route
+            path="/initiative/monthly-program-club-smile-mass"
+            element={<Navigate to="/clubsmilemass" />}
+          />
 
-        <Route path="/contact" element={<Contact />} />
+          <Route path="/contact" element={<Contact />} />
 
-        <Route path="/donate" element={<Donate />} />
-        <Route path="/support-us" element={<Navigate to="/donate" />} />
+          <Route path="/donate" element={<Donate />} />
+          <Route path="/support-us" element={<Navigate to="/donate" />} />
 
-        <Route
-          path="/equipmentloanerprogram"
-          element={<EquipmentLoanerProgram />}
-        />
-        <Route
-          path="/initiative/equipment-loaner-program"
-          element={<Navigate to="/equipmentloanerprogram" />}
-        />
+          <Route
+            path="/equipmentloanerprogram"
+            element={<EquipmentLoanerProgram />}
+          />
+          <Route
+            path="/initiative/equipment-loaner-program"
+            element={<Navigate to="/equipmentloanerprogram" />}
+          />
 
-        <Route path="/events" element={<Events />} />
+          <Route path="/events" element={<Events />} />
 
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/f-a-q" element={<Navigate to="/faq" />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/f-a-q" element={<Navigate to="/faq" />} />
 
-        <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home />} />
 
-        <Route path="/inthenews" element={<InTheNews />} />
-        <Route path="/in-the-news" element={<Navigate to="/inthenews" />} />
+          <Route path="/inthenews" element={<InTheNews />} />
+          <Route path="/in-the-news" element={<Navigate to="/inthenews" />} />
 
-        <Route path="/jointhecoffeeclub" element={<JoinTheCoffeeClub />} />
-        <Route
-          path="/initiative/coffee-club"
-          element={<Navigate to="/jointhecoffeeclub" />}
-        />
+          <Route path="/jointhecoffeeclub" element={<JoinTheCoffeeClub />} />
+          <Route
+            path="/initiative/coffee-club"
+            element={<Navigate to="/jointhecoffeeclub" />}
+          />
 
-        <Route
-          path="/beachwheelchairlocations"
-          element={<BeachWheelchairLocations />}
-        />
-        <Route
-          path="/initiative/beach-wheelchairs/"
-          element={<Navigate to="/localbeachwheelchairlocations" />}
-        />
+          <Route
+            path="/beachwheelchairlocations"
+            element={<BeachWheelchairLocations />}
+          />
+          <Route
+            path="/initiative/beach-wheelchairs/"
+            element={<Navigate to="/localbeachwheelchairlocations" />}
+          />
 
-        <Route path="/lottediomede" element={<LotteDiomede />} />
+          <Route path="/lottediomede" element={<LotteDiomede />} />
 
-        <Route path="/newsletter" element={<Newsletter />} />
+          <Route path="/newsletter" element={<Newsletter />} />
 
-        <Route path="/resources" element={<Resources />} />
+          <Route path="/resources" element={<Resources />} />
 
-        <Route path="/runningteam" element={<RunningTeam />} />
-        <Route
-          path="/smile-mass-running-team"
-          element={<Navigate to="/runningteam" />}
-        />
+          <Route path="/runningteam" element={<RunningTeam />} />
+          <Route
+            path="/smile-mass-running-team"
+            element={<Navigate to="/runningteam" />}
+          />
 
-        <Route path="/smileblog" element={<SmileBlog />} />
-        <Route path="/smileblog/:id" element={<SmileBlogPost />} />
-        <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
-        
-        <Route
-          path="/sponsorships"
-          element={<Sponsorships />}
-        />
+          <Route path="/smileblog" element={<SmileBlog />} />
+          <Route path="/smileblog/:id" element={<SmileBlogPost />} />
+          <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
 
-        <Route path="/susanbrown" element={<SusanBrown />} />
+          <Route path="/sponsorships" element={<Sponsorships />} />
 
-        <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/susanbrown" element={<SusanBrown />} />
 
-        <Route path="/ourteam" element={<OurTeam />} />
-        <Route path="/our-team" element={<Navigate to="/ourteam" />} />
-        <Route path="/ourteam/:id" element={<OurTeamProfile />} />
+          <Route path="/testimonials" element={<Testimonials />} />
 
-        <Route path="/volunteer" element={<Volunteer />} />
-        <Route
-          path="/learn-how-to-get-involved-with-smile-mass"
-          element={<Navigate to="/volunteer" />}
-        />
+          <Route path="/ourteam" element={<OurTeam />} />
+          <Route path="/our-team" element={<Navigate to="/ourteam" />} />
+          <Route path="/ourteam/:id" element={<OurTeamProfile />} />
 
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </AuthProvider>
+          <Route path="/volunteer" element={<Volunteer />} />
+          <Route
+            path="/learn-how-to-get-involved-with-smile-mass"
+            element={<Navigate to="/volunteer" />}
+          />
+
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </AuthProvider>
+    </div>
   );
 }
 
@@ -339,7 +337,17 @@ export default function Navbar() {
   if (window.innerWidth > 1000) {
     return (
       <>
-        <nav className="navbar">
+        <nav
+          className="navbar"
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 10,
+            width: "100%",
+            zIndex: 100,
+            backgroundColor: "white",
+          }}
+        >
           <Link className="link" to="/">
             <img
               src={logo}
@@ -352,7 +360,7 @@ export default function Navbar() {
           <MobileNavbar />
         </nav>
         <PageContent />
-        {/* <Footer /> */}
+        <Footer />
       </>
     );
   } else {

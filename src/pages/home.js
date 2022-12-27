@@ -10,7 +10,6 @@ import wheelchair from "../images/homesplash/wheelchair.webp";
 import "./home.css";
 
 import { useState, useEffect } from "react";
-import { useTheme } from "@mui/material/styles";
 import { Card, styled, Button, Divider } from "@mui/material";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
@@ -32,9 +31,6 @@ export const HomeCard = styled(Card)({
 });
 
 export default function Home() {
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = useState(0);
-
   const [events, setEvents] = useState([]);
   useEffect(() => {
     const getEvents = async () => {
