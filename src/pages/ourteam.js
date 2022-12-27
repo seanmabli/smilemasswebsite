@@ -4,7 +4,7 @@ import { db } from "../firebase/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
 import "./ourteam.css";
-import { Divider } from "@mui/material";
+import { Divider, Button } from "@mui/material";
 
 export function OurTeam() {
   let navigate = useNavigate();
@@ -43,32 +43,45 @@ export function OurTeam() {
         to continue improving the lives of disabled persons and the people
         around them.
       </p>
-      <div style={{ maxWidth: "1250px" }}>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {teamMembers.map((teamMember) => {
-            return (
-              <div
-                id={teamMember.id}
-                className="ourteamcontainer"
-                onClick={() =>
-                  navigate(teamMember.name.replace(/\s/g, "").toLowerCase())
-                }
-              >
-                <img
-                  src={teamMember.imageurl}
-                  alt={teamMember.name}
-                  className="ourteamimage"
-                />
-                <div className="ourteamtext">
-                  <h2 style={{ color: "black" }}>{teamMember.name}</h2>
-                  <p style={{ color: "black" }}>{teamMember.role}</p>
-                </div>
+      {teamMembers.map((teamMember) => {
+        return (
+          <div style={{ display: "flex" }}>
+            <div id={teamMember.id} className="ourteamcontainer">
+              <img
+                src={teamMember.imageurl}
+                alt={teamMember.name}
+                className="ourteamimage"
+              />
+              <div className="ourteamtext">
+                <h2 style={{ color: "black" }}>{teamMember.name}</h2>
+                <p style={{ color: "black" }}>{teamMember.role}</p>
               </div>
-            );
-          })}
-        </div>
-      </div>
-      
+            </div>
+            <div style={{ width: window.innerWidth - 350, margin: "10px" }}>
+              <h2>{teamMember.name.split(" ")[0]}'s Story</h2>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html:
+                    teamMember.readmystory.split(" ").slice(0, 50).join(" ") +
+                    "...",
+                }}
+              />
+              <br />
+              <Button
+                size="small"
+                variant="outlined"
+                style={{ color: "#547c94", borderColor: "#547c94" }}
+                onClick={() => {
+                  navigate(teamMember.name.replace(/\s/g, "").toLowerCase());
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Read More
+              </Button>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -102,28 +115,25 @@ export function OurTeamProfile() {
       {teamMembers.map((teamMember) => {
         return (
           <div>
-            <div className="ourteamprofilecontainer">
+            <div id={teamMember.id} className="ourteamcontainer">
               <img
                 src={teamMember.imageurl}
                 alt={teamMember.name}
-                className="ourteamprofileimage"
+                className="ourteamimage"
               />
-              <h1>{teamMember.name}</h1>
-              <br />
-              <p>{teamMember.role}</p>
-              <br />
-              <p>{teamMember.bio}</p>
-              <br />
+              <div className="ourteamtext">
+                <h2 style={{ color: "black" }}>{teamMember.name}</h2>
+                <p style={{ color: "black" }}>{teamMember.role}</p>
+              </div>
             </div>
-            <div>
-              <br />
-              <Divider />
-              <br />
-              <h2>Lotte's Story</h2>
-              <br />
-              <p>{teamMember.story}</p>
-              <br />
-            </div>
+            <h2>{teamMember.name.split(" ")[0]}'s Story</h2>
+            <br />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: teamMember.readmystory,
+              }}
+            />
+            <br />
           </div>
         );
       })}

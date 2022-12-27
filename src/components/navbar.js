@@ -21,12 +21,10 @@ import Home from "../pages/home";
 import InTheNews from "../pages/inthenews";
 import JoinTheCoffeeClub from "../pages/jointhecoffeeclub";
 import BeachWheelchairLocations from "../pages/beachwheelchairlocations";
-import LotteDiomede from "../pages/lottediomede";
 import Newsletter from "../pages/newsletter";
 import Resources from "../pages/resources";
 import RunningTeam from "../pages/runningteam";
 import { SmileBlog, SmileBlogPost } from "../pages/smileblog";
-import SusanBrown from "../pages/susanbrown";
 import Testimonials from "../pages/testimonials";
 import { OurTeam, OurTeamProfile } from "../pages/ourteam";
 import Volunteer from "../pages/volunteer";
@@ -294,8 +292,6 @@ function PageContent() {
             element={<Navigate to="/localbeachwheelchairlocations" />}
           />
 
-          <Route path="/lottediomede" element={<LotteDiomede />} />
-
           <Route path="/newsletter" element={<Newsletter />} />
 
           <Route path="/resources" element={<Resources />} />
@@ -311,8 +307,6 @@ function PageContent() {
           <Route paht="/smile-blog" element={<Navigate to="/smileblog" />} />
 
           <Route path="/sponsorships" element={<Sponsorships />} />
-
-          <Route path="/susanbrown" element={<SusanBrown />} />
 
           <Route path="/testimonials" element={<Testimonials />} />
 
